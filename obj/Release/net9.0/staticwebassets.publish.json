@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "olfy8NuyzydGi+evm2yAxnF+9XXN4Jdarnt3r/uJAsE=",
+  "Source": "botAPI",
+  "BasePath": "_content/botAPI",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
