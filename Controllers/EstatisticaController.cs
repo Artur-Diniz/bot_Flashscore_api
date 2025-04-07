@@ -72,6 +72,33 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        [HttpPost("Partida")]
+        public async Task<IActionResult> Post(Estatistica estatisticaCasa,Estatistica estatisticaFora,Partida partida)
+        {
+            try
+            {
+                await _context.TB_ESTATISTICA.AddRangeAsync(estatisticaCasa,estatisticaFora);
+                await _context.TB_PARTIDAS.AddAsync(partida);
+                estatisticaCasa.Id_Partida = partida.Id;
+                estatisticaFora.Id_Partida = partida.Id;
+                partida.Id_EstatisticaCasa = estatisticaCasa.Id_Estatistica;
+                partida.Id_EstatisticaFora = estatisticaFora.Id_Estatistica;
+
+
+                await _context.SaveChangesAsync();
+
+
+                string mensagem = $"estatistica casa temo o id {estatisticaCasa.Id}\n estatistica Fora temo o id {estatisticaFora.Id}\n e a Partida ficou com o ID de {partida.Id}";
+                return Ok(mensagem);
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPut]
         public async Task<IActionResult> Put(Estatistica e)

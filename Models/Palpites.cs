@@ -1,8 +1,11 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace botAPI.Models
 {
     public class Palpites
     {
+        [Key]
         public int Id { get; set; }
         public int IdPartida { get; set; }
         public TipoAposta TipoAposta { get; set; }

@@ -22,10 +22,13 @@ namespace botAPI.Controllers
         {
             try
             {
+                if (id == 0)
+                    throw new System.Exception("O Id não pode ser igual a zero");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 Partida p = await _context.TB_PARTIDAS
                 .FirstOrDefaultAsync(pa => pa.Id == id);
-
+                if (p == null)
+                    throw new System.Exception("Partida Não Encontrada");
                 return Ok(p);
             }
             catch (System.Exception ex)
@@ -101,7 +104,7 @@ namespace botAPI.Controllers
                 if (p == null)
                     throw new System.Exception("Partida Não Encontrada");
                 _context.TB_PARTIDAS.Remove(p);
-    
+
 
                 int linhasAfetadas = await _context.SaveChangesAsync();
 

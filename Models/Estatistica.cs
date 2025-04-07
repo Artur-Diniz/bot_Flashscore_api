@@ -1,13 +1,17 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace botAPI.Models
 {
     public class Estatistica:Partida
-    {
+    {   
+        [Key]
         public int Id_Estatistica { get; set; }
         public int Id_Partida { get; set; }
 
         public string CasaOuFora { get; set; }= string.Empty;
         public string NomeTime { get; set; }= string.Empty;
+        public string NomeTimeRival { get; set; }= string.Empty;
 
         public int? Gol { get; set; }
         public int? GolSofrido { get; set; }
@@ -31,7 +35,7 @@ namespace botAPI.Models
         public int? Cruzamentos { get; set; }
         public int? Desarmes { get; set; }
         public int? Bolas_Afastadas { get; set; }
-        public int? interceptacoes { get; set; }
+        public int? Interceptacoes { get; set; }
 
     }
 }

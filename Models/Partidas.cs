@@ -1,8 +1,11 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace botAPI.Models
 {
     public class Partida
     {
+        [Key]
         public int Id { get; set; }
         public int Id_EstatisticaCasa { get; set; }
         public int Id_EstatisticaFora { get; set; }

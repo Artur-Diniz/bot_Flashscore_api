@@ -1,8 +1,11 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace botAPI.Models
 {
     public class Estatistica_Times
     {
+        [Key]
         public int Id { get; set; }
 
         public string CasaOuFora { get; set; }= string.Empty;
@@ -70,7 +73,7 @@ namespace botAPI.Models
         public float Cartoes_Amarelos_Confrontos { get; set; }
         public float Cartoes_Vermelhos_Confrontos { get; set; }
         public float Laterais_Cobrados_Confrontos { get; set; }
-        public float Toque_Area_Confrontos_Confrontos { get; set; }
+        public float Toque_Area_Adversaria_Confrontos { get; set; }
         public float Passes_Confrontos { get; set; }
         public float Passes_Totais_Confrontos { get; set; }
         public float Precisao_Passes_Confrontos { get; set; }
