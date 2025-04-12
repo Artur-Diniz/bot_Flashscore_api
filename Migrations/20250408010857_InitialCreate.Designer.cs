@@ -12,7 +12,7 @@ using botAPI.Data;
 namespace botAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250405011657_InitialCreate")]
+    [Migration("20250408010857_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,103 @@ namespace botAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("botAPI.Models.Estatistica", b =>
+                {
+                    b.Property<int>("Id_Estatistica")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Estatistica"));
+
+                    b.Property<int?>("Bolas_Afastadas")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Bolas_trave")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Cartoes_Amarelos")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Cartoes_Vermelhos")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CasaOuFora")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<int?>("Chances_Claras")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Cruzamentos")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Defesas_Goleiro")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Desarmes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Escanteios")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Faltas")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Gol")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GolSofrido")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Gols_de_cabeça")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Partida")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Impedimentos")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Interceptacoes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Laterais_Cobrados")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NomeTime")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("NomeTimeRival")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<int?>("Passes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Passes_Totais")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Passes_terco_Final")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Posse_Bola")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Precisao_Passes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Toque_Area_Adversaria")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Total_Finalizacao")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_Estatistica");
+
+                    b.ToTable("TB_ESTATISTICA");
+                });
 
             modelBuilder.Entity("botAPI.Models.Estatistica_Times", b =>
                 {
@@ -70,7 +167,6 @@ namespace botAPI.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("CasaOuFora")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
@@ -183,7 +279,6 @@ namespace botAPI.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("NomeTime")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
@@ -238,7 +333,7 @@ namespace botAPI.Migrations
                     b.Property<float>("Toque_Area_Adversaria_Adversaria")
                         .HasColumnType("real");
 
-                    b.Property<float>("Toque_Area_Confrontos_Confrontos")
+                    b.Property<float>("Toque_Area_Adversaria_Confrontos")
                         .HasColumnType("real");
 
                     b.Property<float>("Total_Finalizacao")
@@ -264,7 +359,6 @@ namespace botAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
@@ -291,17 +385,11 @@ namespace botAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Campeonato")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
                     b.Property<DateTime>("DataPartida")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar");
 
                     b.Property<int>("Id_EstatisticaCasa")
                         .HasColumnType("int");
@@ -310,12 +398,10 @@ namespace botAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NomeTimeCasa")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
                     b.Property<string>("NomeTimeFora")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
@@ -323,109 +409,12 @@ namespace botAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("TipoPartida")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
                     b.ToTable("TB_PARTIDAS");
-
-                    b.HasDiscriminator().HasValue("Partida");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("botAPI.Models.Estatistica", b =>
-                {
-                    b.HasBaseType("botAPI.Models.Partida");
-
-                    b.Property<int?>("Bolas_Afastadas")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Bolas_trave")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Cartoes_Amarelos")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Cartoes_Vermelhos")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CasaOuFora")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar");
-
-                    b.Property<int?>("Chances_Claras")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Cruzamentos")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Defesas_Goleiro")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Desarmes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Escanteios")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Faltas")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Gol")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GolSofrido")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Gols_de_cabeça")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Estatistica")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Partida")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Impedimentos")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Laterais_Cobrados")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeTime")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar");
-
-                    b.Property<int?>("Passes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Passes_Totais")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Passes_terco_Final")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Posse_Bola")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Precisao_Passes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Toque_Area_Adversaria")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Finalizacao")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("interceptacoes")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Estatistica");
                 });
 #pragma warning restore 612, 618
         }

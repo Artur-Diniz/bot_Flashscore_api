@@ -12,13 +12,52 @@ namespace botAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "TB_ESTATISTICA",
+                columns: table => new
+                {
+                    Id_Estatistica = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id_Partida = table.Column<int>(type: "int", nullable: false),
+                    CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    NomeTimeRival = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    Gol = table.Column<int>(type: "int", nullable: true),
+                    GolSofrido = table.Column<int>(type: "int", nullable: true),
+                    Posse_Bola = table.Column<int>(type: "int", nullable: true),
+                    Total_Finalizacao = table.Column<int>(type: "int", nullable: true),
+                    Chances_Claras = table.Column<int>(type: "int", nullable: true),
+                    Escanteios = table.Column<int>(type: "int", nullable: true),
+                    Bolas_trave = table.Column<int>(type: "int", nullable: true),
+                    Gols_de_cabeça = table.Column<int>(type: "int", nullable: true),
+                    Defesas_Goleiro = table.Column<int>(type: "int", nullable: true),
+                    Impedimentos = table.Column<int>(type: "int", nullable: true),
+                    Faltas = table.Column<int>(type: "int", nullable: true),
+                    Cartoes_Amarelos = table.Column<int>(type: "int", nullable: true),
+                    Cartoes_Vermelhos = table.Column<int>(type: "int", nullable: true),
+                    Laterais_Cobrados = table.Column<int>(type: "int", nullable: true),
+                    Toque_Area_Adversaria = table.Column<int>(type: "int", nullable: true),
+                    Passes = table.Column<int>(type: "int", nullable: true),
+                    Passes_Totais = table.Column<int>(type: "int", nullable: true),
+                    Precisao_Passes = table.Column<int>(type: "int", nullable: true),
+                    Passes_terco_Final = table.Column<int>(type: "int", nullable: true),
+                    Cruzamentos = table.Column<int>(type: "int", nullable: true),
+                    Desarmes = table.Column<int>(type: "int", nullable: true),
+                    Bolas_Afastadas = table.Column<int>(type: "int", nullable: true),
+                    Interceptacoes = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_ESTATISTICA", x => x.Id_Estatistica);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_ESTATISTICA_TIME",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     Gol = table.Column<float>(type: "real", nullable: false),
                     GolSofrido = table.Column<float>(type: "real", nullable: false),
                     Posse_Bola = table.Column<float>(type: "real", nullable: false),
@@ -79,7 +118,7 @@ namespace botAPI.Migrations
                     Cartoes_Amarelos_Confrontos = table.Column<float>(type: "real", nullable: false),
                     Cartoes_Vermelhos_Confrontos = table.Column<float>(type: "real", nullable: false),
                     Laterais_Cobrados_Confrontos = table.Column<float>(type: "real", nullable: false),
-                    Toque_Area_Confrontos_Confrontos = table.Column<float>(type: "real", nullable: false),
+                    Toque_Area_Adversaria_Confrontos = table.Column<float>(type: "real", nullable: false),
                     Passes_Confrontos = table.Column<float>(type: "real", nullable: false),
                     Passes_Totais_Confrontos = table.Column<float>(type: "real", nullable: false),
                     Precisao_Passes_Confrontos = table.Column<float>(type: "real", nullable: false),
@@ -103,7 +142,7 @@ namespace botAPI.Migrations
                     IdPartida = table.Column<int>(type: "int", nullable: false),
                     TipoAposta = table.Column<int>(type: "int", nullable: false),
                     Num = table.Column<double>(type: "float", nullable: true),
-                    Descricao = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                    Descricao = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,40 +157,12 @@ namespace botAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_EstatisticaCasa = table.Column<int>(type: "int", nullable: false),
                     Id_EstatisticaFora = table.Column<int>(type: "int", nullable: false),
-                    NomeTimeCasa = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    NomeTimeFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    NomeTimeCasa = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    NomeTimeFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     DataPartida = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Campeonato = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    Campeonato = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     PartidaAnalise = table.Column<bool>(type: "bit", nullable: false),
-                    TipoPartida = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    Id_Estatistica = table.Column<int>(type: "int", nullable: true),
-                    Id_Partida = table.Column<int>(type: "int", nullable: true),
-                    CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
-                    NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
-                    Gol = table.Column<int>(type: "int", nullable: true),
-                    GolSofrido = table.Column<int>(type: "int", nullable: true),
-                    Posse_Bola = table.Column<int>(type: "int", nullable: true),
-                    Total_Finalizacao = table.Column<int>(type: "int", nullable: true),
-                    Chances_Claras = table.Column<int>(type: "int", nullable: true),
-                    Escanteios = table.Column<int>(type: "int", nullable: true),
-                    Bolas_trave = table.Column<int>(type: "int", nullable: true),
-                    Gols_de_cabeça = table.Column<int>(type: "int", nullable: true),
-                    Defesas_Goleiro = table.Column<int>(type: "int", nullable: true),
-                    Impedimentos = table.Column<int>(type: "int", nullable: true),
-                    Faltas = table.Column<int>(type: "int", nullable: true),
-                    Cartoes_Amarelos = table.Column<int>(type: "int", nullable: true),
-                    Cartoes_Vermelhos = table.Column<int>(type: "int", nullable: true),
-                    Laterais_Cobrados = table.Column<int>(type: "int", nullable: true),
-                    Toque_Area_Adversaria = table.Column<int>(type: "int", nullable: true),
-                    Passes = table.Column<int>(type: "int", nullable: true),
-                    Passes_Totais = table.Column<int>(type: "int", nullable: true),
-                    Precisao_Passes = table.Column<int>(type: "int", nullable: true),
-                    Passes_terco_Final = table.Column<int>(type: "int", nullable: true),
-                    Cruzamentos = table.Column<int>(type: "int", nullable: true),
-                    Desarmes = table.Column<int>(type: "int", nullable: true),
-                    Bolas_Afastadas = table.Column<int>(type: "int", nullable: true),
-                    interceptacoes = table.Column<int>(type: "int", nullable: true)
+                    TipoPartida = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -162,6 +173,9 @@ namespace botAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "TB_ESTATISTICA");
+
             migrationBuilder.DropTable(
                 name: "TB_ESTATISTICA_TIME");
 

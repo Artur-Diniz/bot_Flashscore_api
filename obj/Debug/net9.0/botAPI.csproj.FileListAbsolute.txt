@@ -171,3 +171,4 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Debug\net9.0\botAPI
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

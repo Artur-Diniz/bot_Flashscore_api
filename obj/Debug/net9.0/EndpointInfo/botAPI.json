@@ -1,0 +1,1134 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "botAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Estatistica/{id}": {
+      "get": {
+        "tags": [
+          "Estatistica"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Estatistica"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Estatistica/GetAll": {
+      "get": {
+        "tags": [
+          "Estatistica"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Estatistica": {
+      "post": {
+        "tags": [
+          "Estatistica"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Estatistica"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Estatistica/Partida": {
+      "post": {
+        "tags": [
+          "Estatistica"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/EstatisticaTimes/{id}": {
+      "get": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/EstatisticaTimes/GetAll": {
+      "get": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/EstatisticaTimes": {
+      "post": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/EstatisticaTimes/GerarEstatistica/{nomeTime}": {
+      "post": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "parameters": [
+          {
+            "name": "nomeTime",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Palpite/{id}": {
+      "get": {
+        "tags": [
+          "Palpite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Palpite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Palpite/GetAll": {
+      "get": {
+        "tags": [
+          "Palpite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Palpite": {
+      "post": {
+        "tags": [
+          "Palpite"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Palpite"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Partida/{id}": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Partida"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Partida/GetAll": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Partida": {
+      "post": {
+        "tags": [
+          "Partida"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Partida"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Estatistica": {
+        "type": "object",
+        "properties": {
+          "id_Estatistica": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Partida": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "casaOuFora": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeTimeRival": {
+            "type": "string",
+            "nullable": true
+          },
+          "gol": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "golSofrido": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "posse_Bola": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total_Finalizacao": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "chances_Claras": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "escanteios": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bolas_trave": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gols_de_cabeça": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "defesas_Goleiro": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "impedimentos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "faltas": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cartoes_Amarelos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cartoes_Vermelhos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "laterais_Cobrados": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "toque_Area_Adversaria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes_Totais": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "precisao_Passes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes_terco_Final": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cruzamentos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "desarmes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bolas_Afastadas": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "interceptacoes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Estatistica_Times": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "casaOuFora": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "gol": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gol_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes_Adversaria": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gol_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Palpites": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idPartida": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoAposta": {
+            "$ref": "#/components/schemas/TipoAposta"
+          },
+          "num": {
+            "type": "number",
+            "format": "double"
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Partida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_EstatisticaCasa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_EstatisticaFora": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomeTimeCasa": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeTimeFora": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataPartida": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "campeonato": {
+            "type": "string",
+            "nullable": true
+          },
+          "partidaAnalise": {
+            "type": "boolean"
+          },
+          "tipoPartida": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Partida_Estatistica_DTO": {
+        "type": "object",
+        "properties": {
+          "estatisticaCasa": {
+            "$ref": "#/components/schemas/Estatistica"
+          },
+          "estatisticaFora": {
+            "$ref": "#/components/schemas/Estatistica"
+          },
+          "partida": {
+            "$ref": "#/components/schemas/Partida"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoAposta": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    }
+  }
+}

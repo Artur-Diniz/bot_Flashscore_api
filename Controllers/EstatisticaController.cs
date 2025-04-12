@@ -27,7 +27,7 @@ namespace botAPI.Controllers
 
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 Estatistica e = await _context.TB_ESTATISTICA
-                .FirstOrDefaultAsync(es => es.Id == id);
+                .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
                 if (e == null)
                     throw new System.Exception("Estatistica Não Encontrada");
 
@@ -64,7 +64,7 @@ namespace botAPI.Controllers
                 await _context.TB_ESTATISTICA.AddAsync(e);
                 await _context.SaveChangesAsync();
 
-                return Ok(e.Id);
+                return Ok(e.Id_Estatistica);
 
             }
             catch (System.Exception ex)
@@ -74,22 +74,30 @@ namespace botAPI.Controllers
         }
         
         [HttpPost("Partida")]
-        public async Task<IActionResult> Post(Estatistica estatisticaCasa,Estatistica estatisticaFora,Partida partida)
+        public async Task<IActionResult> Post(Partida_Estatistica_DTO dTO)
         {
-            try
-            {
-                await _context.TB_ESTATISTICA.AddRangeAsync(estatisticaCasa,estatisticaFora);
-                await _context.TB_PARTIDAS.AddAsync(partida);
-                estatisticaCasa.Id_Partida = partida.Id;
-                estatisticaFora.Id_Partida = partida.Id;
-                partida.Id_EstatisticaCasa = estatisticaCasa.Id_Estatistica;
-                partida.Id_EstatisticaFora = estatisticaFora.Id_Estatistica;
+            try{
+                await _context.TB_ESTATISTICA.AddRangeAsync(dTO.EstatisticaCasa, dTO.EstatisticaFora);
+                await _context.SaveChangesAsync();
 
+                dTO.Partida.Id_EstatisticaCasa = dTO.EstatisticaCasa.Id_Estatistica;
+                dTO.Partida.Id_EstatisticaFora = dTO.EstatisticaFora.Id_Estatistica;
+
+                await _context.TB_PARTIDAS.AddAsync(dTO.Partida);
+                await _context.SaveChangesAsync(); 
+
+                dTO.EstatisticaCasa.Id_Partida = dTO.Partida.Id;
+                dTO.EstatisticaFora.Id_Partida = dTO.Partida.Id;
+                await _context.SaveChangesAsync();
+
+                _context.TB_ESTATISTICA.UpdateRange(dTO.EstatisticaCasa, dTO.EstatisticaFora);
+                _context.TB_PARTIDAS.Update(dTO.Partida);
 
                 await _context.SaveChangesAsync();
 
-
-                string mensagem = $"estatistica casa temo o id {estatisticaCasa.Id}\n estatistica Fora temo o id {estatisticaFora.Id}\n e a Partida ficou com o ID de {partida.Id}";
+                string mensagem = $"Estatísticas salvas - Casa: {dTO.EstatisticaCasa.Id_Estatistica}, " +
+                                 $"Fora: {dTO.EstatisticaFora.Id_Estatistica}, " +
+                                 $"Partida ID: {dTO.Partida.Id}";
                 return Ok(mensagem);
 
             }
@@ -125,7 +133,7 @@ namespace botAPI.Controllers
                     throw new System.Exception("O Id não pode ser igual a zero");
 
                 Estatistica e = await _context.TB_ESTATISTICA
-                .FirstOrDefaultAsync(es => es.Id == id);
+                .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
                 if (e == null)
                     throw new System.Exception("Estatistica Não Encontrada");
                 _context.TB_ESTATISTICA.Remove(e);

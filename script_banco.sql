@@ -9,10 +9,42 @@ END;
 GO
 
 BEGIN TRANSACTION;
+CREATE TABLE [TB_ESTATISTICA] (
+    [Id_Estatistica] int NOT NULL IDENTITY,
+    [Id_Partida] int NOT NULL,
+    [CasaOuFora] varchar(250) NULL,
+    [NomeTime] varchar(250) NULL,
+    [NomeTimeRival] varchar(250) NULL,
+    [Gol] int NULL,
+    [GolSofrido] int NULL,
+    [Posse_Bola] int NULL,
+    [Total_Finalizacao] int NULL,
+    [Chances_Claras] int NULL,
+    [Escanteios] int NULL,
+    [Bolas_trave] int NULL,
+    [Gols_de_cabeça] int NULL,
+    [Defesas_Goleiro] int NULL,
+    [Impedimentos] int NULL,
+    [Faltas] int NULL,
+    [Cartoes_Amarelos] int NULL,
+    [Cartoes_Vermelhos] int NULL,
+    [Laterais_Cobrados] int NULL,
+    [Toque_Area_Adversaria] int NULL,
+    [Passes] int NULL,
+    [Passes_Totais] int NULL,
+    [Precisao_Passes] int NULL,
+    [Passes_terco_Final] int NULL,
+    [Cruzamentos] int NULL,
+    [Desarmes] int NULL,
+    [Bolas_Afastadas] int NULL,
+    [Interceptacoes] int NULL,
+    CONSTRAINT [PK_TB_ESTATISTICA] PRIMARY KEY ([Id_Estatistica])
+);
+
 CREATE TABLE [TB_ESTATISTICA_TIME] (
     [Id] int NOT NULL IDENTITY,
-    [CasaOuFora] varchar(250) NOT NULL,
-    [NomeTime] varchar(250) NOT NULL,
+    [CasaOuFora] varchar(250) NULL,
+    [NomeTime] varchar(250) NULL,
     [Gol] real NOT NULL,
     [GolSofrido] real NOT NULL,
     [Posse_Bola] real NOT NULL,
@@ -73,7 +105,7 @@ CREATE TABLE [TB_ESTATISTICA_TIME] (
     [Cartoes_Amarelos_Confrontos] real NOT NULL,
     [Cartoes_Vermelhos_Confrontos] real NOT NULL,
     [Laterais_Cobrados_Confrontos] real NOT NULL,
-    [Toque_Area_Confrontos_Confrontos] real NOT NULL,
+    [Toque_Area_Adversaria_Confrontos] real NOT NULL,
     [Passes_Confrontos] real NOT NULL,
     [Passes_Totais_Confrontos] real NOT NULL,
     [Precisao_Passes_Confrontos] real NOT NULL,
@@ -90,7 +122,7 @@ CREATE TABLE [TB_PALPITES] (
     [IdPartida] int NOT NULL,
     [TipoAposta] int NOT NULL,
     [Num] float NULL,
-    [Descricao] varchar(250) NOT NULL,
+    [Descricao] varchar(250) NULL,
     CONSTRAINT [PK_TB_PALPITES] PRIMARY KEY ([Id])
 );
 
@@ -98,45 +130,17 @@ CREATE TABLE [TB_PARTIDAS] (
     [Id] int NOT NULL IDENTITY,
     [Id_EstatisticaCasa] int NOT NULL,
     [Id_EstatisticaFora] int NOT NULL,
-    [NomeTimeCasa] varchar(250) NOT NULL,
-    [NomeTimeFora] varchar(250) NOT NULL,
+    [NomeTimeCasa] varchar(250) NULL,
+    [NomeTimeFora] varchar(250) NULL,
     [DataPartida] datetime2 NOT NULL,
-    [Campeonato] varchar(250) NOT NULL,
+    [Campeonato] varchar(250) NULL,
     [PartidaAnalise] bit NOT NULL,
-    [TipoPartida] varchar(250) NOT NULL,
-    [Discriminator] varchar(250) NOT NULL,
-    [Id_Estatistica] int NULL,
-    [Id_Partida] int NULL,
-    [CasaOuFora] varchar(250) NULL,
-    [NomeTime] varchar(250) NULL,
-    [Gol] int NULL,
-    [GolSofrido] int NULL,
-    [Posse_Bola] int NULL,
-    [Total_Finalizacao] int NULL,
-    [Chances_Claras] int NULL,
-    [Escanteios] int NULL,
-    [Bolas_trave] int NULL,
-    [Gols_de_cabeça] int NULL,
-    [Defesas_Goleiro] int NULL,
-    [Impedimentos] int NULL,
-    [Faltas] int NULL,
-    [Cartoes_Amarelos] int NULL,
-    [Cartoes_Vermelhos] int NULL,
-    [Laterais_Cobrados] int NULL,
-    [Toque_Area_Adversaria] int NULL,
-    [Passes] int NULL,
-    [Passes_Totais] int NULL,
-    [Precisao_Passes] int NULL,
-    [Passes_terco_Final] int NULL,
-    [Cruzamentos] int NULL,
-    [Desarmes] int NULL,
-    [Bolas_Afastadas] int NULL,
-    [interceptacoes] int NULL,
+    [TipoPartida] varchar(250) NULL,
     CONSTRAINT [PK_TB_PARTIDAS] PRIMARY KEY ([Id])
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250405011657_InitialCreate', N'9.0.3');
+VALUES (N'20250408010857_InitialCreate', N'9.0.3');
 
 COMMIT;
 GO

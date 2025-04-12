@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace botAPI.Models
 {
-    public class Estatistica:Partida
+    public class Estatistica
     {   
         [Key]
         public int Id_Estatistica { get; set; }

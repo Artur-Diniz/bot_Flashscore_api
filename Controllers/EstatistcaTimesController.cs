@@ -81,7 +81,8 @@ namespace botAPI.Controllers
         {
             try
             {
-                Partida partidaAnalisada = await _context.TB_PARTIDAS.FirstOrDefaultAsync(p => p.PartidaAnalise == true && p.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()) ||
+                Partida partidaAnalisada = await _context.TB_PARTIDAS
+                .FirstOrDefaultAsync(p => p.PartidaAnalise == true && p.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()) ||
                  p.PartidaAnalise == true && p.NomeTimeFora.ToLower().Contains(nomeTime.ToLower()));
 
                 if (partidaAnalisada == null)
@@ -158,24 +159,32 @@ namespace botAPI.Controllers
 
             if (partidaAnalisada.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()))
             {
-                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()) && n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa").ToListAsync();
-                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()) && n.NomeTime != nomeTime && n.CasaOuFora == "Casa").ToListAsync();
+                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa").ToListAsync();
+                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa").ToListAsync();
 
             }
             else
             {
-                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeFora.ToLower().Contains(nomeTime.ToLower()) && n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora").ToListAsync();
-                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeFora.ToLower().Contains(nomeTime.ToLower()) && n.NomeTime != nomeTime && n.CasaOuFora == "Fora").ToListAsync();
+                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora").ToListAsync();
+                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora").ToListAsync();
             }
             Estatistica_Times time = gerarMediaByTime(estatisticas, estatisticasRival);
-            
-            
-            if (nomeTime == partidaAnalisada.NomeTimeCasa)
-                time.NomeTime = partidaAnalisada.NomeTimeCasa;
-            else
-                time.NomeTime = partidaAnalisada.NomeTimeFora;
 
-            time = await GerarConfrontoDireto(time);
+            string rival = "";
+
+            if (nomeTime == partidaAnalisada.NomeTimeCasa)
+            {
+                time.NomeTime = partidaAnalisada.NomeTimeCasa;
+                rival = partidaAnalisada.NomeTimeFora;
+            }
+            else
+            {
+                time.NomeTime = partidaAnalisada.NomeTimeFora;
+                rival = partidaAnalisada.NomeTimeCasa;
+            }
+
+
+            time = await GerarConfrontoDireto(time, rival);
 
             return time;
 
@@ -237,10 +246,12 @@ namespace botAPI.Controllers
             return estatisticas;
         }
 
-        private async Task<Estatistica_Times> GerarConfrontoDireto(Estatistica_Times estastitica)
+        private async Task<Estatistica_Times> GerarConfrontoDireto(Estatistica_Times estastitica, string Rival)
         {
-            List<Estatistica> jogos = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeCasa == estastitica.NomeTime && e.NomeTime == estastitica.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
-            List<Estatistica> jogosFora = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeFora == estastitica.NomeTime && e.NomeTime == estastitica.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
+
+
+            List<Estatistica> jogos = await _context.TB_ESTATISTICA.Where(e => e.NomeTime == estastitica.NomeTime && e.NomeTimeRival==Rival ).ToListAsync();
+            List<Estatistica> jogosFora = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeRival == estastitica.NomeTime && e.NomeTime==Rival ).ToListAsync();
 
             jogos.AddRange(jogosFora);
 
