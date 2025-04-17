@@ -14,9 +14,17 @@ namespace botAPI.Data
         public DbSet<Estatistica_Times> TB_ESTATISTICA_TIME { get; set; }
         public DbSet<Palpites> TB_PALPITES { get; set; }
         public DbSet<Partida> TB_PARTIDAS { get; set; }
+        public DbSet<ErrosLogs> TB_ERROSLOGS { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+            modelBuilder.Entity<ErrosLogs>(entity =>
+            {
+                entity.Property(e => e.OqueProvavelmenteAConteceu)
+                    .HasMaxLength(510)
+                    .HasColumnType("varchar(510)");
+            });
 
         }
 
