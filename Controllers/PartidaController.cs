@@ -56,6 +56,24 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpGet("PartidasAnalisadas")]
+        public async Task<IActionResult> GetAnalise()
+        {
+            try         
+            {
+                List<Partida> partidas = await _context
+                .TB_PARTIDAS.Where(p => p.PartidaAnalise == true).ToListAsync();
+                if (partidas == null)
+                    throw new System.Exception("Partida Não Encontrada");
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Partida partida)
         {

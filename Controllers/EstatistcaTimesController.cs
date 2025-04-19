@@ -165,9 +165,12 @@ namespace botAPI.Controllers
             }
             else
             {
-                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Fora").ToListAsync();
-                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Fora").ToListAsync();
+                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Fora").ToListAsync();
+                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Fora").ToListAsync();
             }
+            if (estatisticasRival.Count() == 0 || estatisticas.Count() == 0)            
+                throw new System.Exception("Não achei time com esse nome ai");
+            
             Estatistica_Times time = gerarMediaByTime(estatisticas, estatisticasRival);
 
             string rival = "";

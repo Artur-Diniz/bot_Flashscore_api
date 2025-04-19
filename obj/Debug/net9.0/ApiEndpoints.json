@@ -410,5 +410,15 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetAnalise",
+    "RelativePath": "Partida/PartidasAnalisadas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

@@ -590,6 +590,18 @@
         }
       }
     },
+    "/Partida/PartidasAnalisadas": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Partida": {
       "post": {
         "tags": [
