@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\script_banco.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:script_banco.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\script_banco.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:script_banco.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,13 +38,38 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "script_banco.sql ",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\script_banco.sql",
+              "RelativeDocumentMoniker": "script_banco.sql",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\script_banco.sql",
+              "RelativeToolTip": "script_banco.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-04-19T04:43:34.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "EstatistcaTimesController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatistcaTimesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstatistcaTimesController.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatistcaTimesController.cs",
+              "RelativeToolTip": "Controllers\\EstatistcaTimesController.cs",
+              "ViewState": "AgIAAAEBAAAAAAAAAAAAwAwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T02:00:01.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "EstatisticaController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaController.cs",
               "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
               "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaController.cs",
               "RelativeToolTip": "Controllers\\EstatisticaController.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAiwGkAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAqwI0AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-12T00:50:53.383Z",
               "EditorCaption": ""

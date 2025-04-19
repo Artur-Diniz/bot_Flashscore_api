@@ -21,6 +21,7 @@ CREATE TABLE [TB_ESTATISTICA] (
     [Id_Estatistica] int NOT NULL IDENTITY,
     [Id_Partida] int NOT NULL,
     [CasaOuFora] varchar(250) NULL,
+    [TipoPartida] varchar(250) NULL,
     [NomeTime] varchar(250) NULL,
     [NomeTimeRival] varchar(250) NULL,
     [Gol] int NULL,
@@ -148,7 +149,7 @@ CREATE TABLE [TB_PARTIDAS] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250417162906_InitialCreate', N'9.0.3');
+VALUES (N'20250419031246_InitialCreate', N'9.0.3');
 
 COMMIT;
 GO

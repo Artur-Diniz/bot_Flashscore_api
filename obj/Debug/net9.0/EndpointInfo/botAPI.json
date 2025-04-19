@@ -5,6 +5,134 @@
     "version": "1.0"
   },
   "paths": {
+    "/ErrosLogs/{id}": {
+      "get": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ErrosLogs/GetAll": {
+      "get": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ErrosLogs": {
+      "post": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrosLogs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ErrosLogs/Apague": {
+      "delete": {
+        "tags": [
+          "ErrosLogs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Estatistica/{id}": {
       "get": {
         "tags": [
@@ -525,6 +653,29 @@
   },
   "components": {
     "schemas": {
+      "ErrosLogs": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "qualPageFoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "qualUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "oqueProvavelmenteAConteceu": {
+            "maxLength": 510,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Estatistica": {
         "type": "object",
         "properties": {
@@ -537,6 +688,10 @@
             "format": "int32"
           },
           "casaOuFora": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoPartida": {
             "type": "string",
             "nullable": true
           },

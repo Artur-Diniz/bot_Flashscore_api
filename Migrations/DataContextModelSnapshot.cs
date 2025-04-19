@@ -133,6 +133,10 @@ namespace botAPI.Migrations
                     b.Property<int?>("Precisao_Passes")
                         .HasColumnType("int");
 
+                    b.Property<string>("TipoPartida")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
                     b.Property<int?>("Toque_Area_Adversaria")
                         .HasColumnType("int");
 

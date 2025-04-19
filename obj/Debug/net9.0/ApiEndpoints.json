@@ -1,5 +1,89 @@
 [
   {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "Post",
+    "RelativePath": "ErrosLogs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "e",
+        "Type": "botAPI.Models.ErrosLogs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "Put",
+    "RelativePath": "ErrosLogs",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "e",
+        "Type": "botAPI.Models.ErrosLogs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "getId",
+    "RelativePath": "ErrosLogs/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "Delete",
+    "RelativePath": "ErrosLogs/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "DeleteAll",
+    "RelativePath": "ErrosLogs/Apague",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.ErrosLogsController",
+    "Method": "GetAll",
+    "RelativePath": "ErrosLogs/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "botAPI.Controllers.EstatisticaController",
     "Method": "Post",
     "RelativePath": "Estatistica",
