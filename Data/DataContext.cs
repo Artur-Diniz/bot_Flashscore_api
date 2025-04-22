@@ -25,7 +25,12 @@ namespace botAPI.Data
                     .HasMaxLength(510)
                     .HasColumnType("varchar(510)");
             });
-
+    	    modelBuilder.Entity<Palpites>(entity =>
+            {
+                entity.Property(e => e.Descricao)
+                    .HasMaxLength(510)
+                    .HasColumnType("varchar(510)");
+            });
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -131,7 +131,7 @@ CREATE TABLE [TB_PALPITES] (
     [IdPartida] int NOT NULL,
     [TipoAposta] int NOT NULL,
     [Num] float NOT NULL,
-    [Descricao] varchar(250) NULL,
+    [Descricao] varchar(510) NULL,
     CONSTRAINT [PK_TB_PALPITES] PRIMARY KEY ([Id])
 );
 
@@ -149,7 +149,7 @@ CREATE TABLE [TB_PARTIDAS] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250419031246_InitialCreate', N'9.0.3');
+VALUES (N'20250422010444_InitialCreate', N'9.0.3');
 
 COMMIT;
 GO

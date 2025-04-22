@@ -71,7 +71,7 @@ namespace botAPI.Controllers
             }
         }
 
-        [HttpPost("{Gerar_Palpites}")]
+        [HttpPost("Gerar_Palpites")]
         public async Task<IActionResult> GerarPalpites()
         {
             try
@@ -84,10 +84,10 @@ namespace botAPI.Controllers
 
                 List<Palpites> palpites = await MetodosPalpites(partidas);
 
-                await _context.TB_PALPITES.AddRangeAsync(palpites);
-                await _context.SaveChangesAsync();
+                if (palpites.Count() > 0)
+                    return Ok($"FOI hoje tem {palpites.Count()} palpites, Bora Forrar!!!");
 
-                return Ok();
+                return Ok("Não há Palpites para o dia de Hoje");
 
             }
             catch (System.Exception ex)
@@ -140,14 +140,14 @@ namespace botAPI.Controllers
         private async Task<List<Palpites>> MetodosPalpites(List<Partida> partidas)
         {
             List<Palpites> palpites = new List<Palpites>();
-
+            List<Palpites> apostas = new List<Palpites>();
 
             foreach (var item in partidas)
             {
                 palpites = await Palpitesgenerate(item);
-
+                apostas.AddRange(palpites);
             }
-            return palpites;
+            return apostas;
         }
 
 
@@ -159,7 +159,7 @@ namespace botAPI.Controllers
             Estatistica_Times fora = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeFora);
 
             List<Partida> Partidas_casa = await _context.TB_PARTIDAS.Where(e => e.NomeTimeCasa == casa.NomeTime && e.TipoPartida == "Casa").ToListAsync();
-            List<Partida> Partidas_fora = await _context.TB_PARTIDAS.Where(e => e.NomeTimeCasa == fora.NomeTime && e.TipoPartida == "Fora").ToListAsync();
+            List<Partida> Partidas_fora = await _context.TB_PARTIDAS.Where(e => e.NomeTimeFora == fora.NomeTime && e.TipoPartida == "Fora").ToListAsync();
 
 
             if (partida.Campeonato != "Eurocopa" && partida.Campeonato != "Copa America"
@@ -178,6 +178,12 @@ namespace botAPI.Controllers
                 Palpites OverCantos = await OverCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
                 if (OverCantos.Descricao != "")
                     palpites.Add(OverCantos);
+                Palpites UnderCantos = await UnderCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                if (UnderCantos.Descricao != "")
+                    palpites.Add(UnderCantos);
+                Palpites Golteam = await GolTime(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                if (Golteam.Descricao != "")
+                    palpites.Add(Golteam);
 
 
             }
@@ -433,6 +439,7 @@ namespace botAPI.Controllers
             if (escanteios)
             {
                 palpite.TipoAposta = TipoAposta.Escanteios;
+                palpite.IdPartida = IdPartida;
                 palpite.Num = cantosEsperados + 0.5;
 
                 palpite.Descricao = $"Under {cantosEsperados + 0.5}" +
@@ -441,6 +448,87 @@ namespace botAPI.Controllers
             }
             return palpite;
 
+        }
+
+
+        private async Task<Palpites> GolTime(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        {
+            Palpites palpite = new Palpites();
+
+            if (c == null || f == null)
+                return palpite;
+
+            if (casa.Count < 3 || fora.Count < 3)
+                return palpite;
+
+            bool CasaMarca = false;
+            bool ForaMarca = false;
+
+            int golcasa = 0, golsofridoCasa = 0;
+            foreach (var item in casa)
+            {
+                Estatistica home = await _context.TB_ESTATISTICA
+                      .FirstOrDefaultAsync(e => e.Id_Estatistica == item.Id_EstatisticaCasa);
+                if (home.Gol > 0)
+                    golcasa++;
+
+                if (home.GolSofrido > 0)
+                    golsofridoCasa++;
+            }
+            int golfora = 0, golssofridosfora = 0;
+            foreach (var item in fora)
+            {
+                Estatistica home = await _context.TB_ESTATISTICA
+                      .FirstOrDefaultAsync(e => e.Id_Estatistica == item.Id_EstatisticaFora);
+                if (home.Gol > 0)
+                    golfora++;
+
+                if (home.GolSofrido > 0)
+                    golssofridosfora++;
+            }
+
+            if (golcasa > 3 && golssofridosfora > 2)
+                if (c.Gol > 1.15)
+                    CasaMarca = true;
+            if (golfora > 3 && golsofridoCasa > 2)
+                if (f.Gol > 1.2)
+                    ForaMarca = true;
+
+            if (CasaMarca && ForaMarca)
+            {
+                palpite.IdPartida = IdPartida;
+
+                palpite.TipoAposta = TipoAposta.Gols;
+                palpite.Num = 2;
+
+                palpite.Descricao = $"Ambas Marcam pela" +
+                $" Constante  Media de Gols Esperadas para esse Partida entre {c.NomeTime} e {f.NomeTime} ";
+            }
+            else
+           if (CasaMarca)
+            {
+                palpite.IdPartida = IdPartida;
+
+                palpite.TipoAposta = TipoAposta.Gols;
+                palpite.Num = 0.5;
+
+                palpite.Descricao = $"Casa Marca pela" +
+                $" Constante  Media de Gols Em Casa  na Partida entre {c.NomeTime} e {f.NomeTime} ";
+            }
+            else
+           if (ForaMarca)
+            {
+                palpite.IdPartida = IdPartida;
+
+                palpite.TipoAposta = TipoAposta.Gols;
+                palpite.Num = 0.5;
+
+                palpite.Descricao = $"Fora Marca pela" +
+                $" Constante  Media de Gols Jogando Fora na Partida entre {c.NomeTime} e {f.NomeTime} ";
+            }
+
+
+            return palpite;
         }
 
         private async Task<Palpites> MetodoWinner(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)

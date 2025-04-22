@@ -385,8 +385,8 @@ namespace botAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descricao")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar");
+                        .HasMaxLength(510)
+                        .HasColumnType("varchar(510)");
 
                     b.Property<int>("IdPartida")
                         .HasColumnType("int");

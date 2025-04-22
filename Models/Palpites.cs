@@ -10,6 +10,7 @@ namespace botAPI.Models
         public int IdPartida { get; set; }
         public TipoAposta TipoAposta { get; set; }
         public double Num { get; set; }   //exemplo 2 gols casa que seria 1.5 +
+        [MaxLength(510)]
         public string Descricao { get; set; } = string.Empty;
 
     }

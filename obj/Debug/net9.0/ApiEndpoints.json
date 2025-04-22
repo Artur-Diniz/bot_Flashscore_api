@@ -329,6 +329,16 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "GerarPalpites",
+    "RelativePath": "Palpite/Gerar_Palpites",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
     "Method": "GetAll",
     "RelativePath": "Palpite/GetAll",
     "HttpMethod": "GET",

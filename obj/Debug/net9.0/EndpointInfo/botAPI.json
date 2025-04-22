@@ -534,6 +534,18 @@
         }
       }
     },
+    "/Palpite/Gerar_Palpites": {
+      "post": {
+        "tags": [
+          "Palpite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Partida/{id}": {
       "get": {
         "tags": [
