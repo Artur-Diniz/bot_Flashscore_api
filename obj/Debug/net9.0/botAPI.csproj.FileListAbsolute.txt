@@ -171,3 +171,4 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsi
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.deps.json
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.runtimeconfig.json
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.staticwebassets.endpoints.json
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

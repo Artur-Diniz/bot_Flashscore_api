@@ -1227,6 +1227,7 @@
             "format": "double"
           },
           "descricao": {
+            "maxLength": 510,
             "type": "string",
             "nullable": true
           }

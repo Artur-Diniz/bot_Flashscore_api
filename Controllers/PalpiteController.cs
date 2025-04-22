@@ -44,7 +44,8 @@ namespace botAPI.Controllers
             {
                 List<Palpites> palpites = await _context
                 .TB_PALPITES.ToListAsync();
-
+                if (palpites.Count() == 0)
+                    return Ok($"Sem Palpites Para o Hoje");
                 return Ok(palpites);
 
             }
@@ -158,12 +159,15 @@ namespace botAPI.Controllers
             Estatistica_Times casa = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeCasa);
             Estatistica_Times fora = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeFora);
 
+            if (casa == null || fora == null)            
+                return palpites;
+            
             List<Partida> Partidas_casa = await _context.TB_PARTIDAS.Where(e => e.NomeTimeCasa == casa.NomeTime && e.TipoPartida == "Casa").ToListAsync();
             List<Partida> Partidas_fora = await _context.TB_PARTIDAS.Where(e => e.NomeTimeFora == fora.NomeTime && e.TipoPartida == "Fora").ToListAsync();
 
 
             if (partida.Campeonato != "Eurocopa" && partida.Campeonato != "Copa America"
-                    && partida.Campeonato != "Copa Sul-Americana" && partida.Campeonato != "Copa Libertadores"
+                    && partida.Campeonato != "Copa Sul-Americana" && partida.Campeonato != "COPA LIBERTADORES"
                      && partida.Campeonato != "Copa do Mundo" && partida.Campeonato != "Liga dos Campeoes")
             {
                 Palpites under4 = await MetodoUnder4(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
@@ -283,9 +287,9 @@ namespace botAPI.Controllers
             {
                 Estatistica home = await _context.TB_ESTATISTICA
                       .FirstOrDefaultAsync(e => e.Id_Estatistica == item.Id_EstatisticaCasa);
-                int mais4 = (int)(home.Gol + home.GolSofrido);
+                int mais2 = (int)(home.Gol + home.GolSofrido);
 
-                if (mais4 >= 2)
+                if (mais2 >= 2)
                     numOverGols4Home = +1;
             }
             int numOverGols4Fora = 0;
@@ -293,9 +297,9 @@ namespace botAPI.Controllers
             {
                 Estatistica home = await _context.TB_ESTATISTICA
                       .FirstOrDefaultAsync(e => e.Id_Estatistica == item.Id_EstatisticaFora);
-                int mais4 = (int)(home.Gol + home.GolSofrido);
+                int mais2 = (int)(home.Gol + home.GolSofrido);
 
-                if (mais4 >= 2)
+                if (mais2 >= 2)
                     numOverGols4Fora = +1;
             }
             if (numOverGols4Fora < 1 || numOverGols4Home < 1)
@@ -345,7 +349,7 @@ namespace botAPI.Controllers
             float espectaticaCasa = (float)(c.Escanteios + f.Escanteios_Adversaria) / 2;
             float espectaticaFora = (float)(f.Escanteios + c.Escanteios_Adversaria) / 2;
 
-            float espectativaCantos = (float)(espectaticaCasa + espectaticaFora) / 2;
+            float espectativaCantos = (float)(espectaticaCasa + espectaticaFora) ;
             bool escanteios = false;
             float cantosEsperados = (float)Math.Floor(espectativaCantos * 0.7);
 
@@ -404,15 +408,15 @@ namespace botAPI.Controllers
             float espectaticaCasa = (float)(c.Escanteios + f.Escanteios_Adversaria) / 2;
             float espectaticaFora = (float)(f.Escanteios + c.Escanteios_Adversaria) / 2;
 
-            float espectativaCantos = (float)(espectaticaCasa + espectaticaFora) / 2;
+            float espectativaCantos = (float)espectaticaCasa + espectaticaFora ;
             bool escanteios = false;
             float cantosEsperados = (float)Math.Ceiling(espectativaCantos * 1.3);
 
-            if (espectativaCantos <= 7)
+            if (espectativaCantos <= 10)
             {
                 List<Partida> confrontos = await _context.TB_PARTIDAS.Where(e => e.NomeTimeCasa == c.NomeTime
-            && e.TipoPartida == "ConfrontoDireto" && e.NomeTimeFora == f.NomeTime || e.NomeTimeCasa == f.NomeTime
-            && e.TipoPartida == "ConfrontoDireto" && e.NomeTimeFora == c.NomeTime).ToListAsync();
+            && e.TipoPartida == "Confronto Direto" && e.NomeTimeFora == f.NomeTime || e.NomeTimeCasa == f.NomeTime
+            && e.TipoPartida == "Confronto Direto" && e.NomeTimeFora == c.NomeTime).ToListAsync();
 
                 int UnderCantos = 0;
                 if (confrontos.Count() > 2)
@@ -440,9 +444,9 @@ namespace botAPI.Controllers
             {
                 palpite.TipoAposta = TipoAposta.Escanteios;
                 palpite.IdPartida = IdPartida;
-                palpite.Num = cantosEsperados + 0.5;
+                palpite.Num = cantosEsperados - 0.5;
 
-                palpite.Descricao = $"Under {cantosEsperados + 0.5}" +
+                palpite.Descricao = $"Under {cantosEsperados - 0.5}" +
                 $" os confronstos entre {c.NomeTime} e {f.NomeTime} apresentaram Baixa media de escanteios " +
                 $" alem de apresentarem uma media alta em suas partidas";
             }
