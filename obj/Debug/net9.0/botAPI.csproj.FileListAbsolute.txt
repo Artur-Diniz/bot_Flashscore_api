@@ -165,10 +165,9 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Debug\net9.0\botAPI
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\web.config
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\appsettings.Development.json
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\appsettings.json
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.deps.json
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.runtimeconfig.json
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publsih\botAPI.staticwebassets.endpoints.json
-C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\web.config
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\appsettings.Development.json
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\appsettings.json
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\botAPI.deps.json
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\botAPI.runtimeconfig.json
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Debug\net9.0\publish\botAPI.staticwebassets.endpoints.json

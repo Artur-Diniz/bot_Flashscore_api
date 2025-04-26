@@ -55,6 +55,8 @@ namespace botAPI.Controllers
             }
         }
 
+
+
         [HttpPost]
         public async Task<IActionResult> Post(Palpites p)
         {
@@ -159,9 +161,9 @@ namespace botAPI.Controllers
             Estatistica_Times casa = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeCasa);
             Estatistica_Times fora = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeFora);
 
-            if (casa == null || fora == null)            
+            if (casa == null || fora == null)
                 return palpites;
-            
+
             List<Partida> Partidas_casa = await _context.TB_PARTIDAS.Where(e => e.NomeTimeCasa == casa.NomeTime && e.TipoPartida == "Casa").ToListAsync();
             List<Partida> Partidas_fora = await _context.TB_PARTIDAS.Where(e => e.NomeTimeFora == fora.NomeTime && e.TipoPartida == "Fora").ToListAsync();
 
@@ -349,7 +351,7 @@ namespace botAPI.Controllers
             float espectaticaCasa = (float)(c.Escanteios + f.Escanteios_Adversaria) / 2;
             float espectaticaFora = (float)(f.Escanteios + c.Escanteios_Adversaria) / 2;
 
-            float espectativaCantos = (float)(espectaticaCasa + espectaticaFora) ;
+            float espectativaCantos = (float)(espectaticaCasa + espectaticaFora);
             bool escanteios = false;
             float cantosEsperados = (float)Math.Floor(espectativaCantos * 0.7);
 
@@ -408,7 +410,7 @@ namespace botAPI.Controllers
             float espectaticaCasa = (float)(c.Escanteios + f.Escanteios_Adversaria) / 2;
             float espectaticaFora = (float)(f.Escanteios + c.Escanteios_Adversaria) / 2;
 
-            float espectativaCantos = (float)espectaticaCasa + espectaticaFora ;
+            float espectativaCantos = (float)espectaticaCasa + espectaticaFora;
             bool escanteios = false;
             float cantosEsperados = (float)Math.Ceiling(espectativaCantos * 1.3);
 
@@ -697,5 +699,8 @@ namespace botAPI.Controllers
 
             return input;
         }
+
+
+ 
     }
 }
