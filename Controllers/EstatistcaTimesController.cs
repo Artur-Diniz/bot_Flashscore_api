@@ -249,7 +249,55 @@ namespace botAPI.Controllers
                 Cruzamentos_Adversaria = SafeAverage(rival, r => r.Cruzamentos),
                 Desarmes_Adversaria = SafeAverage(rival, r => r.Desarmes),
                 Bolas_Afastadas_Adversaria = SafeAverage(rival, r => r.Bolas_Afastadas),
-                Interceptacoes_Adversaria = SafeAverage(rival, r => r.Interceptacoes)
+                Interceptacoes_Adversaria = SafeAverage(rival, r => r.Interceptacoes),
+
+                Gol_HT = SafeAverage(principal, p => p.Gol_HT),
+                GolSofrido_HT = SafeAverage(principal, p => p.GolSofrido_HT),
+                Posse_Bola_HT = SafeAverage(principal, p => p.Posse_Bola_HT),
+                Total_Finalizacao_HT = SafeAverage(principal, p => p.Total_Finalizacao_HT),
+                Chances_Claras_HT = SafeAverage(principal, p => p.Chances_Claras_HT),
+                Escanteios_HT = SafeAverage(principal, p => p.Escanteios_HT),
+                Bolas_trave_HT = SafeAverage(principal, p => p.Bolas_trave_HT),
+                Gols_de_cabeça_HT = SafeAverage(principal, p => p.Gols_de_cabeça_HT),
+                Defesas_Goleiro_HT = SafeAverage(principal, p => p.Defesas_Goleiro_HT),
+                Impedimentos_HT = SafeAverage(principal, p => p.Impedimentos_HT),
+                Faltas_HT = SafeAverage(principal, p => p.Faltas_HT),
+                Cartoes_Amarelos_HT = SafeAverage(principal, p => p.Cartoes_Amarelos_HT),
+                Cartoes_Vermelhos_HT = SafeAverage(principal, p => p.Cartoes_Vermelhos_HT),
+                Laterais_Cobrados_HT = SafeAverage(principal, p => p.Laterais_Cobrados_HT),
+                Toque_Area_Adversaria_HT = SafeAverage(principal, p => p.Toque_Area_Adversaria_HT),
+                Passes_HT = SafeAverage(principal, p => p.Passes_HT),
+                Passes_Totais_HT = SafeAverage(principal, p => p.Passes_Totais_HT),
+                Precisao_Passes_HT = SafeAverage(principal, p => p.Precisao_Passes_HT),
+                Passes_terco_Final_HT = SafeAverage(principal, p => p.Passes_terco_Final_HT),
+                Cruzamentos_HT = SafeAverage(principal, p => p.Cruzamentos_HT),
+                Desarmes_HT = SafeAverage(principal, p => p.Desarmes_HT),
+                Bolas_Afastadas_HT = SafeAverage(principal, p => p.Bolas_Afastadas_HT),
+                Interceptacoes_HT = SafeAverage(principal, p => p.Interceptacoes_HT),
+
+                Gol_Adversaria_HT = SafeAverage(rival, r => r.Gol_HT),
+                GolSofrido_Adversaria_HT = SafeAverage(rival, r => r.GolSofrido_HT),
+                Posse_Bola_Adversaria_HT = SafeAverage(rival, r => r.Posse_Bola_HT),
+                Total_Finalizacao_Adversaria_HT = SafeAverage(rival, r => r.Total_Finalizacao_HT),
+                Chances_Claras_Adversaria_HT = SafeAverage(rival, r => r.Chances_Claras_HT),
+                Escanteios_Adversaria_HT = SafeAverage(rival, r => r.Escanteios_HT),
+                Bolas_trave_Adversaria_HT = SafeAverage(rival, r => r.Bolas_trave_HT),
+                Gols_de_cabeça_Adversaria_HT = SafeAverage(rival, r => r.Gols_de_cabeça_HT),
+                Defesas_Goleiro_Adversaria_HT = SafeAverage(rival, r => r.Defesas_Goleiro_HT),
+                Impedimentos_Adversaria_HT = SafeAverage(rival, r => r.Impedimentos_HT),
+                Faltas_Adversaria_HT = SafeAverage(rival, r => r.Faltas_HT),
+                Cartoes_Amarelos_Adversaria_HT = SafeAverage(rival, r => r.Cartoes_Amarelos_HT),
+                Cartoes_Vermelhos_Adversaria_HT = SafeAverage(rival, r => r.Cartoes_Vermelhos_HT),
+                Laterais_Cobrados_Adversaria_HT = SafeAverage(rival, r => r.Laterais_Cobrados_HT),
+                Toque_Area_Adversaria_Adversaria_HT = SafeAverage(rival, r => r.Toque_Area_Adversaria_HT),
+                Passes_Adversaria_HT = SafeAverage(rival, r => r.Passes_HT),
+                Passes_Totais_Adversaria_HT = SafeAverage(rival, r => r.Passes_Totais_HT),
+                Precisao_Passes_Adversaria_HT = SafeAverage(rival, r => r.Precisao_Passes_HT),
+                Passes_terco_Final_Adversaria_HT = SafeAverage(rival, r => r.Passes_terco_Final_HT),
+                Cruzamentos_Adversaria_HT = SafeAverage(rival, r => r.Cruzamentos_HT),
+                Desarmes_Adversaria_HT = SafeAverage(rival, r => r.Desarmes_HT),
+                Bolas_Afastadas_Adversaria_HT = SafeAverage(rival, r => r.Bolas_Afastadas_HT),
+                Interceptacoes_Adversaria_HT = SafeAverage(rival, r => r.Interceptacoes_HT)
             };
 
             return estatisticas;
@@ -271,28 +319,51 @@ namespace botAPI.Controllers
 
 
             estastitica.Gol_Confrontos = SafeAverage(jogos,j => j.Gol);
+            estastitica.Gol_Confrontos_HT = SafeAverage(jogos,j => j.Gol_HT);
             estastitica.GolSofrido_Confrontos = SafeAverage(jogos,j => j.GolSofrido);
+            estastitica.GolSofrido_Confrontos_HT = SafeAverage(jogos,j => j.GolSofrido_HT);
             estastitica.Posse_Bola_Confrontos = SafeAverage(jogos,j => j.Posse_Bola);
+            estastitica.Posse_Bola_Confrontos_HT = SafeAverage(jogos,j => j.Posse_Bola_HT);
             estastitica.Total_Finalizacao_Confrontos = SafeAverage(jogos,j => j.Total_Finalizacao);
+            estastitica.Total_Finalizacao_Confrontos_HT = SafeAverage(jogos,j => j.Total_Finalizacao_HT);
             estastitica.Chances_Claras_Confrontos = SafeAverage(jogos,j => j.Chances_Claras);
+            estastitica.Chances_Claras_Confrontos_HT = SafeAverage(jogos,j => j.Chances_Claras_HT);
             estastitica.Escanteios_Confrontos = SafeAverage(jogos,j => j.Escanteios);
+            estastitica.Escanteios_Confrontos_HT = SafeAverage(jogos,j => j.Escanteios_HT);
             estastitica.Bolas_trave_Confrontos = SafeAverage(jogos,j => j.Bolas_trave);
+            estastitica.Bolas_trave_Confrontos_HT = SafeAverage(jogos,j => j.Bolas_trave_HT);
             estastitica.Gols_de_cabeça_Confrontos = SafeAverage(jogos,j => j.Gols_de_cabeça);
+            estastitica.Gols_de_cabeça_Confrontos_HT = SafeAverage(jogos,j => j.Gols_de_cabeça_HT);
             estastitica.Defesas_Goleiro_Confrontos = SafeAverage(jogos,j => j.Defesas_Goleiro);
+            estastitica.Defesas_Goleiro_Confrontos_HT = SafeAverage(jogos,j => j.Defesas_Goleiro_HT);
             estastitica.Impedimentos_Confrontos = SafeAverage(jogos,j => j.Impedimentos);
+            estastitica.Impedimentos_Confrontos_HT = SafeAverage(jogos,j => j.Impedimentos_HT);
             estastitica.Faltas_Confrontos = SafeAverage(jogos,j => j.Faltas);
+            estastitica.Faltas_Confrontos_HT = SafeAverage(jogos,j => j.Faltas_HT);
             estastitica.Cartoes_Amarelos_Confrontos = SafeAverage(jogos,j => j.Cartoes_Amarelos);
+            estastitica.Cartoes_Amarelos_Confrontos_HT = SafeAverage(jogos,j => j.Cartoes_Amarelos_HT);
             estastitica.Cartoes_Vermelhos_Confrontos = SafeAverage(jogos,j => j.Cartoes_Vermelhos);
+            estastitica.Cartoes_Vermelhos_Confrontos_HT = SafeAverage(jogos,j => j.Cartoes_Vermelhos_HT);
             estastitica.Laterais_Cobrados_Confrontos = SafeAverage(jogos,j => j.Laterais_Cobrados);
+            estastitica.Laterais_Cobrados_Confrontos_HT = SafeAverage(jogos,j => j.Laterais_Cobrados_HT);
             estastitica.Toque_Area_Adversaria_Confrontos = SafeAverage(jogos,j => j.Toque_Area_Adversaria);
+            estastitica.Toque_Area_Adversaria_Confrontos_HT = SafeAverage(jogos,j => j.Toque_Area_Adversaria_HT);
             estastitica.Passes_Confrontos = SafeAverage(jogos,j => j.Passes);
+            estastitica.Passes_Confrontos_HT = SafeAverage(jogos,j => j.Passes_HT);
             estastitica.Passes_Totais_Confrontos = SafeAverage(jogos,j => j.Passes_Totais);
+            estastitica.Passes_Totais_Confrontos_HT = SafeAverage(jogos,j => j.Passes_Totais_HT);
             estastitica.Precisao_Passes_Confrontos = SafeAverage(jogos,j => j.Precisao_Passes);
+            estastitica.Precisao_Passes_Confrontos_HT = SafeAverage(jogos,j => j.Precisao_Passes_HT);
             estastitica.Passes_terco_Final_Confrontos = SafeAverage(jogos,j => j.Passes_terco_Final);
+            estastitica.Passes_terco_Final_Confrontos_HT = SafeAverage(jogos,j => j.Passes_terco_Final_HT);
             estastitica.Cruzamentos_Confrontos = SafeAverage(jogos,j => j.Cruzamentos);
+            estastitica.Cruzamentos_Confrontos_HT = SafeAverage(jogos,j => j.Cruzamentos_HT);
             estastitica.Desarmes_Confrontos = SafeAverage(jogos,j => j.Desarmes);
+            estastitica.Desarmes_Confrontos_HT = SafeAverage(jogos,j => j.Desarmes_HT);
             estastitica.Bolas_Afastadas_Confrontos = SafeAverage(jogos,j => j.Bolas_Afastadas);
+            estastitica.Bolas_Afastadas_Confrontos_HT = SafeAverage(jogos,j => j.Bolas_Afastadas_HT);
             estastitica.Interceptacoes_Confrontos = SafeAverage(jogos,j => j.Interceptacoes);
+            estastitica.Interceptacoes_Confrontos_HT = SafeAverage(jogos,j => j.Interceptacoes_HT);
 
             return estastitica;
         }

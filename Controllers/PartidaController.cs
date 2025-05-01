@@ -37,7 +37,24 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpGet("Relatorio")]
+        public async Task<IActionResult> GetGerarRelatorio()
+        {
+            try
+            {//é só pra verificar se teve partida pra mandar gerar relatorio  por isso ta chumbado
+                List<Partida> partidas = await _context
+                .TB_PARTIDAS.Where(p => p.Id == 1).ToListAsync();
 
+                if (partidas.Count() == 0)
+                    throw new System.Exception("Sem Partidas Analisadas Hoje");
+                string relatorio = await relatorioMensage();
+                return Ok(relatorio);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
@@ -92,24 +109,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("Relatorio")]
-        public async Task<IActionResult> PostGerarRelatorio()
-        {
-            try
-            {//é só pra verificar se teve partida pra mandar gerar relatorio  por isso ta chumbado
-                List<Partida> partidas = await _context
-                .TB_PARTIDAS.Where(p => p.Id==1).ToListAsync();
-
-                if (partidas.Count() > 0)
-                    throw new System.Exception("Sem Partidas Analisadas Hoje");
-
-                return Ok(relatorioMensage());
-            }
-            catch (System.Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+       
         [HttpPut]
         public async Task<IActionResult> Put(Partida p)
         {
@@ -156,7 +156,6 @@ namespace botAPI.Controllers
 
         private async Task<string> relatorioMensage()
         {
-            string mensagem = "";
             List<Palpites> palpites = await _context
                .TB_PALPITES.ToListAsync();
 
@@ -175,14 +174,14 @@ namespace botAPI.Controllers
             .TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Ultimos_jogos.py").ToListAsync();
 
             List<ErrosLogs> ultimas = await _context
-            .TB_ERROSLOGS.Where(e => e.QualPageFoi == "ObterJogosEspecificos.py").ToListAsync();
+            .TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Estatisticas.py").ToListAsync();
 
             int num_partidasEsperadas = partidas.Count() * 15;
-            double eficienciaPalpites = palpites.Count() / partidas.Count();
-            double eficienciaErros = 100 - (Erros.Count() / partidas.Count());
-            double eficienciaEstatistica = totalPartidas.Count() / num_partidasEsperadas;
+            float eficienciaPalpites = palpites.Count() / partidas.Count();
+            float eficienciaErros = 100 - (Erros.Count() / totalPartidas.Count());
+            float eficienciaEstatistica = totalPartidas.Count() / num_partidasEsperadas;
             string qtPalpites = $" Hoje foi gerado {palpites.Count()} por {partidas.Count()} num de partidas" +
-              $"gerando uma eficiencia de {eficienciaPalpites}% . \n" +
+              $"gerando uma eficiencia de {eficienciaPalpites}% . " +
               $" também foi gerado {Erros.Count()} Erros na Automação, sendo uma eficiencia de acertos {eficienciaErros}% ";
 
 
@@ -198,7 +197,7 @@ namespace botAPI.Controllers
             qtPalpites = qtPalpites + $"Além disso era esperado num de estatisticas de: {num_partidasEsperadas} porém foram lidas apenas {totalPartidas.Count() - partidas.Count()} gerando " +
               $"uma diferença de {num_partidasEsperadas - totalPartidas.Count()} estatisticas trazendo uma eficencia de {eficienciaEstatistica}% ";
 
-            return mensagem;
+            return qtPalpites;
 
         }
     }

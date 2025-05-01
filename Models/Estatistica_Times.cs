@@ -82,5 +82,79 @@ namespace botAPI.Models
         public float? Desarmes_Confrontos { get; set; }
         public float? Bolas_Afastadas_Confrontos { get; set; }
         public float? Interceptacoes_Confrontos { get; set; }
+
+
+        
+        public float? Gol_HT { get; set; }
+        public float? GolSofrido_HT { get; set; }
+        public float? Posse_Bola_HT { get; set; }
+        public float? Total_Finalizacao_HT { get; set; }
+        public float? Chances_Claras_HT { get; set; }
+        public float? Escanteios_HT { get; set; }
+        public float? Bolas_trave_HT { get; set; }
+        public float? Gols_de_cabeça_HT { get; set; }
+        public float? Defesas_Goleiro_HT { get; set; }
+        public float? Impedimentos_HT { get; set; }
+        public float? Faltas_HT { get; set; }
+        public float? Cartoes_Amarelos_HT { get; set; }
+        public float? Cartoes_Vermelhos_HT { get; set; }
+        public float? Laterais_Cobrados_HT { get; set; }
+        public float? Toque_Area_Adversaria_HT { get; set; }
+        public float? Passes_HT { get; set; }
+        public float? Passes_Totais_HT { get; set; }
+        public float? Precisao_Passes_HT { get; set; }
+        public float? Passes_terco_Final_HT { get; set; }
+        public float? Cruzamentos_HT { get; set; }
+        public float? Desarmes_HT { get; set; }
+        public float? Bolas_Afastadas_HT { get; set; }
+        public float? Interceptacoes_HT { get; set; }
+
+        public float? Gol_Adversaria_HT { get; set; }
+        public float? GolSofrido_Adversaria_HT { get; set; }
+        public float? Posse_Bola_Adversaria_HT { get; set; }
+        public float? Total_Finalizacao_Adversaria_HT { get; set; }
+        public float? Chances_Claras_Adversaria_HT { get; set; }
+        public float? Escanteios_Adversaria_HT { get; set; }
+        public float? Bolas_trave_Adversaria_HT { get; set; }
+        public float? Gols_de_cabeça_Adversaria_HT { get; set; }
+        public float? Defesas_Goleiro_Adversaria_HT { get; set; }
+        public float? Impedimentos_Adversaria_HT { get; set; }
+        public float? Faltas_Adversaria_HT { get; set; }
+        public float? Cartoes_Amarelos_Adversaria_HT { get; set; }
+        public float? Cartoes_Vermelhos_Adversaria_HT { get; set; }
+        public float? Laterais_Cobrados_Adversaria_HT { get; set; }
+        public float? Toque_Area_Adversaria_Adversaria_HT { get; set; }
+        public float? Passes_Adversaria_HT { get; set; }
+        public float? Passes_Totais_Adversaria_HT { get; set; }
+        public float? Precisao_Passes_Adversaria_HT { get; set; }
+        public float? Passes_terco_Final_Adversaria_HT { get; set; }
+        public float? Cruzamentos_Adversaria_HT { get; set; }
+        public float? Desarmes_Adversaria_HT { get; set; }
+        public float? Bolas_Afastadas_Adversaria_HT { get; set; }
+        public float? Interceptacoes_Adversaria_HT { get; set; }
+
+        public float? Gol_Confrontos_HT { get; set; }
+        public float? GolSofrido_Confrontos_HT { get; set; }
+        public float? Posse_Bola_Confrontos_HT { get; set; }
+        public float? Total_Finalizacao_Confrontos_HT { get; set; }
+        public float? Chances_Claras_Confrontos_HT { get; set; }
+        public float? Escanteios_Confrontos_HT { get; set; }
+        public float? Bolas_trave_Confrontos_HT { get; set; }
+        public float? Gols_de_cabeça_Confrontos_HT { get; set; }
+        public float? Defesas_Goleiro_Confrontos_HT { get; set; }
+        public float? Impedimentos_Confrontos_HT { get; set; }
+        public float? Faltas_Confrontos_HT { get; set; }
+        public float? Cartoes_Amarelos_Confrontos_HT { get; set; }
+        public float? Cartoes_Vermelhos_Confrontos_HT { get; set; }
+        public float? Laterais_Cobrados_Confrontos_HT { get; set; }
+        public float? Toque_Area_Adversaria_Confrontos_HT { get; set; }
+        public float? Passes_Confrontos_HT { get; set; }
+        public float? Passes_Totais_Confrontos_HT { get; set; }
+        public float? Precisao_Passes_Confrontos_HT { get; set; }
+        public float? Passes_terco_Final_Confrontos_HT { get; set; }
+        public float? Cruzamentos_Confrontos_HT { get; set; }
+        public float? Desarmes_Confrontos_HT { get; set; }
+        public float? Bolas_Afastadas_Confrontos_HT { get; set; }
+        public float? Interceptacoes_Confrontos_HT { get; set; }
     }
 }
