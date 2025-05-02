@@ -853,6 +853,121 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "gol_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "golSofrido_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "posse_Bola_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total_Finalizacao_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "chances_Claras_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "escanteios_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bolas_trave_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gols_de_cabeça_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "defesas_Goleiro_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "impedimentos_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "faltas_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cartoes_Amarelos_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "laterais_Cobrados_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes_Totais_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "precisao_Passes_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passes_terco_Final_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cruzamentos_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "desarmes_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bolas_Afastadas_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "interceptacoes_HT": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1213,6 +1328,351 @@
             "nullable": true
           },
           "interceptacoes_Confrontos": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gol_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gol_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes_Adversaria_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gol_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "golSofrido_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "posse_Bola_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "total_Finalizacao_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "chances_Claras_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "escanteios_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_trave_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "gols_de_cabeça_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "defesas_Goleiro_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "impedimentos_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "faltas_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Amarelos_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cartoes_Vermelhos_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laterais_Cobrados_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "toque_Area_Adversaria_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_Totais_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "precisao_Passes_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "passes_terco_Final_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "cruzamentos_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "desarmes_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "bolas_Afastadas_Confrontos_HT": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "interceptacoes_Confrontos_HT": {
             "type": "number",
             "format": "float",
             "nullable": true

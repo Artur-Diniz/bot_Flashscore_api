@@ -109,7 +109,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-       
+
         [HttpPut]
         public async Task<IActionResult> Put(Partida p)
         {
@@ -156,49 +156,36 @@ namespace botAPI.Controllers
 
         private async Task<string> relatorioMensage()
         {
-            List<Palpites> palpites = await _context
-               .TB_PALPITES.ToListAsync();
-
-
-            List<Partida> partidas = await _context
-            .TB_PARTIDAS.Where(p => p.PartidaAnalise == true).ToListAsync();
-
-            List<Partida> totalPartidas = await _context
-            .TB_PARTIDAS.Where(p => p.PartidaAnalise == false).ToListAsync();
-
-
-            List<ErrosLogs> Erros = await _context
-            .TB_ERROSLOGS.ToListAsync();
-
-            List<ErrosLogs> partidasDescontadas = await _context
-            .TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Ultimos_jogos.py").ToListAsync();
-
-            List<ErrosLogs> ultimas = await _context
-            .TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Estatisticas.py").ToListAsync();
+            List<Palpites> palpites = await _context.TB_PALPITES.ToListAsync();
+            List<Partida> partidas = await _context.TB_PARTIDAS.Where(p => p.PartidaAnalise == true).ToListAsync();
+            List<Partida> totalPartidas = await _context.TB_PARTIDAS.Where(p => p.PartidaAnalise == false).ToListAsync();
+            List<ErrosLogs> Erros = await _context.TB_ERROSLOGS.ToListAsync();
+            List<ErrosLogs> partidasDescontadas = await _context.TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Ultimos_jogos.py").ToListAsync();
+            List<ErrosLogs> ultimas = await _context.TB_ERROSLOGS.Where(e => e.QualPageFoi == "Obter_Estatisticas.py").ToListAsync();
 
             int num_partidasEsperadas = partidas.Count() * 15;
-            float eficienciaPalpites = palpites.Count() / partidas.Count();
-            float eficienciaErros = 100 - (Erros.Count() / totalPartidas.Count());
-            float eficienciaEstatistica = totalPartidas.Count() / num_partidasEsperadas;
-            string qtPalpites = $" Hoje foi gerado {palpites.Count()} por {partidas.Count()} num de partidas" +
-              $"gerando uma eficiencia de {eficienciaPalpites}% . " +
-              $" também foi gerado {Erros.Count()} Erros na Automação, sendo uma eficiencia de acertos {eficienciaErros}% ";
 
+            // Correções principais aqui - adicionando conversão para float e multiplicando por 100
+            float eficienciaPalpites = partidas.Count > 0 ? (float)palpites.Count() / partidas.Count() * 100 : 0;
+            float eficienciaErros = totalPartidas.Count > 0 ? 100 - ((float)Erros.Count() / totalPartidas.Count() * 100) : 100;
+            float eficienciaEstatistica = num_partidasEsperadas > 0 ? (float)totalPartidas.Count() / num_partidasEsperadas * 100 : 0;
+
+            string qtPalpites = $"Hoje foi gerado {palpites.Count()} palpites para {partidas.Count()} partidas " +
+                               $"gerando uma eficiência de {eficienciaPalpites:F2}%. " +
+                               $"Também foram gerados {Erros.Count()} erros na automação, com eficiência de acertos de {eficienciaErros:F2}%.";
 
             if (partidasDescontadas.Count() > 0)
-                qtPalpites = qtPalpites + $",porém perdemos {partidasDescontadas.Count()} partidas que poderiam trazer palpites bons.";
-
+                qtPalpites += $"\n\nPerdemos {partidasDescontadas.Count()} partidas que poderiam trazer bons palpites.";
 
             if (ultimas.Count() > 0)
-                qtPalpites = qtPalpites + $"porém perdemos {ultimas.Count()} Estatisticas que poderiam trazer Estatisticas que melhorariam os palpites.";
+                qtPalpites += $"\n\nPerdemos {ultimas.Count()} estatísticas que poderiam melhorar a qualidade dos palpites.";
 
-
-
-            qtPalpites = qtPalpites + $"Além disso era esperado num de estatisticas de: {num_partidasEsperadas} porém foram lidas apenas {totalPartidas.Count() - partidas.Count()} gerando " +
-              $"uma diferença de {num_partidasEsperadas - totalPartidas.Count()} estatisticas trazendo uma eficencia de {eficienciaEstatistica}% ";
+            qtPalpites += $"\n\nEra esperado um total de {num_partidasEsperadas} estatísticas, " +
+                         $"porém foram lidas {totalPartidas.Count() - partidas.Count()}, " +
+                         $"gerando uma diferença de {num_partidasEsperadas - totalPartidas.Count()} " +
+                         $"e uma eficiência de {eficienciaEstatistica:F2}%.";
 
             return qtPalpites;
-
         }
     }
 }
