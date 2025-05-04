@@ -920,168 +920,6 @@ namespace botAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float?>("Bolas_Afastadas")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Bolas_Afastadas_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Bolas_trave")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Bolas_trave_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Amarelos_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cartoes_Vermelhos_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Chances_Claras")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Chances_Claras_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cruzamentos")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Cruzamentos_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Defesas_Goleiro")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Defesas_Goleiro_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Desarmes_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Escanteios_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Faltas_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("GolSofrido_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gol_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gols_de_cabeça")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Gols_de_cabeça_HT")
-                        .HasColumnType("real");
-
                     b.Property<int>("Id_Estatisticas_Esperadas_Casa")
                         .HasColumnType("int");
 
@@ -1091,80 +929,20 @@ namespace botAPI.Migrations
                     b.Property<int>("Id_Partida")
                         .HasColumnType("int");
 
-                    b.Property<float?>("Impedimentos")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Impedimentos_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Impedimentos_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Impedimentos_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Impedimentos_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Impedimentos_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Interceptacoes")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Interceptacoes_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Laterais_Cobrados")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Laterais_Cobrados_HT")
-                        .HasColumnType("real");
-
                     b.Property<int?>("PartidaId")
                         .HasColumnType("int");
 
-                    b.Property<float?>("Passes")
-                        .HasColumnType("real");
+                    b.Property<int?>("Partida_FTId")
+                        .HasColumnType("int");
 
-                    b.Property<float?>("Passes_HT")
-                        .HasColumnType("real");
+                    b.Property<int?>("Partida_FT_ConfrontoId")
+                        .HasColumnType("int");
 
-                    b.Property<float?>("Passes_Totais")
-                        .HasColumnType("real");
+                    b.Property<int?>("Partida_HTId")
+                        .HasColumnType("int");
 
-                    b.Property<float?>("Passes_Totais_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Passes_terco_Final")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Passes_terco_Final_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Posse_Bola_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Precisao_Passes")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Precisao_Passes_HT")
-                        .HasColumnType("real");
+                    b.Property<int?>("Partida_HT_ConfrontoId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Time_CasaId")
                         .HasColumnType("int");
@@ -1172,33 +950,17 @@ namespace botAPI.Migrations
                     b.Property<int?>("Time_ForaId")
                         .HasColumnType("int");
 
-                    b.Property<float?>("Toque_Area_Adversaria")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Toque_Area_Adversaria_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao_HT")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao_HT_DP")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao_HT_Slope")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Total_Finalizacao_Slope")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PartidaId");
+
+                    b.HasIndex("Partida_FTId");
+
+                    b.HasIndex("Partida_FT_ConfrontoId");
+
+                    b.HasIndex("Partida_HTId");
+
+                    b.HasIndex("Partida_HT_ConfrontoId");
 
                     b.HasIndex("Time_CasaId");
 
@@ -1252,6 +1014,22 @@ namespace botAPI.Migrations
                         .WithMany()
                         .HasForeignKey("PartidaId");
 
+                    b.HasOne("botAPI.Models.Estatistica_BaseModel", "Partida_FT")
+                        .WithMany()
+                        .HasForeignKey("Partida_FTId");
+
+                    b.HasOne("botAPI.Models.Estatistica_BaseModel", "Partida_FT_Confronto")
+                        .WithMany()
+                        .HasForeignKey("Partida_FT_ConfrontoId");
+
+                    b.HasOne("botAPI.Models.Estatistica_BaseModel", "Partida_HT")
+                        .WithMany()
+                        .HasForeignKey("Partida_HTId");
+
+                    b.HasOne("botAPI.Models.Estatistica_BaseModel", "Partida_HT_Confronto")
+                        .WithMany()
+                        .HasForeignKey("Partida_HT_ConfrontoId");
+
                     b.HasOne("botAPI.Models.Estatistica_Esperadas", "Time_Casa")
                         .WithMany()
                         .HasForeignKey("Time_CasaId");
@@ -1261,6 +1039,14 @@ namespace botAPI.Migrations
                         .HasForeignKey("Time_ForaId");
 
                     b.Navigation("Partida");
+
+                    b.Navigation("Partida_FT");
+
+                    b.Navigation("Partida_FT_Confronto");
+
+                    b.Navigation("Partida_HT");
+
+                    b.Navigation("Partida_HT_Confronto");
 
                     b.Navigation("Time_Casa");
 

@@ -604,13 +604,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "partida",
-        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
-        "IsRequired": true
-      },
-      {
         "Name": "IdPartida",
-        "Type": "",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

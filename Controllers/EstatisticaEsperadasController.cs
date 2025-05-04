@@ -34,6 +34,8 @@ namespace botAPI.Controllers
                 .Include(e => e.HT_Adversario)
                 .Include(e => e.HT_Confronto)
                 .FirstOrDefaultAsync(es => es.Id == id);
+
+
                 if (e == null)
                     throw new System.Exception("Estatistica Não Encontrada");
 
@@ -92,8 +94,6 @@ namespace botAPI.Controllers
         {
             try
             {
-
-
                 Partida partida = await _context.TB_PARTIDAS
                 .FirstOrDefaultAsync(p => p.Id == IdPartida && p.PartidaAnalise == true);
 
@@ -103,7 +103,10 @@ namespace botAPI.Controllers
                 Estatistica_Esperadas c = await BuscarPartidas(partida, partida.NomeTimeCasa);
                 Estatistica_Esperadas f = await BuscarPartidas(partida, partida.NomeTimeCasa);
 
-                await _context.TB_ESTATISTICA_ESPERADAS.AddRangeAsync(c,f);
+                c.NomeTime = partida.NomeTimeCasa;
+                f.NomeTime = partida.NomeTimeFora;
+
+                await _context.TB_ESTATISTICA_ESPERADAS.AddRangeAsync(c, f);
                 await _context.SaveChangesAsync();
 
                 string mensagem = $"foi gerado Estatisticas esperadas corretamente o ID de casa é{c.Id} ,  o ID de Fora é {f.Id} ";
@@ -198,9 +201,9 @@ namespace botAPI.Controllers
             List<Estatistica> confrontos = await _context.TB_ESTATISTICA.Where(e => e.NomeTime == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
             List<Estatistica> confrontosFora = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeRival == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
             confrontos.AddRange(confrontosFora);
-            
 
-            time = gerarEstatisticasByTime(estatisticas, estatisticasRival,confrontos);
+
+            time = gerarEstatisticasByTime(estatisticas, estatisticasRival, confrontos);
 
             return time;
         }
@@ -419,86 +422,5 @@ namespace botAPI.Controllers
         }
 
 
-        // Método auxiliar para obter valores com sufixo (usando reflection)
-        private static float? GetPropValueFast(Estatistica item, string propName, string suffix)
-        {
-            string key = string.IsNullOrEmpty(suffix) ? propName : $"{propName}_{suffix}";
-
-            return key switch
-            {
-                // Gols
-                "Gol" => item.Gol,
-                "Gol_HT" => item.Gol_HT,
-                "GolSofrido" => item.GolSofrido,
-                "GolSofrido_HT" => item.GolSofrido_HT,
-
-                // Posse de Bola
-                "Posse_Bola" => item.Posse_Bola,
-                "Posse_Bola_HT" => item.Posse_Bola_HT,
-
-                // Finalizações
-                "Total_Finalizacao" => item.Total_Finalizacao,
-                "Total_Finalizacao_HT" => item.Total_Finalizacao_HT,
-
-                // Escanteios
-                "Escanteios" => item.Escanteios,
-                "Escanteios_HT" => item.Escanteios_HT,
-
-                // Chances de Gol
-                "Chances_Claras" => item.Chances_Claras,
-                "Chances_Claras_HT" => item.Chances_Claras_HT,
-                "Bolas_trave" => item.Bolas_trave,
-                "Bolas_trave_HT" => item.Bolas_trave_HT,
-                "Gols_de_cabeça" => item.Gols_de_cabeça,
-                "Gols_de_cabeça_HT" => item.Gols_de_cabeça_HT,
-
-                // Defesas
-                "Defesas_Goleiro" => item.Defesas_Goleiro,
-                "Defesas_Goleiro_HT" => item.Defesas_Goleiro_HT,
-
-                // Disciplina
-                "Impedimentos" => item.Impedimentos,
-                "Impedimentos_HT" => item.Impedimentos_HT,
-                "Faltas" => item.Faltas,
-                "Faltas_HT" => item.Faltas_HT,
-                "Cartoes_Amarelos" => item.Cartoes_Amarelos,
-                "Cartoes_Amarelos_HT" => item.Cartoes_Amarelos_HT,
-                "Cartoes_Vermelhos" => item.Cartoes_Vermelhos,
-                "Cartoes_Vermelhos_HT" => item.Cartoes_Vermelhos_HT,
-
-                // Laterais
-                "Laterais_Cobrados" => item.Laterais_Cobrados,
-                "Laterais_Cobrados_HT" => item.Laterais_Cobrados_HT,
-
-                // Área Adversária
-                "Toque_Area_Adversaria" => item.Toque_Area_Adversaria,
-                "Toque_Area_Adversaria_HT" => item.Toque_Area_Adversaria_HT,
-
-                // Passes
-                "Passes" => item.Passes,
-                "Passes_HT" => item.Passes_HT,
-                "Passes_Totais" => item.Passes_Totais,
-                "Passes_Totais_HT" => item.Passes_Totais_HT,
-                "Precisao_Passes" => item.Precisao_Passes,
-                "Precisao_Passes_HT" => item.Precisao_Passes_HT,
-                "Passes_terco_Final" => item.Passes_terco_Final,
-                "Passes_terco_Final_HT" => item.Passes_terco_Final_HT,
-
-                // Cruzamentos
-                "Cruzamentos" => item.Cruzamentos,
-                "Cruzamentos_HT" => item.Cruzamentos_HT,
-
-                // Defensivos
-                "Desarmes" => item.Desarmes,
-                "Desarmes_HT" => item.Desarmes_HT,
-                "Bolas_Afastadas" => item.Bolas_Afastadas,
-                "Bolas_Afastadas_HT" => item.Bolas_Afastadas_HT,
-                "Interceptacoes" => item.Interceptacoes,
-                "Interceptacoes_HT" => item.Interceptacoes_HT,
-
-                // Caso padrão (opcional)
-                _ => null
-            };
-        }
     }
 }

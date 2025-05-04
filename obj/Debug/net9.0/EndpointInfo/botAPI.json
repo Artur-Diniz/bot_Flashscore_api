@@ -953,29 +953,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
