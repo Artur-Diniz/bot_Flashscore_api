@@ -174,6 +174,96 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "Post",
+    "RelativePath": "EstatisticaEsperadas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "e",
+        "Type": "botAPI.Models.Estatistica_Esperadas",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "Put",
+    "RelativePath": "EstatisticaEsperadas",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "e",
+        "Type": "botAPI.Models.Estatistica_Esperadas",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "Delete",
+    "RelativePath": "EstatisticaEsperadas/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "Post",
+    "RelativePath": "EstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IdPartida",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "GetAll",
+    "RelativePath": "EstatisticaEsperadas/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "getId",
+    "RelativePath": "EstatisticaEsperadas/id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
     "Method": "Post",
     "RelativePath": "EstatisticaTimes",
@@ -435,6 +525,80 @@
     "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "GetGerarRelatorio",
     "RelativePath": "Partida/Relatorio",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "Post",
+    "RelativePath": "PartidaEstatisticaEsperadas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "partida",
+        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "Put",
+    "RelativePath": "PartidaEstatisticaEsperadas",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "p",
+        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "getsingle",
+    "RelativePath": "PartidaEstatisticaEsperadas/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "Delte",
+    "RelativePath": "PartidaEstatisticaEsperadas/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "Get",
+    "RelativePath": "PartidaEstatisticaEsperadas/GetAll",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

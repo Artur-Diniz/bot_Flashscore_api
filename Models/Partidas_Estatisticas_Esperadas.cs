@@ -7,6 +7,8 @@ namespace botAPI.Models
     {
         public int Id { get; set; }
 
+
+        public int Id_Partida { get; set; }
         public Partida Partida { get; set; }
 
         public int Id_Estatisticas_Esperadas_Casa { get; set; }
