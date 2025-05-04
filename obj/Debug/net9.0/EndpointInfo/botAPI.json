@@ -1729,6 +1729,10 @@
             "type": "string",
             "nullable": true
           },
+          "url_Partida": {
+            "type": "string",
+            "nullable": true
+          },
           "dataPartida": {
             "type": "string",
             "format": "date-time"

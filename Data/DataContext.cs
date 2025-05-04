@@ -15,6 +15,8 @@ namespace botAPI.Data
         public DbSet<Palpites> TB_PALPITES { get; set; }
         public DbSet<Partida> TB_PARTIDAS { get; set; }
         public DbSet<ErrosLogs> TB_ERROSLOGS { get; set; }
+        public DbSet<Partida_Estatistica_Esperadas> TB_PARTIDA_ESTAITSTICA_ESPERADAS { get; set; }
+        public DbSet<Estatistica_Esperadas> TB_ESTATISTICA_ESPERADAS { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -55,6 +55,8 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
