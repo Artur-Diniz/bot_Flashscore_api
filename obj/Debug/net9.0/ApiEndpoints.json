@@ -223,7 +223,7 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
-    "Method": "Post",
+    "Method": "GerarEstatistcasEsperadas",
     "RelativePath": "EstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}",
     "HttpMethod": "POST",
     "IsController": true,
@@ -590,6 +590,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "GerarPartidasestatistcasEsperadas",
+    "RelativePath": "PartidaEstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "partida",
+        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
+        "IsRequired": true
+      },
+      {
+        "Name": "IdPartida",
+        "Type": "",
         "IsRequired": true
       }
     ],

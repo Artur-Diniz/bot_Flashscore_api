@@ -27,6 +27,12 @@ namespace botAPI.Controllers
                     throw new System.Exception("Estatistica Não Encontrada");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 Estatistica_Esperadas e = await _context.TB_ESTATISTICA_ESPERADAS
+                .Include(e => e.FT)
+                .Include(e => e.FT_Adversario)
+                .Include(e => e.FT_Confronto)
+                .Include(e => e.HT)
+                .Include(e => e.HT_Adversario)
+                .Include(e => e.HT_Confronto)
                 .FirstOrDefaultAsync(es => es.Id == id);
                 if (e == null)
                     throw new System.Exception("Estatistica Não Encontrada");
@@ -46,7 +52,14 @@ namespace botAPI.Controllers
             try
             {
                 List<Estatistica_Esperadas> estatisticas = await _context
-                .TB_ESTATISTICA_ESPERADAS.ToListAsync();
+                .TB_ESTATISTICA_ESPERADAS
+                .Include(e => e.FT)
+                .Include(e => e.FT_Adversario)
+                .Include(e => e.FT_Confronto)
+                .Include(e => e.HT)
+                .Include(e => e.HT_Adversario)
+                .Include(e => e.HT_Confronto)
+                .ToListAsync();
 
                 return Ok(estatisticas);
 
@@ -75,7 +88,7 @@ namespace botAPI.Controllers
         }
 
         [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
-        public async Task<IActionResult> Post(int IdPartida)
+        public async Task<IActionResult> GerarEstatistcasEsperadas(int IdPartida)
         {
             try
             {
@@ -170,7 +183,7 @@ namespace botAPI.Controllers
                 throw new System.Exception("Não achei time com esse nome ai");
             Estatistica_Esperadas time = new Estatistica_Esperadas();
             string rival = "";
-
+            time.NomeTime = nomeTime;
             if (nomeTime == partidaAnalisada.NomeTimeCasa)
             {
                 time.NomeTime = partidaAnalisada.NomeTimeCasa;
@@ -185,7 +198,7 @@ namespace botAPI.Controllers
             List<Estatistica> confrontos = await _context.TB_ESTATISTICA.Where(e => e.NomeTime == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
             List<Estatistica> confrontosFora = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeRival == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
             confrontos.AddRange(confrontosFora);
-
+            
 
             time = gerarEstatisticasByTime(estatisticas, estatisticasRival,confrontos);
 
@@ -339,14 +352,72 @@ namespace botAPI.Controllers
                 "Posse_Bola" => item.Posse_Bola,
                 "Posse_Bola_HT" => item.Posse_Bola_HT,
 
-                // Continue com todas as outras propriedades...
+                // Finalizações
                 "Total_Finalizacao" => item.Total_Finalizacao,
                 "Total_Finalizacao_HT" => item.Total_Finalizacao_HT,
 
-                // ... (adicione todos os outros casos)
+                // Escanteios
+                "Escanteios" => item.Escanteios,
+                "Escanteios_HT" => item.Escanteios_HT,
+
+                // Chances claras, bolas na trave, gols de cabeça, defesas
+                "Chances_Claras" => item.Chances_Claras,
+                "Chances_Claras_HT" => item.Chances_Claras_HT,
+                "Bolas_trave" => item.Bolas_trave,
+                "Bolas_trave_HT" => item.Bolas_trave_HT,
+                "Gols_de_cabeça" => item.Gols_de_cabeça,
+                "Gols_de_cabeça_HT" => item.Gols_de_cabeça_HT,
+                "Defesas_Goleiro" => item.Defesas_Goleiro,
+                "Defesas_Goleiro_HT" => item.Defesas_Goleiro_HT,
+
+                // Impedimentos
+                "Impedimentos" => item.Impedimentos,
+                "Impedimentos_HT" => item.Impedimentos_HT,
+
+                // Faltas
+                "Faltas" => item.Faltas,
+                "Faltas_HT" => item.Faltas_HT,
+
+                // Cartões
+                "Cartoes_Amarelos" => item.Cartoes_Amarelos,
+                "Cartoes_Amarelos_HT" => item.Cartoes_Amarelos_HT,
+                "Cartoes_Vermelhos" => item.Cartoes_Vermelhos,
+                "Cartoes_Vermelhos_HT" => item.Cartoes_Vermelhos_HT,
+
+                // Laterais e toques na área
+                "Laterais_Cobrados" => item.Laterais_Cobrados,
+                "Laterais_Cobrados_HT" => item.Laterais_Cobrados_HT,
+                "Toque_Area_Adversaria" => item.Toque_Area_Adversaria,
+                "Toque_Area_Adversaria_HT" => item.Toque_Area_Adversaria_HT,
+
+                // Passes
+                "Passes" => item.Passes,
+                "Passes_HT" => item.Passes_HT,
+                "Passes_Totais" => item.Passes_Totais,
+                "Passes_Totais_HT" => item.Passes_Totais_HT,
+                "Precisao_Passes" => item.Precisao_Passes,
+                "Precisao_Passes_HT" => item.Precisao_Passes_HT,
+                "Passes_terco_Final" => item.Passes_terco_Final,
+                "Passes_terco_Final_HT" => item.Passes_terco_Final_HT,
+
+                // Cruzamentos
+                "Cruzamentos" => item.Cruzamentos,
+                "Cruzamentos_HT" => item.Cruzamentos_HT,
+
+                // Desarmes
+                "Desarmes" => item.Desarmes,
+                "Desarmes_HT" => item.Desarmes_HT,
+
+                // Defensivos
+                "Bolas_Afastadas" => item.Bolas_Afastadas,
+                "Bolas_Afastadas_HT" => item.Bolas_Afastadas_HT,
+                "Interceptacoes" => item.Interceptacoes,
+                "Interceptacoes_HT" => item.Interceptacoes_HT,
+
                 _ => null
             };
         }
+
 
         // Método auxiliar para obter valores com sufixo (usando reflection)
         private static float? GetPropValueFast(Estatistica item, string propName, string suffix)

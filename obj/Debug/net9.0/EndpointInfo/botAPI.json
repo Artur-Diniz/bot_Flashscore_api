@@ -941,6 +941,47 @@
           }
         }
       }
+    },
+    "/PartidaEstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}": {
+      "post": {
+        "tags": [
+          "PartidaEstatisticaEsperadas"
+        ],
+        "parameters": [
+          {
+            "name": "IdPartida",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2307,435 +2348,17 @@
           "time_Fora": {
             "$ref": "#/components/schemas/Estatistica_Esperadas"
           },
-          "gol": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
+          "partida_FT": {
+            "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
-          "gol_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
+          "partida_HT": {
+            "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
-          "gol_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
+          "partida_FT_Confronto": {
+            "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
-          "golSofrido": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "golSofrido_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "golSofrido_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "chances_Claras": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "bolas_trave": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "gols_de_cabeça": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "defesas_Goleiro": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "laterais_Cobrados": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "toque_Area_Adversaria": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes_Totais": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "precisao_Passes": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes_terco_Final": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cruzamentos": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "bolas_Afastadas": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "interceptacoes": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "gol_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "gol_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "gol_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "golSofrido_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "golSofrido_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "golSofrido_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "posse_Bola_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "total_Finalizacao_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "chances_Claras_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "escanteios_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "bolas_trave_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "gols_de_cabeça_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "defesas_Goleiro_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "impedimentos_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "faltas_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Amarelos_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cartoes_Vermelhos_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "laterais_Cobrados_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "toque_Area_Adversaria_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes_Totais_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "precisao_Passes_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "passes_terco_Final_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "cruzamentos_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes_HT_Slope": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "desarmes_HT_DP": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "bolas_Afastadas_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
-          },
-          "interceptacoes_HT": {
-            "type": "number",
-            "format": "float",
-            "nullable": true
+          "partida_HT_Confronto": {
+            "$ref": "#/components/schemas/Estatistica_BaseModel"
           }
         },
         "additionalProperties": false

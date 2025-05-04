@@ -74,6 +74,24 @@ namespace botAPI.Controllers
             }
         }
 
+
+        [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
+        public async Task<IActionResult> GerarPartidasestatistcasEsperadas(Partida_Estatistica_Esperadas partida)
+        {
+            try
+            {
+                await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
+                await _context.SaveChangesAsync();
+
+                return Ok(partida.Id);
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut]
         public async Task<IActionResult> Put(Partida_Estatistica_Esperadas p)
         {

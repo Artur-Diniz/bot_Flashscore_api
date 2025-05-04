@@ -10,6 +10,7 @@ namespace botAPI.Data
         {
 
         }
+        
         public DbSet<Estatistica> TB_ESTATISTICA { get; set; }
         public DbSet<Estatistica_Times> TB_ESTATISTICA_TIME { get; set; }
         public DbSet<Palpites> TB_PALPITES { get; set; }
