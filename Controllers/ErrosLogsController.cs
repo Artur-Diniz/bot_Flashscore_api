@@ -17,6 +17,8 @@ namespace botAPI.Controllers
             _context = context;
         }
 
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> getId(int id)
         {
@@ -56,6 +58,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Post(ErrosLogs e)

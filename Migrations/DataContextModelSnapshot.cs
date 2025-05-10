@@ -42,6 +42,9 @@ namespace botAPI.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
 
+                    b.Property<DateTime>("horaErro")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("TB_ERROSLOGS");

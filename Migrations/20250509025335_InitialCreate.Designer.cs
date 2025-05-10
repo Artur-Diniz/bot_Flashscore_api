@@ -12,7 +12,7 @@ using botAPI.Data;
 namespace botAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250504233545_InitialCreate")]
+    [Migration("20250509025335_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,6 +44,9 @@ namespace botAPI.Migrations
                     b.Property<string>("QualUrl")
                         .HasMaxLength(250)
                         .HasColumnType("varchar");
+
+                    b.Property<DateTime>("horaErro")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

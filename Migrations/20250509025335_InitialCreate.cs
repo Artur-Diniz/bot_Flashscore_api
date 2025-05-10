@@ -72,6 +72,7 @@ namespace botAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    horaErro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QualPageFoi = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     QualUrl = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     OqueProvavelmenteAConteceu = table.Column<string>(type: "varchar(510)", maxLength: 510, nullable: true)

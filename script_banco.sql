@@ -59,6 +59,7 @@ CREATE TABLE [Estatistica_BaseModel] (
 
 CREATE TABLE [TB_ERROSLOGS] (
     [Id] int NOT NULL IDENTITY,
+    [horaErro] datetime2 NOT NULL,
     [QualPageFoi] varchar(250) NULL,
     [QualUrl] varchar(250) NULL,
     [OqueProvavelmenteAConteceu] varchar(510) NULL,
@@ -356,7 +357,7 @@ CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Time_CasaId] ON [TB_PARTIDA_ES
 CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Time_ForaId] ON [TB_PARTIDA_ESTAITSTICA_ESPERADAS] ([Time_ForaId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250504233545_InitialCreate', N'9.0.3');
+VALUES (N'20250509025335_InitialCreate', N'9.0.3');
 
 COMMIT;
 GO
