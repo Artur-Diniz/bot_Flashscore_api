@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "O24wG7ruVLI=",
+  "dgSpecHash": "AH28uzLX0yU=",
   "success": true,
   "projectFilePath": "C:\\Users\\artur\\OneDrive\\Área de Trabalho\\program\\botAPI\\botAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\artur\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.3\\microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
@@ -51,6 +52,8 @@
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
+    "C:\\Users\\artur\\.nuget\\packages\\npgsql\\9.0.3\\npgsql.9.0.3.nupkg.sha512",
+    "C:\\Users\\artur\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\9.0.4\\npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\swashbuckle.aspnetcore\\8.1.0\\swashbuckle.aspnetcore.8.1.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\8.1.0\\swashbuckle.aspnetcore.swagger.8.1.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\8.1.0\\swashbuckle.aspnetcore.swaggergen.8.1.0.nupkg.sha512",

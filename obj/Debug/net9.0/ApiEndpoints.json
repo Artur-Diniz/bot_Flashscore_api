@@ -597,7 +597,7 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
-    "Method": "GerarPartidasestatistcasEsperadas",
+    "Method": "GerarPartidasEstatisticasEsperadas",
     "RelativePath": "PartidaEstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}",
     "HttpMethod": "POST",
     "IsController": true,

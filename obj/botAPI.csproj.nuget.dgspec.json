@@ -50,6 +50,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.66, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.3, )"
@@ -63,6 +67,14 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

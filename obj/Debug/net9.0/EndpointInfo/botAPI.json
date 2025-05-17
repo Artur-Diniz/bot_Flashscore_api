@@ -975,6 +975,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "horaErro": {
+            "type": "string",
+            "format": "date-time"
+          },
           "qualPageFoi": {
             "type": "string",
             "nullable": true

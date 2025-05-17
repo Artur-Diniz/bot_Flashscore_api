@@ -25,7 +25,7 @@ namespace botAPI.Models
         public float? Escanteios_Slope { get; set; }
         public float? Escanteios_DP { get; set; }
         public float? Bolas_trave { get; set; }
-        public float? Gols_de_cabeça { get; set; }
+        public float? Gols_de_cabeca { get; set; }
         public float? Defesas_Goleiro { get; set; }
         public float? Impedimentos { get; set; }
         public float? Impedimentos_Slope { get; set; }
