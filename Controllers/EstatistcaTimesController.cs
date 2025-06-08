@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using botAPI.Models;
 using botAPI.Data;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace botAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace botAPI.Controllers
     public class EstatisticaTimesController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MLDbContext _MLDb;
 
-        public EstatisticaTimesController(DataContext context)
+        public EstatisticaTimesController(DataContext context, MLDbContext mLDb)
         {
             _context = context;
+            _MLDb = mLDb;
         }
 
         [HttpGet("{id}")]
@@ -62,23 +65,42 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Estatistica_Times e)
         {
+            // Habilita transação distribuída (se os bancos suportarem)
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
-                await _context.TB_ESTATISTICA_TIME.AddAsync(e);
+                // 1. Insere no banco PRINCIPAL (_MLDb)
+                await _MLDb.TB_ESTATISTICA_TIME.AddAsync(e);
+                await _MLDb.SaveChangesAsync();
+                int idPrincipal = e.Id;
+
+                // 2. Desanexa para evitar conflitos
+                _MLDb.Entry(e).State = EntityState.Detached;
+
+                // 3. Insere no banco SECUNDÁRIO (_context)
+                _context.TB_ESTATISTICA_TIME.Add(e);
                 await _context.SaveChangesAsync();
+                int idSecundario = e.Id;
 
-                return Ok(e.Id);
+                // Confirma a transação em AMBOS os bancos
+                scope.Complete();
 
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                // Rollback automático (se configurado corretamente)
                 return BadRequest(ex.Message);
             }
         }
 
+
         [HttpPost("GerarEstatistica/{nomeTime}")]
         public async Task<IActionResult> GerarEstatisticaMedia(string nomeTime)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
                 Partida partidaAnalisada = await _context.TB_PARTIDAS
@@ -90,11 +112,19 @@ namespace botAPI.Controllers
 
                 Estatistica_Times e = await Buscarpartidas(nomeTime);
 
+                await _MLDb.TB_ESTATISTICA_TIME.AddAsync(e);
+                await _MLDb.SaveChangesAsync();
+                int idPrincipal = e.Id;
 
-                await _context.TB_ESTATISTICA_TIME.AddAsync(e);
+
+                _context.TB_ESTATISTICA_TIME.Add(e);
                 await _context.SaveChangesAsync();
 
-                return Ok(e.Id);
+                int idSecundario = e.Id;
+
+                scope.Complete();
+
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
 
             }
             catch (System.Exception ex)
@@ -102,39 +132,54 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpPut]
         public async Task<IActionResult> Put(Estatistica_Times e)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
-                _context.TB_ESTATISTICA_TIME.Update(e);
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                // Atualiza no primeiro banco
+                _MLDb.TB_ESTATISTICA_TIME.Update(e);
+                await _MLDb.SaveChangesAsync();
 
-                return Ok(linhasAfetadas);
+                // Desanexa a entidade do primeiro contexto
+                _MLDb.Entry(e).State = EntityState.Detached;
+
+                // Atualiza no segundo banco
+                _context.TB_ESTATISTICA_TIME.Update(e);
+                await _context.SaveChangesAsync();
+
+
+                return Ok(new { Message = "Atualização realizada com sucesso em ambos os bancos" });
             }
             catch (System.Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
                 if (id == 0)
                     throw new System.Exception("O Id não pode ser igual a zero");
 
-                Estatistica_Times e = await _context.TB_ESTATISTICA_TIME
+                Estatistica_Times e = await _MLDb.TB_ESTATISTICA_TIME
                 .FirstOrDefaultAsync(es => es.Id == id);
-                if (e == null)
+                Estatistica_Times e_repeat = await _context.TB_ESTATISTICA_TIME
+                .FirstOrDefaultAsync(es => es.Id == id);
+
+                if (e == null || e_repeat == null)
                     throw new System.Exception("Estatistica Não Encontrada");
-                _context.TB_ESTATISTICA_TIME.Remove(e);
 
+                _context.TB_ESTATISTICA_TIME.Remove(e_repeat);
+                _MLDb.TB_ESTATISTICA_TIME.Remove(e);
 
+                await _MLDb.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
@@ -168,9 +213,9 @@ namespace botAPI.Controllers
                 estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Fora").ToListAsync();
                 estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Fora").ToListAsync();
             }
-            if (estatisticasRival.Count() == 0 || estatisticas.Count() == 0)            
+            if (estatisticasRival.Count() == 0 || estatisticas.Count() == 0)
                 throw new System.Exception("Não achei time com esse nome ai");
-            
+
             Estatistica_Times time = gerarMediaByTime(estatisticas, estatisticasRival);
 
             string rival = "";
@@ -318,52 +363,52 @@ namespace botAPI.Controllers
             }
 
 
-            estastitica.Gol_Confrontos = SafeAverage(jogos,j => j.Gol);
-            estastitica.Gol_Confrontos_HT = SafeAverage(jogos,j => j.Gol_HT);
-            estastitica.GolSofrido_Confrontos = SafeAverage(jogos,j => j.GolSofrido);
-            estastitica.GolSofrido_Confrontos_HT = SafeAverage(jogos,j => j.GolSofrido_HT);
-            estastitica.Posse_Bola_Confrontos = SafeAverage(jogos,j => j.Posse_Bola);
-            estastitica.Posse_Bola_Confrontos_HT = SafeAverage(jogos,j => j.Posse_Bola_HT);
-            estastitica.Total_Finalizacao_Confrontos = SafeAverage(jogos,j => j.Total_Finalizacao);
-            estastitica.Total_Finalizacao_Confrontos_HT = SafeAverage(jogos,j => j.Total_Finalizacao_HT);
-            estastitica.Chances_Claras_Confrontos = SafeAverage(jogos,j => j.Chances_Claras);
-            estastitica.Chances_Claras_Confrontos_HT = SafeAverage(jogos,j => j.Chances_Claras_HT);
-            estastitica.Escanteios_Confrontos = SafeAverage(jogos,j => j.Escanteios);
-            estastitica.Escanteios_Confrontos_HT = SafeAverage(jogos,j => j.Escanteios_HT);
-            estastitica.Bolas_trave_Confrontos = SafeAverage(jogos,j => j.Bolas_trave);
-            estastitica.Bolas_trave_Confrontos_HT = SafeAverage(jogos,j => j.Bolas_trave_HT);
-            estastitica.Gols_de_cabeça_Confrontos = SafeAverage(jogos,j => j.Gols_de_cabeça);
-            estastitica.Gols_de_cabeça_Confrontos_HT = SafeAverage(jogos,j => j.Gols_de_cabeça_HT);
-            estastitica.Defesas_Goleiro_Confrontos = SafeAverage(jogos,j => j.Defesas_Goleiro);
-            estastitica.Defesas_Goleiro_Confrontos_HT = SafeAverage(jogos,j => j.Defesas_Goleiro_HT);
-            estastitica.Impedimentos_Confrontos = SafeAverage(jogos,j => j.Impedimentos);
-            estastitica.Impedimentos_Confrontos_HT = SafeAverage(jogos,j => j.Impedimentos_HT);
-            estastitica.Faltas_Confrontos = SafeAverage(jogos,j => j.Faltas);
-            estastitica.Faltas_Confrontos_HT = SafeAverage(jogos,j => j.Faltas_HT);
-            estastitica.Cartoes_Amarelos_Confrontos = SafeAverage(jogos,j => j.Cartoes_Amarelos);
-            estastitica.Cartoes_Amarelos_Confrontos_HT = SafeAverage(jogos,j => j.Cartoes_Amarelos_HT);
-            estastitica.Cartoes_Vermelhos_Confrontos = SafeAverage(jogos,j => j.Cartoes_Vermelhos);
-            estastitica.Cartoes_Vermelhos_Confrontos_HT = SafeAverage(jogos,j => j.Cartoes_Vermelhos_HT);
-            estastitica.Laterais_Cobrados_Confrontos = SafeAverage(jogos,j => j.Laterais_Cobrados);
-            estastitica.Laterais_Cobrados_Confrontos_HT = SafeAverage(jogos,j => j.Laterais_Cobrados_HT);
-            estastitica.Toque_Area_Adversaria_Confrontos = SafeAverage(jogos,j => j.Toque_Area_Adversaria);
-            estastitica.Toque_Area_Adversaria_Confrontos_HT = SafeAverage(jogos,j => j.Toque_Area_Adversaria_HT);
-            estastitica.Passes_Confrontos = SafeAverage(jogos,j => j.Passes);
-            estastitica.Passes_Confrontos_HT = SafeAverage(jogos,j => j.Passes_HT);
-            estastitica.Passes_Totais_Confrontos = SafeAverage(jogos,j => j.Passes_Totais);
-            estastitica.Passes_Totais_Confrontos_HT = SafeAverage(jogos,j => j.Passes_Totais_HT);
-            estastitica.Precisao_Passes_Confrontos = SafeAverage(jogos,j => j.Precisao_Passes);
-            estastitica.Precisao_Passes_Confrontos_HT = SafeAverage(jogos,j => j.Precisao_Passes_HT);
-            estastitica.Passes_terco_Final_Confrontos = SafeAverage(jogos,j => j.Passes_terco_Final);
-            estastitica.Passes_terco_Final_Confrontos_HT = SafeAverage(jogos,j => j.Passes_terco_Final_HT);
-            estastitica.Cruzamentos_Confrontos = SafeAverage(jogos,j => j.Cruzamentos);
-            estastitica.Cruzamentos_Confrontos_HT = SafeAverage(jogos,j => j.Cruzamentos_HT);
-            estastitica.Desarmes_Confrontos = SafeAverage(jogos,j => j.Desarmes);
-            estastitica.Desarmes_Confrontos_HT = SafeAverage(jogos,j => j.Desarmes_HT);
-            estastitica.Bolas_Afastadas_Confrontos = SafeAverage(jogos,j => j.Bolas_Afastadas);
-            estastitica.Bolas_Afastadas_Confrontos_HT = SafeAverage(jogos,j => j.Bolas_Afastadas_HT);
-            estastitica.Interceptacoes_Confrontos = SafeAverage(jogos,j => j.Interceptacoes);
-            estastitica.Interceptacoes_Confrontos_HT = SafeAverage(jogos,j => j.Interceptacoes_HT);
+            estastitica.Gol_Confrontos = SafeAverage(jogos, j => j.Gol);
+            estastitica.Gol_Confrontos_HT = SafeAverage(jogos, j => j.Gol_HT);
+            estastitica.GolSofrido_Confrontos = SafeAverage(jogos, j => j.GolSofrido);
+            estastitica.GolSofrido_Confrontos_HT = SafeAverage(jogos, j => j.GolSofrido_HT);
+            estastitica.Posse_Bola_Confrontos = SafeAverage(jogos, j => j.Posse_Bola);
+            estastitica.Posse_Bola_Confrontos_HT = SafeAverage(jogos, j => j.Posse_Bola_HT);
+            estastitica.Total_Finalizacao_Confrontos = SafeAverage(jogos, j => j.Total_Finalizacao);
+            estastitica.Total_Finalizacao_Confrontos_HT = SafeAverage(jogos, j => j.Total_Finalizacao_HT);
+            estastitica.Chances_Claras_Confrontos = SafeAverage(jogos, j => j.Chances_Claras);
+            estastitica.Chances_Claras_Confrontos_HT = SafeAverage(jogos, j => j.Chances_Claras_HT);
+            estastitica.Escanteios_Confrontos = SafeAverage(jogos, j => j.Escanteios);
+            estastitica.Escanteios_Confrontos_HT = SafeAverage(jogos, j => j.Escanteios_HT);
+            estastitica.Bolas_trave_Confrontos = SafeAverage(jogos, j => j.Bolas_trave);
+            estastitica.Bolas_trave_Confrontos_HT = SafeAverage(jogos, j => j.Bolas_trave_HT);
+            estastitica.Gols_de_cabeça_Confrontos = SafeAverage(jogos, j => j.Gols_de_cabeça);
+            estastitica.Gols_de_cabeça_Confrontos_HT = SafeAverage(jogos, j => j.Gols_de_cabeça_HT);
+            estastitica.Defesas_Goleiro_Confrontos = SafeAverage(jogos, j => j.Defesas_Goleiro);
+            estastitica.Defesas_Goleiro_Confrontos_HT = SafeAverage(jogos, j => j.Defesas_Goleiro_HT);
+            estastitica.Impedimentos_Confrontos = SafeAverage(jogos, j => j.Impedimentos);
+            estastitica.Impedimentos_Confrontos_HT = SafeAverage(jogos, j => j.Impedimentos_HT);
+            estastitica.Faltas_Confrontos = SafeAverage(jogos, j => j.Faltas);
+            estastitica.Faltas_Confrontos_HT = SafeAverage(jogos, j => j.Faltas_HT);
+            estastitica.Cartoes_Amarelos_Confrontos = SafeAverage(jogos, j => j.Cartoes_Amarelos);
+            estastitica.Cartoes_Amarelos_Confrontos_HT = SafeAverage(jogos, j => j.Cartoes_Amarelos_HT);
+            estastitica.Cartoes_Vermelhos_Confrontos = SafeAverage(jogos, j => j.Cartoes_Vermelhos);
+            estastitica.Cartoes_Vermelhos_Confrontos_HT = SafeAverage(jogos, j => j.Cartoes_Vermelhos_HT);
+            estastitica.Laterais_Cobrados_Confrontos = SafeAverage(jogos, j => j.Laterais_Cobrados);
+            estastitica.Laterais_Cobrados_Confrontos_HT = SafeAverage(jogos, j => j.Laterais_Cobrados_HT);
+            estastitica.Toque_Area_Adversaria_Confrontos = SafeAverage(jogos, j => j.Toque_Area_Adversaria);
+            estastitica.Toque_Area_Adversaria_Confrontos_HT = SafeAverage(jogos, j => j.Toque_Area_Adversaria_HT);
+            estastitica.Passes_Confrontos = SafeAverage(jogos, j => j.Passes);
+            estastitica.Passes_Confrontos_HT = SafeAverage(jogos, j => j.Passes_HT);
+            estastitica.Passes_Totais_Confrontos = SafeAverage(jogos, j => j.Passes_Totais);
+            estastitica.Passes_Totais_Confrontos_HT = SafeAverage(jogos, j => j.Passes_Totais_HT);
+            estastitica.Precisao_Passes_Confrontos = SafeAverage(jogos, j => j.Precisao_Passes);
+            estastitica.Precisao_Passes_Confrontos_HT = SafeAverage(jogos, j => j.Precisao_Passes_HT);
+            estastitica.Passes_terco_Final_Confrontos = SafeAverage(jogos, j => j.Passes_terco_Final);
+            estastitica.Passes_terco_Final_Confrontos_HT = SafeAverage(jogos, j => j.Passes_terco_Final_HT);
+            estastitica.Cruzamentos_Confrontos = SafeAverage(jogos, j => j.Cruzamentos);
+            estastitica.Cruzamentos_Confrontos_HT = SafeAverage(jogos, j => j.Cruzamentos_HT);
+            estastitica.Desarmes_Confrontos = SafeAverage(jogos, j => j.Desarmes);
+            estastitica.Desarmes_Confrontos_HT = SafeAverage(jogos, j => j.Desarmes_HT);
+            estastitica.Bolas_Afastadas_Confrontos = SafeAverage(jogos, j => j.Bolas_Afastadas);
+            estastitica.Bolas_Afastadas_Confrontos_HT = SafeAverage(jogos, j => j.Bolas_Afastadas_HT);
+            estastitica.Interceptacoes_Confrontos = SafeAverage(jogos, j => j.Interceptacoes);
+            estastitica.Interceptacoes_Confrontos_HT = SafeAverage(jogos, j => j.Interceptacoes_HT);
 
             return estastitica;
         }

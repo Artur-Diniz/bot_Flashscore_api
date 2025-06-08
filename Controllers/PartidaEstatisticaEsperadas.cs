@@ -5,6 +5,7 @@ using botAPI.Models;
 using botAPI.Data;
 using Npgsql;
 using Dapper;
+using System.Transactions;
 
 namespace botAPI.Controllers
 {
@@ -13,10 +14,12 @@ namespace botAPI.Controllers
     public class PartidaEstatisticaEsperadasController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MLDbContext _mlDb;
 
-        public PartidaEstatisticaEsperadasController(DataContext context)
+        public PartidaEstatisticaEsperadasController(DataContext context, MLDbContext mLDb)
         {
             _context = context;
+            _mlDb = mLDb;
         }
 
         [HttpGet("{id}")]
@@ -62,12 +65,21 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Partida_Estatistica_Esperadas partida)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
-                await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
-                await _context.SaveChangesAsync();
+                await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
+                await _mlDb.SaveChangesAsync();
+                int idPrincipal = partida.Id;
 
-                return Ok(partida.Id);
+                _mlDb.Entry(partida).State = EntityState.Detached;
+
+                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Add(partida);
+                await _context.SaveChangesAsync();
+                int idSecundario = partida.Id;
+
+                scope.Complete();
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
 
             }
             catch (System.Exception ex)
@@ -77,156 +89,64 @@ namespace botAPI.Controllers
         }
 
 
+
         [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
-        public async Task<IActionResult> GerarPartidasEstatisticasEsperadas(int IdPartida)
+        public async Task<IActionResult> GerarPartidasestatistcasEsperadas(int IdPartida)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
-                // 1. Obter a partida do banco principal
-                var partidaAnalisada = await _context.TB_PARTIDAS
 
-                    .FirstOrDefaultAsync(p => p.Id == IdPartida && p.PartidaAnalise == true);
+
+                Partida partidaAnalisada = await _context.TB_PARTIDAS
+                .FirstOrDefaultAsync(p => p.Id == IdPartida && p.PartidaAnalise == true);
 
                 if (partidaAnalisada == null)
-                    return NotFound("Partida não encontrada ou não marcada para análise");
+                    throw new System.Exception("Não foi encontrada partida Analise com esse Id");
 
-                // 2. Configurar conexão com Supabase
-                string connectionString = "Host=db.gvabzwwvqjxnezjxuabe.supabase.co;Port=5432;Username=postgres;Password=gytw rgmj rexc ocax;Database=postgres;SSL Mode=Require;Trust Server Certificate=true;Include Error Detail=true;";
+                Partida_Estatistica_Esperadas partida = await GerarPartidaEstatisticaEsperada(partidaAnalisada);
 
-                using var conn = new NpgsqlConnection(connectionString);
-                await conn.OpenAsync();
+                await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
+                await _mlDb.SaveChangesAsync();
 
-                using var transaction = await conn.BeginTransactionAsync();
+                int idPrincipal = partida.Id;
 
-                try
-                {
-                    // 3. Criar estatísticas base vazias
-                    var insertEstatisticaVazia = "INSERT INTO estatistica_basemodel DEFAULT VALUES RETURNING id;";
-                    int idEstatisticaCasaVazia = await conn.QuerySingleAsync<int>(insertEstatisticaVazia, null, transaction);
-                    int idEstatisticaForaVazia = await conn.QuerySingleAsync<int>(insertEstatisticaVazia, null, transaction);
+                _mlDb.Entry(partida).State = EntityState.Detached;
+                int idSecundario = partida.Id;
 
-                    // 4. Inserir/atualizar partida
-                    var insertPartida = @"
-                INSERT INTO tb_partidas 
-                (id, id_estatisticacasa, id_estatisticafora, nome_time_casa, nome_time_fora, 
-                 data_partida, campeonato, partida_analise, tipo_partida, url_partida) 
-                VALUES 
-                (@Id, @IdEstatisticaCasa, @IdEstatisticaFora, @NomeTimeCasa, @NomeTimeFora, 
-                 @DataPartida, @Campeonato, @PartidaAnalise, @TipoPartida, @UrlPartida)
-                ON CONFLICT (id) DO UPDATE SET
-                nome_time_casa = EXCLUDED.nome_time_casa,
-                nome_time_fora = EXCLUDED.nome_time_fora,
-                data_partida = EXCLUDED.data_partida,
-                campeonato = EXCLUDED.campeonato,
-                partida_analise = EXCLUDED.partida_analise,
-                tipo_partida = EXCLUDED.tipo_partida,
-                url_partida = EXCLUDED.url_partida;";
 
-                    await conn.ExecuteAsync(insertPartida, new
-                    {
-                        partidaAnalisada.Id,
-                        IdEstatisticaCasa = idEstatisticaCasaVazia,
-                        IdEstatisticaFora = idEstatisticaForaVazia,
-                        partidaAnalisada.NomeTimeCasa,
-                        partidaAnalisada.NomeTimeFora,
-                        partidaAnalisada.DataPartida,
-                        partidaAnalisada.Campeonato,
-                        partidaAnalisada.PartidaAnalise,
-                        partidaAnalisada.TipoPartida,
-                        UrlPartida = partidaAnalisada.Url_Partida ?? string.Empty
-                    }, transaction);
+                await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
+                await _context.SaveChangesAsync();
 
-                    // 5. Gerar estatísticas esperadas
-                    Partida_Estatistica_Esperadas partidaEstatisticas = await GerarPartidaEstatisticaEsperada(partidaAnalisada);
+                scope.Complete();
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
 
-                    // 6. Inserir estatísticas esperadas
-                    var insertEstatisticaEsperada = @"
-                INSERT INTO tb_estatistica_esperadas 
-                (nome_time, ftid, htid, ft_adversarioid, ht_adversarioid, 
-                 ft_confrontoid, ht_confrontoid, is_previsao) 
-                VALUES 
-                (@NomeTime, @FtId, @HtId, @FtAdversarioId, @HtAdversarioId, 
-                 @FtConfrontoId, @HtConfrontoId, true)
-                RETURNING id;";
-
-                    int idEstatisticaEsperadaCasa = await conn.QuerySingleAsync<int>(insertEstatisticaEsperada, new
-                    {
-                        NomeTime = partidaAnalisada.NomeTimeCasa,
-                        FtId = idEstatisticaCasaVazia,
-                        HtId = idEstatisticaCasaVazia,
-                        FtAdversarioId = idEstatisticaForaVazia,
-                        HtAdversarioId = idEstatisticaForaVazia,
-                        FtConfrontoId = idEstatisticaCasaVazia,
-                        HtConfrontoId = idEstatisticaCasaVazia
-                    }, transaction);
-
-                    int idEstatisticaEsperadaFora = await conn.QuerySingleAsync<int>(insertEstatisticaEsperada, new
-                    {
-                        NomeTime = partidaAnalisada.NomeTimeFora,
-                        FtId = idEstatisticaForaVazia,
-                        HtId = idEstatisticaForaVazia,
-                        FtAdversarioId = idEstatisticaCasaVazia,
-                        HtAdversarioId = idEstatisticaCasaVazia,
-                        FtConfrontoId = idEstatisticaForaVazia,
-                        HtConfrontoId = idEstatisticaForaVazia
-                    }, transaction);
-
-                    // 7. Vincular estatísticas à partida
-                    var insertPartidaEstatisticas = @"
-                INSERT INTO tb_partida_estatistica_esperadas 
-                (id_partida, id_estatisticas_esperadas_casa, id_estatisticas_esperadas_fora,
-                 partida_ftid, partida_htid, partida_ft_confrontoid, partida_ht_confrontoid) 
-                VALUES 
-                (@IdPartida, @IdEstatisticasEsperadasCasa, @IdEstatisticasEsperadasFora,
-                 @PartidaFtId, @PartidaHtId, @PartidaFtConfrontoId, @PartidaHtConfrontoId)
-                ON CONFLICT (id_partida) DO UPDATE SET
-                id_estatisticas_esperadas_casa = EXCLUDED.id_estatisticas_esperadas_casa,
-                id_estatisticas_esperadas_fora = EXCLUDED.id_estatisticas_esperadas_fora,
-                partida_ftid = EXCLUDED.partida_ftid,
-                partida_htid = EXCLUDED.partida_htid,
-                partida_ft_confrontoid = EXCLUDED.partida_ft_confrontoid,
-                partida_ht_confrontoid = EXCLUDED.partida_ht_confrontoid;";
-
-                    await conn.ExecuteAsync(insertPartidaEstatisticas, new
-                    {
-                        IdPartida = partidaAnalisada.Id,
-                        IdEstatisticasEsperadasCasa = idEstatisticaEsperadaCasa,
-                        IdEstatisticasEsperadasFora = idEstatisticaEsperadaFora,
-                        PartidaFtId = idEstatisticaCasaVazia,
-                        PartidaHtId = idEstatisticaCasaVazia,
-                        PartidaFtConfrontoId = idEstatisticaCasaVazia,
-                        PartidaHtConfrontoId = idEstatisticaCasaVazia
-                    }, transaction);
-
-                    // 8. Salvar no banco principal
-                    _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Add(partidaEstatisticas);
-                    await _context.SaveChangesAsync();
-
-                    await transaction.CommitAsync();
-                    return Ok("Dados salvos com sucesso em ambos os bancos");
-                }
-                catch (Exception ex)
-                {
-                    await transaction.RollbackAsync();
-                    return StatusCode(500, $"Erro ao salvar no Supabase: {ex.Message}");
-                }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(Partida_Estatistica_Esperadas p)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
+                _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Update(p);
+                await _mlDb.SaveChangesAsync();
+
+                _mlDb.Entry(p).State = EntityState.Detached;
+
+
                 _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Update(p);
                 int linhasAfetadas = await _context.SaveChangesAsync();
+                scope.Complete();
 
                 return Ok(linhasAfetadas);
-
             }
             catch (System.Exception ex)
             {
@@ -243,18 +163,21 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("O Id não pode ser igual a zero");
 
-                Partida_Estatistica_Esperadas p = await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS
+                Partida_Estatistica_Esperadas p = await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS
+              .FirstOrDefaultAsync(pa => pa.Id == id);
+                Partida_Estatistica_Esperadas part = await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS
               .FirstOrDefaultAsync(pa => pa.Id == id);
 
-                if (p == null)
+                if (p == null || part == null)
                     throw new System.Exception("Partida Não Encontrada");
-                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(p);
 
+                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(part);
+                _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(p);
 
+                await _context.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
-
             }
             catch (System.Exception ex)
             {
@@ -340,7 +263,7 @@ namespace botAPI.Controllers
                 Escanteios_Slope = CalcularMediaPropriedade(estatistica1.Escanteios_Slope, estatistica2.Escanteios_Slope),
                 Escanteios_DP = CalcularMediaPropriedade(estatistica1.Escanteios_DP, estatistica2.Escanteios_DP),
                 Bolas_trave = CalcularMediaPropriedade(estatistica1.Bolas_trave, estatistica2.Bolas_trave),
-                Gols_de_cabeça = CalcularMediaPropriedade(estatistica1.Gols_de_cabeça, estatistica2.Gols_de_cabeça),
+                Gols_de_cabeca = CalcularMediaPropriedade(estatistica1.Gols_de_cabeca, estatistica2.Gols_de_cabeca),
                 Defesas_Goleiro = CalcularMediaPropriedade(estatistica1.Defesas_Goleiro, estatistica2.Defesas_Goleiro),
                 Impedimentos = CalcularMediaPropriedade(estatistica1.Impedimentos, estatistica2.Impedimentos),
                 Impedimentos_Slope = CalcularMediaPropriedade(estatistica1.Impedimentos_Slope, estatistica2.Impedimentos_Slope),

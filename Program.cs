@@ -2,8 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using botAPI.Data;
 using Microsoft.Extensions.Options;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 
+
+// Registre seu serviço
 var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona serviços
@@ -15,13 +19,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSomee")));
 
+// Aqui que pode estar o erro se o banco não conecta
 builder.Services.AddDbContext<MLDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("MLDatabase")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MLDatabase")));
 
-// Registrar o serviço de sincronização
-builder.Services.AddScoped<MLDataSyncService>();
 
-var app = builder.Build();
+
+
+
+var app = builder.Build();  
 
 // Pipeline HTTP
 if (app.Environment.IsDevelopment())

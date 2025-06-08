@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using botAPI.Models;
 using botAPI.Data;
+using System.Collections.Generic;
+using System.Transactions;
 
 namespace botAPI.Controllers
 {
@@ -11,11 +13,14 @@ namespace botAPI.Controllers
     public class EstatisticaEsperadasController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MLDbContext _MLDb;
 
-        public EstatisticaEsperadasController(DataContext context)
+        public EstatisticaEsperadasController(DataContext context, MLDbContext mLDb)
         {
             _context = context;
+            _MLDb = mLDb;
         }
+
 
 
         [HttpGet("id")]
@@ -75,13 +80,25 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Estatistica_Esperadas e)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
+                await _MLDb.TB_ESTATISTICA_ESPERADAS.AddAsync(e);
+                await _MLDb.SaveChangesAsync();
+                int idPrincipal = e.Id;
+                _MLDb.Entry(e).State = EntityState.Detached;
+
+
                 await _context.TB_ESTATISTICA_ESPERADAS.AddAsync(e);
                 await _context.SaveChangesAsync();
 
-                return Ok(e.Id);
+                int idSecundario = e.Id;
 
+                // Confirma a transação em AMBOS os bancos
+                scope.Complete();
+
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
             catch (System.Exception ex)
             {
@@ -92,6 +109,8 @@ namespace botAPI.Controllers
         [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
         public async Task<IActionResult> GerarEstatistcasEsperadas(int IdPartida)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
                 Partida partida = await _context.TB_PARTIDAS
@@ -101,13 +120,21 @@ namespace botAPI.Controllers
                     throw new System.Exception("Não foi encontrada partida Analise com esse Id");
 
                 Estatistica_Esperadas c = await BuscarPartidas(partida, partida.NomeTimeCasa);
-                Estatistica_Esperadas f = await BuscarPartidas(partida, partida.NomeTimeCasa);
+                Estatistica_Esperadas f = await BuscarPartidas(partida, partida.NomeTimeFora);
 
                 c.NomeTime = partida.NomeTimeCasa;
                 f.NomeTime = partida.NomeTimeFora;
 
-                await _context.TB_ESTATISTICA_ESPERADAS.AddRangeAsync(c, f);
+                await _MLDb.TB_ESTATISTICA_ESPERADAS.AddRangeAsync(c, f);
+                await _MLDb.SaveChangesAsync();
+                _MLDb.Entry(c).State = EntityState.Detached;
+                _MLDb.Entry(f).State = EntityState.Detached;
+
+
+                _context.TB_ESTATISTICA_ESPERADAS.AddRange(c, f);
                 await _context.SaveChangesAsync();
+                scope.Complete();
+
 
                 string mensagem = $"foi gerado Estatisticas esperadas corretamente o ID de casa é{c.Id} ,  o ID de Fora é {f.Id} ";
                 return Ok(mensagem);
@@ -123,10 +150,19 @@ namespace botAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Estatistica_Esperadas e)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
+                _MLDb.TB_ESTATISTICA_ESPERADAS.Update(e);
+                int linhasAfetadas = await _MLDb.SaveChangesAsync();
+
+                _MLDb.Entry(e).State = EntityState.Detached;
+
+
                 _context.TB_ESTATISTICA_ESPERADAS.Update(e);
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                scope.Complete();
 
                 return Ok(linhasAfetadas);
             }
@@ -147,12 +183,16 @@ namespace botAPI.Controllers
                 Estatistica_Esperadas e = await _context.TB_ESTATISTICA_ESPERADAS
                 .FirstOrDefaultAsync(es => es.Id == id);
 
-                if (e == null)
+                Estatistica_Esperadas e_repeat = await _context.TB_ESTATISTICA_ESPERADAS
+                .FirstOrDefaultAsync(es => es.Id == id);
+
+                if (e == null || e_repeat == null)
                     throw new System.Exception("Estatistica Não Encontrada");
-                _context.TB_ESTATISTICA_ESPERADAS.Remove(e);
 
-
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                _MLDb.TB_ESTATISTICA_ESPERADAS.Remove(e);
+                _context.TB_ESTATISTICA_ESPERADAS.Remove(e_repeat);
+                await _context.SaveChangesAsync();
+                int linhasAfetadas = await _MLDb.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
 
@@ -203,14 +243,16 @@ namespace botAPI.Controllers
             confrontos.AddRange(confrontosFora);
 
 
-            time = gerarEstatisticasByTime(estatisticas, estatisticasRival, confrontos);
+            time = await GerarEstatisticasByTime(estatisticas, estatisticasRival, confrontos);
 
             return time;
         }
 
 
-        private Estatistica_Esperadas gerarEstatisticasByTime(List<Estatistica> principal, List<Estatistica> rival, List<Estatistica> confronto)
+        private async Task<Estatistica_Esperadas> GerarEstatisticasByTime(List<Estatistica> principal, List<Estatistica> rival, List<Estatistica> confronto)
         {
+            List<Estatistica_BaseModel> estatisticas_Base = new List<Estatistica_BaseModel>();
+
             Estatistica_Esperadas estatisticas = new Estatistica_Esperadas
             {
                 FT = CalcularMetricasTime(principal),
@@ -220,6 +262,14 @@ namespace botAPI.Controllers
                 FT_Confronto = CalcularMetricasTime(confronto),
                 HT_Confronto = CalcularMetricasTime(confronto, "HT"),
             };
+            estatisticas_Base.AddRange(estatisticas.FT, estatisticas.HT);
+            estatisticas_Base.AddRange(estatisticas.FT_Adversario, estatisticas.HT_Adversario);
+            estatisticas_Base.AddRange(estatisticas.FT_Confronto, estatisticas.HT_Confronto);
+
+            await _context.TB_ESTATISTICA_ESPERADAS.AddRangeAsync((IEnumerable<Estatistica_Esperadas>)estatisticas_Base);
+            await _MLDb.TB_ESTATISTICA_ESPERADAS.AddRangeAsync((IEnumerable<Estatistica_Esperadas>)estatisticas_Base);
+            await _MLDb.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return estatisticas;
         }
@@ -302,7 +352,7 @@ namespace botAPI.Controllers
 
                 Chances_Claras = SafeAverage(stats, p => GetProp(p, "Chances_Claras", suffix)),
                 Bolas_trave = SafeAverage(stats, p => GetProp(p, "Bolas_trave", suffix)),
-                Gols_de_cabeça = SafeAverage(stats, p => GetProp(p, "Gols_de_cabeça", suffix)),
+                Gols_de_cabeca = SafeAverage(stats, p => GetProp(p, "Gols_de_cabeça", suffix)),
                 Defesas_Goleiro = SafeAverage(stats, p => GetProp(p, "Defesas_Goleiro", suffix)),
 
                 Impedimentos = SafeAverage(stats, p => GetProp(p, "Impedimentos", suffix)),

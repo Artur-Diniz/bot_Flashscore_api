@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using botAPI.Models;
 using botAPI.Data;
+using System.Transactions;
 
 namespace botAPI.Controllers
 {
@@ -11,10 +12,12 @@ namespace botAPI.Controllers
     public class PartidaController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MLDbContext _mlDb;
 
-        public PartidaController(DataContext context)
+        public PartidaController(DataContext context, MLDbContext mLDb)
         {
             _context = context;
+            _mlDb = mLDb;
         }
 
         [HttpGet("{id}")]
@@ -56,7 +59,7 @@ namespace botAPI.Controllers
             }
         }
 
-        
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
@@ -94,40 +97,65 @@ namespace botAPI.Controllers
         }
 
 
-
         [HttpPost]
         public async Task<IActionResult> Post(Partida partida)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
-                await _context.TB_PARTIDAS.AddAsync(partida);
+
+                await _mlDb.TB_PARTIDAS.AddAsync(partida);
+                await _mlDb.SaveChangesAsync();
+                int idPrincipal = partida.Id;
+
+                // Desanexa do primeiro contexto
+                _mlDb.Entry(partida).State = EntityState.Detached;
+
+
+
+                _context.TB_PARTIDAS.Add(partida);
                 await _context.SaveChangesAsync();
 
-                return Ok(partida.Id);
+                int idSecundario = partida.Id;
 
+                scope.Complete();
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                Exception inner = ex;
+                while (inner.InnerException != null)
+                    inner = inner.InnerException;
+                return BadRequest(inner.Message);
             }
         }
+
 
         [HttpPut]
         public async Task<IActionResult> Put(Partida p)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
+                _mlDb.TB_PARTIDAS.Update(p);
+                int linhasAfetadas = await _mlDb.SaveChangesAsync();
+
+
+                _mlDb.Entry(p).State = EntityState.Detached;
+
                 _context.TB_PARTIDAS.Update(p);
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                scope.Complete();
 
                 return Ok(linhasAfetadas);
-
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delte(int id)
@@ -137,15 +165,21 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("O Id não pode ser igual a zero");
 
-                Partida p = await _context.TB_PARTIDAS
+                Partida p = await _mlDb.TB_PARTIDAS
+              .FirstOrDefaultAsync(pa => pa.Id == id);
+                Partida part = await _context.TB_PARTIDAS
               .FirstOrDefaultAsync(pa => pa.Id == id);
 
-                if (p == null)
+
+                if (p == null || part == null)
                     throw new System.Exception("Partida Não Encontrada");
-                _context.TB_PARTIDAS.Remove(p);
+
+                _mlDb.TB_PARTIDAS.Remove(p);
+                _context.TB_PARTIDAS.Remove(part);
 
 
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                int linhasAfetadas = await _mlDb.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
 

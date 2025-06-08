@@ -53,10 +53,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica", b =>
                 {
                     b.Property<int>("Id_Estatistica")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Estatistica"));
 
                     b.Property<int?>("Bolas_Afastadas")
                         .HasColumnType("int");
@@ -223,10 +220,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica_BaseModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float?>("Bolas_Afastadas")
                         .HasColumnType("real");
@@ -306,7 +300,7 @@ namespace botAPI.Migrations
                     b.Property<float?>("Gol_Slope")
                         .HasColumnType("real");
 
-                    b.Property<float?>("Gols_de_cabeça")
+                    b.Property<float?>("Gols_de_cabeca")
                         .HasColumnType("real");
 
                     b.Property<float?>("Impedimentos")
@@ -359,16 +353,13 @@ namespace botAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estatistica_BaseModel");
+                    b.ToTable("TB_ESTATISTICA_BASEMODEL");
                 });
 
             modelBuilder.Entity("botAPI.Models.Estatistica_Esperadas", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("FTId")
                         .HasColumnType("int");
@@ -376,7 +367,16 @@ namespace botAPI.Migrations
                     b.Property<int?>("FT_AdversarioId")
                         .HasColumnType("int");
 
+                    b.Property<int>("FT_Adversario_Id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("FT_ConfrontoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FT_Confronto_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FT_Id")
                         .HasColumnType("int");
 
                     b.Property<int?>("HTId")
@@ -385,7 +385,16 @@ namespace botAPI.Migrations
                     b.Property<int?>("HT_AdversarioId")
                         .HasColumnType("int");
 
+                    b.Property<int>("HT_Adversario_Id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("HT_ConfrontoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HT_Confronto_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HT_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeTime")
@@ -412,10 +421,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica_Times", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float?>("Bolas_Afastadas")
                         .HasColumnType("real");
@@ -847,10 +853,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Palpites", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descricao")
                         .HasMaxLength(510)
@@ -873,10 +876,8 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Partida", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("Campeonato")
                         .HasMaxLength(250)
@@ -918,10 +919,13 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Partida_Estatistica_Esperadas", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int?>("Estatisticas_Esperadas_CasaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Estatisticas_Esperadas_ForaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Id_Estatisticas_Esperadas_Casa")
                         .HasColumnType("int");
@@ -930,6 +934,18 @@ namespace botAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id_Partida")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Partida_FT")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Partida_FT_Confronto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Partida_HT")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Partida_HT_Confronto")
                         .HasColumnType("int");
 
                     b.Property<int?>("PartidaId")
@@ -947,13 +963,11 @@ namespace botAPI.Migrations
                     b.Property<int?>("Partida_HT_ConfrontoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Time_CasaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Time_ForaId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("Estatisticas_Esperadas_CasaId");
+
+                    b.HasIndex("Estatisticas_Esperadas_ForaId");
 
                     b.HasIndex("PartidaId");
 
@@ -964,10 +978,6 @@ namespace botAPI.Migrations
                     b.HasIndex("Partida_HTId");
 
                     b.HasIndex("Partida_HT_ConfrontoId");
-
-                    b.HasIndex("Time_CasaId");
-
-                    b.HasIndex("Time_ForaId");
 
                     b.ToTable("TB_PARTIDA_ESTAITSTICA_ESPERADAS");
                 });
@@ -1013,6 +1023,14 @@ namespace botAPI.Migrations
 
             modelBuilder.Entity("botAPI.Models.Partida_Estatistica_Esperadas", b =>
                 {
+                    b.HasOne("botAPI.Models.Estatistica_Esperadas", "Estatisticas_Esperadas_Casa")
+                        .WithMany()
+                        .HasForeignKey("Estatisticas_Esperadas_CasaId");
+
+                    b.HasOne("botAPI.Models.Estatistica_Esperadas", "Estatisticas_Esperadas_Fora")
+                        .WithMany()
+                        .HasForeignKey("Estatisticas_Esperadas_ForaId");
+
                     b.HasOne("botAPI.Models.Partida", "Partida")
                         .WithMany()
                         .HasForeignKey("PartidaId");
@@ -1033,13 +1051,9 @@ namespace botAPI.Migrations
                         .WithMany()
                         .HasForeignKey("Partida_HT_ConfrontoId");
 
-                    b.HasOne("botAPI.Models.Estatistica_Esperadas", "Time_Casa")
-                        .WithMany()
-                        .HasForeignKey("Time_CasaId");
+                    b.Navigation("Estatisticas_Esperadas_Casa");
 
-                    b.HasOne("botAPI.Models.Estatistica_Esperadas", "Time_Fora")
-                        .WithMany()
-                        .HasForeignKey("Time_ForaId");
+                    b.Navigation("Estatisticas_Esperadas_Fora");
 
                     b.Navigation("Partida");
 
@@ -1050,10 +1064,6 @@ namespace botAPI.Migrations
                     b.Navigation("Partida_HT");
 
                     b.Navigation("Partida_HT_Confronto");
-
-                    b.Navigation("Time_Casa");
-
-                    b.Navigation("Time_Fora");
                 });
 #pragma warning restore 612, 618
         }

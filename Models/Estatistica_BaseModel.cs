@@ -1,12 +1,13 @@
-
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace botAPI.Models
 {
     public class Estatistica_BaseModel
     {
         [Key]
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public float? Gol { get; set; }
         public float? Gol_Slope { get; set; }

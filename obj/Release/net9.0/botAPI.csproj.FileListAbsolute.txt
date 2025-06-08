@@ -165,3 +165,13 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\obj\Release\net9.0\ref\
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Dapper.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.Configuration.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Npgsql.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\bin\Release\net9.0\System.Threading.Channels.dll

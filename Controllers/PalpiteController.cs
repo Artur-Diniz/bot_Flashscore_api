@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using botAPI.Models;
 using botAPI.Data;
+using System.Transactions;
 
 namespace botAPI.Controllers
 {
@@ -11,10 +12,12 @@ namespace botAPI.Controllers
     public class PalpiteController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MLDbContext _MLDb;
 
-        public PalpiteController(DataContext context)
+        public PalpiteController(DataContext context, MLDbContext mLDb)
         {
             _context = context;
+            _MLDb = mLDb;
         }
 
         [HttpGet("{id}")]
@@ -60,13 +63,24 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Palpites p)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
-                await _context.TB_PALPITES.AddAsync(p);
-                await _context.SaveChangesAsync();
+                await _MLDb.TB_PALPITES.AddAsync(p);
+                await _MLDb.SaveChangesAsync();
 
-                return Ok(p.Id);
+                int idPrincipal = p.Id;
 
+                _MLDb.Entry(p).State = EntityState.Detached;
+
+
+                _MLDb.TB_PALPITES.Add(p);
+                await _MLDb.TB_PALPITES.AddAsync(p);
+
+                int idSecundario = p.Id;
+
+                scope.Complete();
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
             catch (System.Exception ex)
             {
@@ -77,6 +91,7 @@ namespace botAPI.Controllers
         [HttpPost("Gerar_Palpites")]
         public async Task<IActionResult> GerarPalpites()
         {
+
             try
             {
                 List<Partida> partidas = await _context
@@ -102,10 +117,17 @@ namespace botAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Palpites palpites)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
+                _MLDb.TB_PALPITES.Update(palpites);
+                int linhasAfetadas = await _MLDb.SaveChangesAsync();
+
+                _MLDb.Entry(palpites).State = EntityState.Detached;
+
                 _context.TB_PALPITES.Update(palpites);
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                scope.Complete();
 
                 return Ok(linhasAfetadas);
             }
@@ -124,11 +146,16 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("Id não pode ser igual a Zero");
 
-                Palpites p = await _context.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
+                Palpites p = await _MLDb.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
+                Palpites p_repeat = await _context.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
+
                 if (p == null)
                     throw new System.Exception("Palpite Não Encontrada");
 
+        
                 _context.TB_PALPITES.Remove(p);
+                _MLDb.TB_PALPITES.Remove(p_repeat);
+                await _MLDb.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
@@ -142,6 +169,7 @@ namespace botAPI.Controllers
 
         private async Task<List<Palpites>> MetodosPalpites(List<Partida> partidas)
         {
+
             List<Palpites> palpites = new List<Palpites>();
             List<Palpites> apostas = new List<Palpites>();
 
@@ -193,11 +221,24 @@ namespace botAPI.Controllers
 
 
             }
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-            if (palpites.Count() != 0)
+
+            if (palpites.Any())
             {
-                await _context.TB_PALPITES.AddRangeAsync(palpites);
+                await _MLDb.TB_PALPITES.AddRangeAsync(palpites);
+                await _MLDb.SaveChangesAsync();
+
+                foreach (var item in palpites)
+                {
+                    _MLDb.Entry(item).State = EntityState.Detached;  // Desanexa cada item
+
+                    _context.TB_PALPITES.Add(item);
+                }
+
                 await _context.SaveChangesAsync();
+                scope.Complete();
+
             }
 
             return palpites;
@@ -701,6 +742,6 @@ namespace botAPI.Controllers
         }
 
 
- 
+
     }
 }

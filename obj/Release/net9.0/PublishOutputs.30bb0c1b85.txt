@@ -6,6 +6,7 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\botAPI.runtimec
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\botAPI.pdb
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Azure.Core.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Azure.Identity.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Dapper.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Data.SqlClient.dll
@@ -15,9 +16,15 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Entit
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Configuration.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Configuration.Json.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Logging.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Extensions.Options.dll
@@ -33,6 +40,8 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Ident
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.OpenApi.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.SqlServer.Server.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Microsoft.Win32.SystemEvents.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Npgsql.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -44,6 +53,7 @@ C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Memory.D
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Runtime.Caching.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Security.Cryptography.ProtectedData.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Security.Permissions.dll
+C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Threading.Channels.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\System.Windows.Extensions.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\artur\OneDrive\Área de Trabalho\program\botAPI\publish\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll

@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\partidaestatisticaesperadas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\partidaestatisticaesperadas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\models\\partidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:models\\partidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\estatisticaesperadascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticaesperadascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\program\\botapi\\controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,51 +39,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PartidaEstatisticaEsperadas.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PartidaEstatisticaEsperadas.cs",
-              "RelativeDocumentMoniker": "Controllers\\PartidaEstatisticaEsperadas.cs",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PartidaEstatisticaEsperadas.cs",
-              "RelativeToolTip": "Controllers\\PartidaEstatisticaEsperadas.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAawM8AAAAQAAAAAAAAAA==",
+              "Title": "EstatisticaController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaController.cs",
+              "RelativeToolTip": "Controllers\\EstatisticaController.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAawFMAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T23:08:01.429Z",
+              "WhenOpened": "2025-06-07T13:40:58.668Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Partidas.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Models\\Partidas.cs",
-              "RelativeDocumentMoniker": "Models\\Partidas.cs",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Models\\Partidas.cs",
-              "RelativeToolTip": "Models\\Partidas.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAmwBIAAAAFAAAAAAAAAA==",
+              "Title": "PartidaController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PartidaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PartidaController.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PartidaController.cs",
+              "RelativeToolTip": "Controllers\\PartidaController.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAcwLEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T15:51:28.59Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DataContext.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Data\\DataContext.cs",
-              "RelativeDocumentMoniker": "Data\\DataContext.cs",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Data\\DataContext.cs",
-              "RelativeToolTip": "Data\\DataContext.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAADwvyEAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:15:28.357Z"
+              "WhenOpened": "2025-06-04T11:43:32.142Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "EstatisticaEsperadasController.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaEsperadasController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EstatisticaEsperadasController.cs",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaEsperadasController.cs",
-              "RelativeToolTip": "Controllers\\EstatisticaEsperadasController.cs",
-              "ViewState": "AgIAALoAAAAAAAAAAAAqwLkAAAAlAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAqwBMAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T13:49:47.185Z"
+              "WhenOpened": "2025-06-03T11:34:35.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PalpiteController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PalpiteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PalpiteController.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\PalpiteController.cs",
+              "RelativeToolTip": "Controllers\\PalpiteController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T13:06:22.909Z",
+              "EditorCaption": ""
             }
           ]
         },

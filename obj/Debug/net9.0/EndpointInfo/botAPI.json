@@ -1347,7 +1347,7 @@
             "format": "float",
             "nullable": true
           },
-          "gols_de_cabeça": {
+          "gols_de_cabeca": {
             "type": "number",
             "format": "float",
             "nullable": true
@@ -1491,20 +1491,44 @@
             "type": "string",
             "nullable": true
           },
+          "fT_Id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "ft": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
+          },
+          "hT_Id": {
+            "type": "integer",
+            "format": "int32"
           },
           "ht": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
+          "fT_Adversario_Id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "fT_Adversario": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
+          },
+          "hT_Adversario_Id": {
+            "type": "integer",
+            "format": "int32"
           },
           "hT_Adversario": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
+          "fT_Confronto_Id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "fT_Confronto": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
+          },
+          "hT_Confronto_Id": {
+            "type": "integer",
+            "format": "int32"
           },
           "hT_Confronto": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
@@ -2324,24 +2348,40 @@
             "type": "integer",
             "format": "int32"
           },
-          "time_Casa": {
+          "estatisticas_Esperadas_Casa": {
             "$ref": "#/components/schemas/Estatistica_Esperadas"
           },
           "id_Estatisticas_Esperadas_Fora": {
             "type": "integer",
             "format": "int32"
           },
-          "time_Fora": {
+          "estatisticas_Esperadas_Fora": {
             "$ref": "#/components/schemas/Estatistica_Esperadas"
+          },
+          "id_Partida_FT": {
+            "type": "integer",
+            "format": "int32"
           },
           "partida_FT": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
+          "id_Partida_HT": {
+            "type": "integer",
+            "format": "int32"
+          },
           "partida_HT": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
           },
+          "id_Partida_FT_Confronto": {
+            "type": "integer",
+            "format": "int32"
+          },
           "partida_FT_Confronto": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
+          },
+          "id_Partida_HT_Confronto": {
+            "type": "integer",
+            "format": "int32"
           },
           "partida_HT_Confronto": {
             "$ref": "#/components/schemas/Estatistica_BaseModel"
