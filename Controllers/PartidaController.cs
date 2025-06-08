@@ -28,7 +28,7 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("O Id não pode ser igual a zero");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                Partida p = await _context.TB_PARTIDAS
+                Partida p = await _mlDb.TB_PARTIDAS
                 .FirstOrDefaultAsync(pa => pa.Id == id);
                 if (p == null)
                     throw new System.Exception("Partida Não Encontrada");
@@ -66,6 +66,23 @@ namespace botAPI.Controllers
             try
             {
                 List<Partida> partidas = await _context
+                .TB_PARTIDAS.ToListAsync();
+                if (partidas == null)
+                    throw new System.Exception("Partida Não Encontrada");
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAllComplete")]
+        public async Task<IActionResult> GetComplete()
+        {
+            try
+            {
+                List<Partida> partidas = await _mlDb
                 .TB_PARTIDAS.ToListAsync();
                 if (partidas == null)
                     throw new System.Exception("Partida Não Encontrada");

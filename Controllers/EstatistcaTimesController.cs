@@ -30,7 +30,7 @@ namespace botAPI.Controllers
                     throw new System.Exception("Estatistica Não Encontrada");
 
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                Estatistica_Times e = await _context.TB_ESTATISTICA_TIME
+                Estatistica_Times e = await _MLDb.TB_ESTATISTICA_TIME
                 .FirstOrDefaultAsync(es => es.Id == id);
                 if (e == null)
                     throw new System.Exception("Estatistica do Times Não Encontrada");
@@ -55,6 +55,22 @@ namespace botAPI.Controllers
 
                 return Ok(estatisticas);
 
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllComplete")]
+        public async Task<IActionResult> GetAllComplete()
+        {
+            try
+            {
+                List<Estatistica_Times> estatisticas = await _MLDb
+                .TB_ESTATISTICA_TIME.ToListAsync();
+
+                return Ok(estatisticas);
             }
             catch (System.Exception ex)
             {

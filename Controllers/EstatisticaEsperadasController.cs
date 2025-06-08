@@ -31,7 +31,7 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("Estatistica Não Encontrada");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                Estatistica_Esperadas e = await _context.TB_ESTATISTICA_ESPERADAS
+                Estatistica_Esperadas e = await _MLDb.TB_ESTATISTICA_ESPERADAS
                 .Include(e => e.FT)
                 .Include(e => e.FT_Adversario)
                 .Include(e => e.FT_Confronto)
@@ -59,6 +59,29 @@ namespace botAPI.Controllers
             try
             {
                 List<Estatistica_Esperadas> estatisticas = await _context
+                .TB_ESTATISTICA_ESPERADAS
+                .Include(e => e.FT)
+                .Include(e => e.FT_Adversario)
+                .Include(e => e.FT_Confronto)
+                .Include(e => e.HT)
+                .Include(e => e.HT_Adversario)
+                .Include(e => e.HT_Confronto)
+                .ToListAsync();
+
+                return Ok(estatisticas);
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAllComplete")]
+        public async Task<IActionResult> GetAllComplete()
+        {
+            try
+            {
+                List<Estatistica_Esperadas> estatisticas = await _MLDb
                 .TB_ESTATISTICA_ESPERADAS
                 .Include(e => e.FT)
                 .Include(e => e.FT_Adversario)
