@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
               "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\program\\botAPI\\Controllers\\EstatisticaController.cs",
               "RelativeToolTip": "Controllers\\EstatisticaController.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAawFMAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAwwFMAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-07T13:40:58.668Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "Controllers\\PartidaController.cs",
               "ViewState": "AgIAAKgAAAAAAAAAAAAcwLEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T11:43:32.142Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T11:43:32.142Z"
             },
             {
               "$type": "Document",
@@ -84,8 +83,7 @@
               "RelativeToolTip": "Controllers\\PalpiteController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAJEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T13:06:22.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T13:06:22.909Z"
             }
           ]
         },

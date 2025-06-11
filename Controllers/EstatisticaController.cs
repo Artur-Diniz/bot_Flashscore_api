@@ -78,34 +78,44 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Estatistica e)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
             try
             {
+                // 1. Insere no primeiro banco (_MLDb) e salva para obter o ID
                 await _MLDb.TB_ESTATISTICA.AddAsync(e);
                 await _MLDb.SaveChangesAsync();
-
                 int idPrincipal = e.Id_Estatistica;
 
+                // 2. Prepara a entidade para o segundo banco
                 _MLDb.Entry(e).State = EntityState.Detached;
+                e.Id_Estatistica = idPrincipal;
+                _context.Entry(e).State = EntityState.Added;
 
-
-                _context.TB_ESTATISTICA.Add(e);
+                // 3. Tenta salvar no segundo banco
                 await _context.SaveChangesAsync();
 
-                int idSecundario = e.Id_Estatistica;
-
-                // Confirma a transação em AMBOS os bancos
-                scope.Complete();
-
-                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
-
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idPrincipal });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    // Estratégia de compensação: remove do primeiro banco se o segundo falhar
+                    var inserted = await _MLDb.TB_ESTATISTICA.FindAsync(e.Id_Estatistica);
+                    if (inserted != null)
+                    {
+                        _MLDb.TB_ESTATISTICA.Remove(inserted);
+                        await _MLDb.SaveChangesAsync();
+                    }
+                }
+                catch (Exception rollbackEx)
+                {
+                    return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
+
 
         [HttpPost("Partida")]
         public async Task<IActionResult> Post(Partida_Estatistica_DTO dTO)
@@ -179,65 +189,90 @@ namespace botAPI.Controllers
             }
         }
 
+[HttpPut("{id}")]
+public async Task<IActionResult> Put(int id, Estatistica estatisticaAtualizada)
+{
+    try
+    {
+        if (id == 0)
+            return BadRequest("O Id não pode ser igual a zero");
 
-        [HttpPut]
-        public async Task<IActionResult> Put(Estatistica e)
+        var estatisticaML = await _MLDb.TB_ESTATISTICA
+            .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+
+        var estatisticaSecundaria = await _context.TB_ESTATISTICA
+            .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+
+        if (estatisticaML == null || estatisticaSecundaria == null)
+            return NotFound("Estatística não encontrada em um dos bancos.");
+
+        // Atualiza dados
+        _MLDb.Entry(estatisticaML).CurrentValues.SetValues(estatisticaAtualizada);
+        _context.Entry(estatisticaSecundaria).CurrentValues.SetValues(estatisticaAtualizada);
+
+        estatisticaML.Id_Estatistica = id;
+        estatisticaSecundaria.Id_Estatistica = id;
+
+        // Salva no primeiro banco
+        await _MLDb.SaveChangesAsync();
+
+        try
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
-            try
-            {
-                _MLDb.TB_ESTATISTICA.Update(e);
-                int linhasAfetadas = await _MLDb.SaveChangesAsync();
-
-                _MLDb.Entry(e).State = EntityState.Detached;
-
-
-                _context.TB_ESTATISTICA.Update(e);
-                await _context.SaveChangesAsync();
-                scope.Complete();
-
-                return Ok(linhasAfetadas);
-            }
-            catch (System.Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            // Salva no segundo banco
+            await _context.SaveChangesAsync();
         }
+        catch (Exception ex)
+        {
+            // Tenta desfazer alteração no primeiro banco
+            _MLDb.Entry(estatisticaML).State = EntityState.Unchanged;
+            return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+        }
+
+        return Ok("Estatística atualizada com sucesso.");
+    }
+    catch (Exception ex)
+    {
+        return BadRequest($"Erro ao atualizar estatística: {ex.Message}");
+    }
+}
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
                 if (id == 0)
-                    throw new System.Exception("O Id não pode ser igual a zero");
+                    throw new Exception("O Id não pode ser igual a zero");
 
+                // Busca a entidade no primeiro banco
                 Estatistica e = await _MLDb.TB_ESTATISTICA
-                .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+                    .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
 
+                // Busca a entidade no segundo banco
                 Estatistica e_repeat = await _context.TB_ESTATISTICA
-                .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+                    .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+
                 if (e == null || e_repeat == null)
-                    throw new System.Exception("Estatistica Não Encontrada");
+                    throw new Exception("Estatística não encontrada em um dos bancos.");
 
+                // Remove do respectivo contexto
+                _MLDb.TB_ESTATISTICA.Remove(e);
+                _context.TB_ESTATISTICA.Remove(e_repeat);
 
-                _context.TB_ESTATISTICA.Remove(e);
-                _MLDb.TB_ESTATISTICA.Remove(e_repeat);
-
-
+                // Salva em ambos
                 await _MLDb.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
-                scope.Complete();
+
 
                 return Ok(linhasAfetadas);
-
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Erro ao deletar: {ex.Message}");
             }
         }
+
     }
 }

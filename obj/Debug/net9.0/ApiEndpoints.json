@@ -159,6 +159,16 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaController",
+    "Method": "GetAllComplete",
+    "RelativePath": "Estatistica/GetAllComplete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaController",
     "Method": "Post",
     "RelativePath": "Estatistica/Partida",
     "HttpMethod": "POST",
@@ -241,6 +251,16 @@
     "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
     "Method": "GetAll",
     "RelativePath": "EstatisticaEsperadas/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
+    "Method": "GetAllComplete",
+    "RelativePath": "EstatisticaEsperadas/GetAllComplete",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -354,6 +374,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
+    "Method": "GetAllComplete",
+    "RelativePath": "EstatisticaTimes/GetAllComplete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "botAPI.Controllers.PalpiteController",
     "Method": "Post",
     "RelativePath": "Palpite",
@@ -438,6 +468,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "GetAllComplete",
+    "RelativePath": "Palpite/GetAllComplete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "Post",
     "RelativePath": "Partida",
@@ -505,6 +545,16 @@
     "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "Get",
     "RelativePath": "Partida/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetComplete",
+    "RelativePath": "Partida/GetAllComplete",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -615,6 +665,16 @@
     "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
     "Method": "Get",
     "RelativePath": "PartidaEstatisticaEsperadas/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "GetAllComplete",
+    "RelativePath": "PartidaEstatisticaEsperadas/GetAllComplete",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

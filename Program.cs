@@ -24,6 +24,7 @@ builder.Services.AddDbContext<MLDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MLDatabase")));
 
 
+AppContext.SetSwitch("System.Transactions.TransactionManager.ImplicitDistributedTransactions", true);
 
 
 

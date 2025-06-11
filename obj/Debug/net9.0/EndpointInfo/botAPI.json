@@ -189,6 +189,18 @@
         }
       }
     },
+    "/Estatistica/GetAllComplete": {
+      "get": {
+        "tags": [
+          "Estatistica"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Estatistica": {
       "post": {
         "tags": [
@@ -303,6 +315,18 @@
       }
     },
     "/EstatisticaEsperadas/GetAll": {
+      "get": {
+        "tags": [
+          "EstatisticaEsperadas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/EstatisticaEsperadas/GetAllComplete": {
       "get": {
         "tags": [
           "EstatisticaEsperadas"
@@ -476,6 +500,18 @@
         }
       }
     },
+    "/EstatisticaTimes/GetAllComplete": {
+      "get": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/EstatisticaTimes": {
       "post": {
         "tags": [
@@ -603,6 +639,18 @@
       }
     },
     "/Palpite/GetAll": {
+      "get": {
+        "tags": [
+          "Palpite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Palpite/GetAllComplete": {
       "get": {
         "tags": [
           "Palpite"
@@ -754,6 +802,18 @@
         }
       }
     },
+    "/Partida/GetAllComplete": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Partida/PartidasAnalisadas": {
       "get": {
         "tags": [
@@ -871,6 +931,18 @@
       }
     },
     "/PartidaEstatisticaEsperadas/GetAll": {
+      "get": {
+        "tags": [
+          "PartidaEstatisticaEsperadas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/PartidaEstatisticaEsperadas/GetAllComplete": {
       "get": {
         "tags": [
           "PartidaEstatisticaEsperadas"

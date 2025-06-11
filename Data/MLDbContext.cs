@@ -22,7 +22,14 @@ namespace botAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Estatistica>().Property(e => e.Id_Estatistica).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Estatistica_Times>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Palpites>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Partida>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Estatistica_BaseModel>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Partida_Estatistica_Esperadas>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Estatistica_Esperadas>().Property(e => e.Id).ValueGeneratedOnAdd();
+            
             modelBuilder.Entity<ErrosLogs>(entity =>
             {
                 entity.Property(e => e.OqueProvavelmenteAConteceu)
