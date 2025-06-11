@@ -93,13 +93,12 @@ namespace botAPI.Controllers
                 // 3. Tenta salvar no segundo banco
                 await _context.SaveChangesAsync();
 
-                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idPrincipal });
+                return Ok(new { PrimaryId = idPrincipal, SecondaryId = e.Id_Estatistica });
             }
             catch (Exception ex)
             {
                 try
                 {
-                    // Estratégia de compensação: remove do primeiro banco se o segundo falhar
                     var inserted = await _MLDb.TB_ESTATISTICA.FindAsync(e.Id_Estatistica);
                     if (inserted != null)
                     {
@@ -121,120 +120,105 @@ namespace botAPI.Controllers
         public async Task<IActionResult> Post(Partida_Estatistica_DTO dTO)
         {
             using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             try
             {
+                // 1. Insere as estatísticas no primeiro contexto
                 await _MLDb.TB_ESTATISTICA.AddRangeAsync(dTO.EstatisticaCasa, dTO.EstatisticaFora);
-
                 await _MLDb.SaveChangesAsync();
 
+                // 2. Atualiza o objeto Partida com os IDs gerados
                 dTO.Partida.Id_EstatisticaCasa = dTO.EstatisticaCasa.Id_Estatistica;
                 dTO.Partida.Id_EstatisticaFora = dTO.EstatisticaFora.Id_Estatistica;
 
+                // 3. Insere a partida no primeiro contexto
                 await _MLDb.TB_PARTIDAS.AddAsync(dTO.Partida);
-
                 await _MLDb.SaveChangesAsync();
 
+                // 4. Atualiza as estatísticas com o Id da partida
                 dTO.EstatisticaCasa.Id_Partida = dTO.Partida.Id;
                 dTO.EstatisticaFora.Id_Partida = dTO.Partida.Id;
-                await _MLDb.SaveChangesAsync();
 
                 _MLDb.TB_ESTATISTICA.UpdateRange(dTO.EstatisticaCasa, dTO.EstatisticaFora);
-
-                _MLDb.TB_PARTIDAS.Update(dTO.Partida);
-
                 await _MLDb.SaveChangesAsync();
 
-
+                // 5. Desanexa do primeiro contexto
                 _MLDb.Entry(dTO.Partida).State = EntityState.Detached;
-                _MLDb.Entry(dTO.EstatisticaFora).State = EntityState.Detached;
                 _MLDb.Entry(dTO.EstatisticaCasa).State = EntityState.Detached;
-                dTO.EstatisticaCasa.Id_Estatistica = 0;
-                dTO.EstatisticaCasa.Id_Partida = 0;
-                dTO.EstatisticaFora.Id_Estatistica = 0;
-                dTO.EstatisticaFora.Id_Partida = 0;
-                dTO.Partida.Id = 0;
-                dTO.Partida.Id_EstatisticaCasa = 0;
-                dTO.Partida.Id_EstatisticaFora = 0;
+                _MLDb.Entry(dTO.EstatisticaFora).State = EntityState.Detached;
 
-                _context.Entry(dTO.Partida).State = EntityState.Added;
-                _context.Entry(dTO.EstatisticaFora).State = EntityState.Added;
-                _context.Entry(dTO.EstatisticaCasa).State = EntityState.Added;
-                dTO.EstatisticaCasa.Id_Partida = dTO.Partida.Id;
-                dTO.EstatisticaFora.Id_Partida = dTO.Partida.Id;
-                dTO.Partida.Id_EstatisticaCasa = dTO.EstatisticaCasa.Id_Estatistica;
-                dTO.Partida.Id_EstatisticaFora = dTO.EstatisticaFora.Id_Estatistica;
-
-                _context.Entry(dTO.Partida).State = EntityState.Added;
-                _context.Entry(dTO.EstatisticaFora).State = EntityState.Added;
-                _context.Entry(dTO.EstatisticaCasa).State = EntityState.Added;
+                // 6. Insere no segundo contexto
+                _context.TB_PARTIDAS.Add(dTO.Partida);
+                _context.TB_ESTATISTICA.Add(dTO.EstatisticaCasa);
+                _context.TB_ESTATISTICA.Add(dTO.EstatisticaFora);
 
                 await _context.SaveChangesAsync();
 
-
                 scope.Complete();
-
 
                 string mensagem = $"Estatísticas salvas - Casa: {dTO.EstatisticaCasa.Id_Estatistica}, " +
                                  $"Fora: {dTO.EstatisticaFora.Id_Estatistica}, " +
                                  $"Partida ID: {dTO.Partida.Id}";
-                return Ok(mensagem);
 
+                return Ok(mensagem);
             }
             catch (Exception ex)
             {
                 Exception inner = ex;
                 while (inner.InnerException != null)
                     inner = inner.InnerException;
+
                 return BadRequest(inner.Message);
             }
         }
 
-[HttpPut("{id}")]
-public async Task<IActionResult> Put(int id, Estatistica estatisticaAtualizada)
-{
-    try
-    {
-        if (id == 0)
-            return BadRequest("O Id não pode ser igual a zero");
 
-        var estatisticaML = await _MLDb.TB_ESTATISTICA
-            .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
-
-        var estatisticaSecundaria = await _context.TB_ESTATISTICA
-            .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
-
-        if (estatisticaML == null || estatisticaSecundaria == null)
-            return NotFound("Estatística não encontrada em um dos bancos.");
-
-        // Atualiza dados
-        _MLDb.Entry(estatisticaML).CurrentValues.SetValues(estatisticaAtualizada);
-        _context.Entry(estatisticaSecundaria).CurrentValues.SetValues(estatisticaAtualizada);
-
-        estatisticaML.Id_Estatistica = id;
-        estatisticaSecundaria.Id_Estatistica = id;
-
-        // Salva no primeiro banco
-        await _MLDb.SaveChangesAsync();
-
-        try
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Estatistica estatisticaAtualizada)
         {
-            // Salva no segundo banco
-            await _context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            // Tenta desfazer alteração no primeiro banco
-            _MLDb.Entry(estatisticaML).State = EntityState.Unchanged;
-            return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
-        }
+            try
+            {
+                if (id == 0)
+                    return BadRequest("O Id não pode ser igual a zero");
 
-        return Ok("Estatística atualizada com sucesso.");
-    }
-    catch (Exception ex)
-    {
-        return BadRequest($"Erro ao atualizar estatística: {ex.Message}");
-    }
-}
+                var estatisticaML = await _MLDb.TB_ESTATISTICA
+                    .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+
+                var estatisticaSecundaria = await _context.TB_ESTATISTICA
+                    .FirstOrDefaultAsync(es => es.Id_Estatistica == id);
+
+                if (estatisticaML == null || estatisticaSecundaria == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
+
+                // Atualiza dados
+                _MLDb.Entry(estatisticaML).CurrentValues.SetValues(estatisticaAtualizada);
+                _context.Entry(estatisticaSecundaria).CurrentValues.SetValues(estatisticaAtualizada);
+
+                estatisticaML.Id_Estatistica = id;
+                estatisticaSecundaria.Id_Estatistica = id;
+
+                // Salva no primeiro banco
+                await _MLDb.SaveChangesAsync();
+
+                try
+                {
+                    // Salva no segundo banco
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Tenta desfazer alteração no primeiro banco
+                    _MLDb.Entry(estatisticaML).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
+
+                return Ok("Estatística atualizada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao atualizar estatística: {ex.Message}");
+            }
+        }
 
 
 

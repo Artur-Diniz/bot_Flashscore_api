@@ -28,7 +28,7 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("Id não pode ser igual a Zero");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                Palpites p = await _MLDb .TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
+                Palpites p = await _MLDb.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
                 if (p == null)
                     throw new System.Exception("Palpite Não Encontrada");
 
@@ -81,30 +81,41 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Palpites p)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
                 await _MLDb.TB_PALPITES.AddAsync(p);
                 await _MLDb.SaveChangesAsync();
-
                 int idPrincipal = p.Id;
 
+                p.Id = idPrincipal;
                 _MLDb.Entry(p).State = EntityState.Detached;
-
-
-                _MLDb.TB_PALPITES.Add(p);
-                await _MLDb.TB_PALPITES.AddAsync(p);
+                _context.Entry(p).State = EntityState.Added;
+                await _context.SaveChangesAsync();
 
                 int idSecundario = p.Id;
 
-                scope.Complete();
                 return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    var inserted = await _MLDb.TB_ESTATISTICA_TIME.FindAsync(p.Id);
+                    if (inserted != null)
+                    {
+                        _MLDb.TB_ESTATISTICA_TIME.Remove(inserted);
+                        await _MLDb.SaveChangesAsync();
+                    }
+                }
+                catch (Exception rollbackEx)
+                {
+                    return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
+
 
         [HttpPost("Gerar_Palpites")]
         public async Task<IActionResult> GerarPalpites()
@@ -132,22 +143,45 @@ namespace botAPI.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put(Palpites palpites)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Palpites palpites)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
-                _MLDb.TB_PALPITES.Update(palpites);
-                int linhasAfetadas = await _MLDb.SaveChangesAsync();
+                if (id == 0)
+                    return BadRequest("O Id não pode ser igual a zero");
 
-                _MLDb.Entry(palpites).State = EntityState.Detached;
+                var palpitesML = await _MLDb.TB_PALPITES
+                              .FirstOrDefaultAsync(es => es.Id == id);
 
-                _context.TB_PALPITES.Update(palpites);
-                await _context.SaveChangesAsync();
-                scope.Complete();
+                var palpitesSecundarios = await _context.TB_PALPITES
+                    .FirstOrDefaultAsync(es => es.Id == id);
 
-                return Ok(linhasAfetadas);
+                if (palpitesML == null || palpitesSecundarios == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
+
+
+                _MLDb.Entry(palpitesML).CurrentValues.SetValues(palpites);
+                _context.Entry(palpitesSecundarios).CurrentValues.SetValues(palpites);
+
+                palpitesML.Id = id;
+                palpitesSecundarios.Id = id;
+                await _MLDb.SaveChangesAsync();
+
+                try
+                {
+                    // Salva no segundo banco
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Tenta desfazer alteração no primeiro banco
+                    _MLDb.Entry(palpitesML).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
+
+                return Ok(new { Message = "Atualização realizada com sucesso em ambos os bancos" });
+
             }
             catch (System.Exception ex)
             {
@@ -167,12 +201,13 @@ namespace botAPI.Controllers
                 Palpites p = await _MLDb.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
                 Palpites p_repeat = await _context.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
 
-                if (p == null)
+                if (p == null || p_repeat == null)
                     throw new System.Exception("Palpite Não Encontrada");
 
-        
-                _context.TB_PALPITES.Remove(p);
-                _MLDb.TB_PALPITES.Remove(p_repeat);
+
+                _context.TB_PALPITES.Remove(p_repeat);
+                _MLDb.TB_PALPITES.Remove(p);
+
                 await _MLDb.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
 
@@ -236,30 +271,47 @@ namespace botAPI.Controllers
                 Palpites Golteam = await GolTime(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
                 if (Golteam.Descricao != "")
                     palpites.Add(Golteam);
-
-
             }
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
 
+            
             if (palpites.Any())
             {
-                await _MLDb.TB_PALPITES.AddRangeAsync(palpites);
-                await _MLDb.SaveChangesAsync();
 
                 foreach (var item in palpites)
                 {
-                    _MLDb.Entry(item).State = EntityState.Detached;  // Desanexa cada item
+                    try
+                    {
+                        await _MLDb.TB_PALPITES.AddAsync(item);
+                        await _MLDb.SaveChangesAsync();
 
-                    _context.TB_PALPITES.Add(item);
+                        _MLDb.Entry(item).State = EntityState.Detached;
+                        _context.Entry(item).State = EntityState.Added;
+                        await _context.SaveChangesAsync();
+
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            var inserted = await _MLDb.TB_ESTATISTICA.FindAsync(item.Id);
+                            if (inserted != null)
+                            {
+                                _MLDb.TB_ESTATISTICA.Remove(inserted);
+                                await _MLDb.SaveChangesAsync();
+                            }
+                        }
+                        catch
+                        {
+                            return palpites;
+                        }
+                    }
                 }
-
-                await _context.SaveChangesAsync();
-                scope.Complete();
-
             }
 
+
             return palpites;
+
         }
 
         private async Task<Palpites> MetodoUnder4(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
