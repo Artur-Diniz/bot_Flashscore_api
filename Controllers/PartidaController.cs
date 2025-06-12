@@ -117,7 +117,6 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Partida partida)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
 
@@ -125,47 +124,71 @@ namespace botAPI.Controllers
                 await _mlDb.SaveChangesAsync();
                 int idPrincipal = partida.Id;
 
-                // Desanexa do primeiro contexto
                 _mlDb.Entry(partida).State = EntityState.Detached;
-
-
-
-                _context.TB_PARTIDAS.Add(partida);
+                _context.Entry(partida).State = EntityState.Added;
                 await _context.SaveChangesAsync();
-
                 int idSecundario = partida.Id;
 
-                scope.Complete();
                 return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
             catch (Exception ex)
             {
-                Exception inner = ex;
-                while (inner.InnerException != null)
-                    inner = inner.InnerException;
-                return BadRequest(inner.Message);
+                try
+                {
+                    var inserted = await _mlDb.TB_PARTIDAS.FindAsync(partida.Id);
+                    if (inserted != null)
+                    {
+                        _mlDb.TB_PARTIDAS.Remove(inserted);
+                        await _mlDb.SaveChangesAsync();
+                    }
+                }
+                catch (Exception rollbackEx)
+                {
+                    return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> Put(Partida p)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Partida p)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
             try
             {
-                _mlDb.TB_PARTIDAS.Update(p);
-                int linhasAfetadas = await _mlDb.SaveChangesAsync();
+                if (id == 0)
+                    return BadRequest("O Id não pode ser igual a zero");
+
+                var PartidaML = await _mlDb.TB_PARTIDAS
+                .FirstOrDefaultAsync(es => es.Id == id);
+
+                var partidaSecundaria = await _context.TB_PARTIDAS
+                .FirstOrDefaultAsync(es => es.Id == id);
 
 
-                _mlDb.Entry(p).State = EntityState.Detached;
+                if (PartidaML == null || partidaSecundaria == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
 
-                _context.TB_PARTIDAS.Update(p);
-                await _context.SaveChangesAsync();
-                scope.Complete();
 
-                return Ok(linhasAfetadas);
+
+                p.Id = id;
+
+                _mlDb.Entry(PartidaML).CurrentValues.SetValues(p);
+                _context.Entry(partidaSecundaria).CurrentValues.SetValues(p);
+
+                await _mlDb.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _mlDb.Entry(PartidaML).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
+
+                return Ok("Estatística atualizada com sucesso.");
             }
             catch (Exception ex)
             {

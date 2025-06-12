@@ -103,36 +103,47 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Estatistica_Esperadas e)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
             try
             {
                 await _MLDb.TB_ESTATISTICA_ESPERADAS.AddAsync(e);
                 await _MLDb.SaveChangesAsync();
                 int idPrincipal = e.Id;
+
+                e.Id = idPrincipal;
                 _MLDb.Entry(e).State = EntityState.Detached;
-
-
-                await _context.TB_ESTATISTICA_ESPERADAS.AddAsync(e);
+                _context.Entry(e).State = EntityState.Added;
                 await _context.SaveChangesAsync();
 
                 int idSecundario = e.Id;
-
-                // Confirma a transação em AMBOS os bancos
-                scope.Complete();
 
                 return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    var inserted = await _MLDb.TB_ESTATISTICA_ESPERADAS.FindAsync(e.Id);
+                    if (inserted != null)
+                    {
+                        _MLDb.TB_ESTATISTICA_ESPERADAS.Remove(inserted);
+                        await _MLDb.SaveChangesAsync();
+                    }
+                }
+                catch (Exception rollbackEx)
+                {
+                    return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
 
         [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
         public async Task<IActionResult> GerarEstatistcasEsperadas(int IdPartida)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            Estatistica_Esperadas c = null; // declara aqui fora pra usar no catch
+            Estatistica_Esperadas f = null; // declara aqui fora pra usar no catch
 
             try
             {
@@ -142,22 +153,21 @@ namespace botAPI.Controllers
                 if (partida == null)
                     throw new System.Exception("Não foi encontrada partida Analise com esse Id");
 
-                Estatistica_Esperadas c = await BuscarPartidas(partida, partida.NomeTimeCasa);
-                Estatistica_Esperadas f = await BuscarPartidas(partida, partida.NomeTimeFora);
+                c = await BuscarPartidas(partida, partida.NomeTimeCasa);
+                f = await BuscarPartidas(partida, partida.NomeTimeFora);
 
                 c.NomeTime = partida.NomeTimeCasa;
                 f.NomeTime = partida.NomeTimeFora;
 
                 await _MLDb.TB_ESTATISTICA_ESPERADAS.AddRangeAsync(c, f);
                 await _MLDb.SaveChangesAsync();
+
+
                 _MLDb.Entry(c).State = EntityState.Detached;
                 _MLDb.Entry(f).State = EntityState.Detached;
-
-
-                _context.TB_ESTATISTICA_ESPERADAS.AddRange(c, f);
+                _context.Entry(c).State = EntityState.Added;
+                _context.Entry(f).State = EntityState.Added;
                 await _context.SaveChangesAsync();
-                scope.Complete();
-
 
                 string mensagem = $"foi gerado Estatisticas esperadas corretamente o ID de casa é{c.Id} ,  o ID de Fora é {f.Id} ";
                 return Ok(mensagem);
@@ -165,29 +175,80 @@ namespace botAPI.Controllers
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (c != null)
+                {
+                    try
+                    {
+                        var inserted = await _MLDb.TB_ESTATISTICA_ESPERADAS.FindAsync(c.Id);
+                        if (inserted != null)
+                        {
+                            _MLDb.TB_ESTATISTICA_ESPERADAS.Remove(inserted);
+                            await _MLDb.SaveChangesAsync();
+                        }
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                    }
+                }
+                if (f != null)
+                {
+                    try
+                    {
+                        var inserted = await _MLDb.TB_ESTATISTICA_ESPERADAS.FindAsync(c.Id);
+                        if (inserted != null)
+                        {
+                            _MLDb.TB_ESTATISTICA_ESPERADAS.Remove(inserted);
+                            await _MLDb.SaveChangesAsync();
+                        }
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                    }
+                }
+
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
+
             }
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> Put(Estatistica_Esperadas e)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Estatistica_Esperadas e)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
             try
             {
-                _MLDb.TB_ESTATISTICA_ESPERADAS.Update(e);
-                int linhasAfetadas = await _MLDb.SaveChangesAsync();
+                if (id == 0)
+                    throw new System.Exception("O Id não pode ser igual a zero");
 
-                _MLDb.Entry(e).State = EntityState.Detached;
+                Estatistica_Esperadas estatistica = await _context.TB_ESTATISTICA_ESPERADAS
+                .FirstOrDefaultAsync(es => es.Id == id);
+
+                Estatistica_Esperadas e_repeat = await _context.TB_ESTATISTICA_ESPERADAS
+                .FirstOrDefaultAsync(es => es.Id == id);
+
+                if (estatistica == null || e_repeat == null)
+                    throw new System.Exception("Estatistica Não Encontrada");
+
+                _MLDb.Entry(estatistica).CurrentValues.SetValues(e);
+                _context.Entry(e_repeat).CurrentValues.SetValues(e);
 
 
-                _context.TB_ESTATISTICA_ESPERADAS.Update(e);
-                await _context.SaveChangesAsync();
-                scope.Complete();
+                await _MLDb.SaveChangesAsync();
 
-                return Ok(linhasAfetadas);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _MLDb.Entry(estatistica).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
+
+                return Ok(new { Message = "Atualização realizada com sucesso em ambos os bancos" });
             }
             catch (System.Exception ex)
             {
@@ -214,6 +275,7 @@ namespace botAPI.Controllers
 
                 _MLDb.TB_ESTATISTICA_ESPERADAS.Remove(e);
                 _context.TB_ESTATISTICA_ESPERADAS.Remove(e_repeat);
+                
                 await _context.SaveChangesAsync();
                 int linhasAfetadas = await _MLDb.SaveChangesAsync();
 

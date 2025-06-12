@@ -84,7 +84,6 @@ namespace botAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Partida_Estatistica_Esperadas partida)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             try
             {
                 await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
@@ -92,18 +91,30 @@ namespace botAPI.Controllers
                 int idPrincipal = partida.Id;
 
                 _mlDb.Entry(partida).State = EntityState.Detached;
-
-                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Add(partida);
+                _context.Entry(partida).State = EntityState.Added;
                 await _context.SaveChangesAsync();
                 int idSecundario = partida.Id;
 
-                scope.Complete();
                 return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
 
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    var inserted = await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.FindAsync(partida.Id);
+                    if (inserted != null)
+                    {
+                        _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(inserted);
+                        await _mlDb.SaveChangesAsync();
+                    }
+                }
+                catch (Exception rollbackEx)
+                {
+                    return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
 
@@ -112,8 +123,7 @@ namespace botAPI.Controllers
         [HttpPost("GerarEstatisticasEsperadas/{IdPartida}")]
         public async Task<IActionResult> GerarPartidasestatistcasEsperadas(int IdPartida)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
+            Partida_Estatistica_Esperadas partida = null;
             try
             {
 
@@ -124,48 +134,76 @@ namespace botAPI.Controllers
                 if (partidaAnalisada == null)
                     throw new System.Exception("Não foi encontrada partida Analise com esse Id");
 
-                Partida_Estatistica_Esperadas partida = await GerarPartidaEstatisticaEsperada(partidaAnalisada);
+                partida = await GerarPartidaEstatisticaEsperada(partidaAnalisada);
 
                 await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
                 await _mlDb.SaveChangesAsync();
-
                 int idPrincipal = partida.Id;
 
                 _mlDb.Entry(partida).State = EntityState.Detached;
+                _context.Entry(partida).State = EntityState.Added;
                 int idSecundario = partida.Id;
-
-
-                await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.AddAsync(partida);
                 await _context.SaveChangesAsync();
 
-                scope.Complete();
                 return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
 
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (partida != null)
+                {
+                    try
+                    {
+                        var inserted = await _mlDb.TB_ESTATISTICA_TIME.FindAsync(partida.Id);
+                        if (inserted != null)
+                        {
+                            _mlDb.TB_ESTATISTICA_TIME.Remove(inserted);
+                            await _mlDb.SaveChangesAsync();
+                        }
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        return BadRequest($"Erro ao inserir estatística: {ex.Message} | Erro ao desfazer no primeiro banco: {rollbackEx.Message}");
+                    }
+                }
+
+                return BadRequest($"Erro ao inserir estatística: {ex.Message}. Inserção no primeiro banco foi revertida com sucesso.");
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put(Partida_Estatistica_Esperadas p)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Partida_Estatistica_Esperadas p)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
             try
             {
-                _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Update(p);
+                if (id == 0)
+                    throw new System.Exception("O Id não pode ser igual a zero");
+
+                Partida_Estatistica_Esperadas partida = await _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS
+              .FirstOrDefaultAsync(pa => pa.Id == id);
+                Partida_Estatistica_Esperadas part = await _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS
+              .FirstOrDefaultAsync(pa => pa.Id == id);
+
+                if (partida == null || part == null)
+                    throw new System.Exception("Partida Não Encontrada");
+
+                _mlDb.Entry(partida).CurrentValues.SetValues(p);
+                _context.Entry(part).CurrentValues.SetValues(p);
+
                 await _mlDb.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Tenta desfazer alteração no primeiro banco
+                    _mlDb.Entry(partida).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
 
-                _mlDb.Entry(p).State = EntityState.Detached;
-
-
-                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Update(p);
-                int linhasAfetadas = await _context.SaveChangesAsync();
-                scope.Complete();
-
-                return Ok(linhasAfetadas);
+                return Ok(new { Message = "Atualização realizada com sucesso em ambos os bancos" });
             }
             catch (System.Exception ex)
             {
@@ -190,8 +228,8 @@ namespace botAPI.Controllers
                 if (p == null || part == null)
                     throw new System.Exception("Partida Não Encontrada");
 
-                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(part);
                 _mlDb.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(p);
+                _context.TB_PARTIDA_ESTAITSTICA_ESPERADAS.Remove(part);
 
                 await _context.SaveChangesAsync();
                 int linhasAfetadas = await _context.SaveChangesAsync();
