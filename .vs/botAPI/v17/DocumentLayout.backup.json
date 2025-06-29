@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\artur\\Desktop\\program\\botAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -11,20 +23,8 @@
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,11 +38,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -68,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "botAPI.csproj",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\botAPI.csproj",
               "RelativeDocumentMoniker": "botAPI.csproj",
@@ -81,7 +81,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "MLDbContext.cs",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Data\\MLDbContext.cs",
               "RelativeDocumentMoniker": "Data\\MLDbContext.cs",
@@ -89,11 +89,12 @@
               "RelativeToolTip": "Data\\MLDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:51:20.966Z"
+              "WhenOpened": "2025-06-10T12:51:20.966Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "EstatisticaController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaController.cs",
               "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
@@ -106,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",

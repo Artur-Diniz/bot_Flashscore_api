@@ -242,6 +242,20 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpDelete("Apague")]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_ESTATISTICA");
+                return Ok($"{linhasAfetadas} Partidas foram apagadas.");
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest($"Erro ao apagar logs: {ex.Message}");
+            }
+        }
+
         private async Task<Estatistica_Times> Buscarpartidas(string nomeTime)
         {
             Partida partidaAnalisada = await _context.TB_PARTIDAS.FirstOrDefaultAsync(p => p.PartidaAnalise == true && p.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()) ||

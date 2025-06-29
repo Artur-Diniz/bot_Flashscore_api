@@ -154,6 +154,16 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaController",
+    "Method": "DeleteAll",
+    "RelativePath": "Estatistica/Apague",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaController",
     "Method": "GetAll",
     "RelativePath": "Estatistica/GetAll",
     "HttpMethod": "GET",
@@ -177,6 +187,22 @@
     "Method": "Post",
     "RelativePath": "Estatistica/Partida",
     "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dados",
+        "Type": "botAPI.Models.Partida_Estatistica_DTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaController",
+    "Method": "PutAnalidasdas",
+    "RelativePath": "Estatistica/PartidaAnalisada",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -564,6 +590,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "DeleteAll",
+    "RelativePath": "Partida/Apague",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

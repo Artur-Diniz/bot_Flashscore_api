@@ -13,5 +13,8 @@ namespace botAPI.Models
         [MaxLength(510)]
         public string Descricao { get; set; } = string.Empty;
 
+        //qual é o metodo 
+        // green red em espera
+
     }
 }

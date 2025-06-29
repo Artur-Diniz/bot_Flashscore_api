@@ -127,23 +127,15 @@ namespace botAPI.Controllers
         {
             try
             {
-                List<ErrosLogs> erros = await _context
-                .TB_ERROSLOGS.ToListAsync();
-                if (erros == null)
-                    throw new System.Exception("Logs Não Encontrada");
-                _context.TB_ERROSLOGS.RemoveRange(erros);
-
-
-                int linhasAfetadas = await _context.SaveChangesAsync();
-
-                return Ok(linhasAfetadas);
-
+                int linhasAfetadas = await _context.Database.ExecuteSqlRawAsync("DELETE FROM TB_ERROSLOGS");
+                return Ok($"{linhasAfetadas} Logs foram apagadas.");
             }
             catch (System.Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Erro ao apagar logs: {ex.Message}");
             }
         }
+
     }
 
 }

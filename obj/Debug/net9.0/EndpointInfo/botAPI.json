@@ -303,6 +303,49 @@
         }
       }
     },
+    "/Estatistica/PartidaAnalisada": {
+      "put": {
+        "tags": [
+          "Estatistica"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Estatistica/Apague": {
+      "delete": {
+        "tags": [
+          "Estatistica"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/EstatisticaEsperadas/id": {
       "get": {
         "tags": [
@@ -934,6 +977,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Partida/Apague": {
+      "delete": {
+        "tags": [
+          "Partida"
+        ],
         "responses": {
           "200": {
             "description": "OK"

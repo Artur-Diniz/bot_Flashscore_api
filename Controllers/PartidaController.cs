@@ -30,7 +30,7 @@ namespace botAPI.Controllers
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 Partida p = await _mlDb.TB_PARTIDAS
                 .FirstOrDefaultAsync(pa => pa.Id == id);
-                
+
                 if (p == null)
                     throw new System.Exception("Partida Não Encontrada");
                 return Ok(p);
@@ -228,6 +228,20 @@ namespace botAPI.Controllers
             catch (System.Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpDelete("Apague")]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                int linhasAfetadas = await _mlDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_PARTIDAS");
+                return Ok($"{linhasAfetadas} Estatisticas foram apagadas.");
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest($"Erro ao apagar logs: {ex.Message}");
             }
         }
 
