@@ -101,22 +101,6 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaController",
-    "Method": "Put",
-    "RelativePath": "Estatistica",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "e",
-        "Type": "botAPI.Models.Estatistica",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "botAPI.Controllers.EstatisticaController",
     "Method": "GetId",
     "RelativePath": "Estatistica/{id}",
     "HttpMethod": "GET",
@@ -126,6 +110,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaController",
+    "Method": "Put",
+    "RelativePath": "Estatistica/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "estatisticaAtualizada",
+        "Type": "botAPI.Models.Estatistica",
         "IsRequired": true
       }
     ],
@@ -176,7 +181,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dTO",
+        "Name": "dados",
         "Type": "botAPI.Models.Partida_Estatistica_DTO",
         "IsRequired": true
       }
@@ -202,11 +207,16 @@
   {
     "ContainingType": "botAPI.Controllers.EstatisticaEsperadasController",
     "Method": "Put",
-    "RelativePath": "EstatisticaEsperadas",
+    "RelativePath": "EstatisticaEsperadas/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
       {
         "Name": "e",
         "Type": "botAPI.Models.Estatistica_Esperadas",
@@ -301,22 +311,6 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
-    "Method": "Put",
-    "RelativePath": "EstatisticaTimes",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "e",
-        "Type": "botAPI.Models.Estatistica_Times",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
     "Method": "getId",
     "RelativePath": "EstatisticaTimes/{id}",
     "HttpMethod": "GET",
@@ -326,6 +320,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
+    "Method": "Put",
+    "RelativePath": "EstatisticaTimes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "e",
+        "Type": "botAPI.Models.Estatistica_Times",
         "IsRequired": true
       }
     ],
@@ -401,22 +416,6 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PalpiteController",
-    "Method": "Put",
-    "RelativePath": "Palpite",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "palpites",
-        "Type": "botAPI.Models.Palpites",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "botAPI.Controllers.PalpiteController",
     "Method": "getId",
     "RelativePath": "Palpite/{id}",
     "HttpMethod": "GET",
@@ -426,6 +425,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "Put",
+    "RelativePath": "Palpite/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "palpites",
+        "Type": "botAPI.Models.Palpites",
         "IsRequired": true
       }
     ],
@@ -495,22 +515,6 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaController",
-    "Method": "Put",
-    "RelativePath": "Partida",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "p",
-        "Type": "botAPI.Models.Partida",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "getsingle",
     "RelativePath": "Partida/{id}",
     "HttpMethod": "GET",
@@ -520,6 +524,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "Put",
+    "RelativePath": "Partida/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "p",
+        "Type": "botAPI.Models.Partida",
         "IsRequired": true
       }
     ],
@@ -599,22 +624,6 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
-    "Method": "Put",
-    "RelativePath": "PartidaEstatisticaEsperadas",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "p",
-        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
     "Method": "getsingle",
     "RelativePath": "PartidaEstatisticaEsperadas/{id}",
     "HttpMethod": "GET",
@@ -624,6 +633,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaEstatisticaEsperadasController",
+    "Method": "Put",
+    "RelativePath": "PartidaEstatisticaEsperadas/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "p",
+        "Type": "botAPI.Models.Partida_Estatistica_Esperadas",
         "IsRequired": true
       }
     ],

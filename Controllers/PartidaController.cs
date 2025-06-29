@@ -30,6 +30,7 @@ namespace botAPI.Controllers
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 Partida p = await _mlDb.TB_PARTIDAS
                 .FirstOrDefaultAsync(pa => pa.Id == id);
+                
                 if (p == null)
                     throw new System.Exception("Partida Não Encontrada");
                 return Ok(p);

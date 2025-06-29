@@ -155,6 +155,46 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "Estatistica"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Estatistica"
@@ -203,35 +243,6 @@
     },
     "/Estatistica": {
       "post": {
-        "tags": [
-          "Estatistica"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
         "tags": [
           "Estatistica"
         ],
@@ -367,35 +378,6 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "EstatisticaEsperadas"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Esperadas"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Esperadas"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Esperadas"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/EstatisticaEsperadas/GerarEstatisticasEsperadas/{IdPartida}": {
@@ -422,6 +404,46 @@
       }
     },
     "/EstatisticaEsperadas/{id}": {
+      "put": {
+        "tags": [
+          "EstatisticaEsperadas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Esperadas"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Esperadas"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Esperadas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "EstatisticaEsperadas"
@@ -460,6 +482,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Estatistica_Times"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -541,35 +603,6 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "EstatisticaTimes"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Times"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Times"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Estatistica_Times"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/EstatisticaTimes/GerarEstatistica/{nomeTime}": {
@@ -610,6 +643,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Palpite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Palpites"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -691,35 +764,6 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Palpite"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Palpites"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Palpites"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Palpites"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/Palpite/Gerar_Palpites": {
@@ -750,6 +794,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Partida"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -855,35 +939,6 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Partida"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/PartidaEstatisticaEsperadas/{id}": {
@@ -902,6 +957,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PartidaEstatisticaEsperadas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -956,35 +1051,6 @@
     },
     "/PartidaEstatisticaEsperadas": {
       "post": {
-        "tags": [
-          "PartidaEstatisticaEsperadas"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partida_Estatistica_Esperadas"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
         "tags": [
           "PartidaEstatisticaEsperadas"
         ],

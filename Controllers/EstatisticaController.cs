@@ -185,7 +185,101 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpPut("PartidaAnalisada")]
+        public async Task<IActionResult> PutAnalidasdas(Partida_Estatistica_DTO dados)
+        {
+            try
+            {
+                // 1. Insere estatísticas no primeiro contexto (_MLDb)
+                await _MLDb.TB_ESTATISTICA.AddRangeAsync(dados.EstatisticaCasa, dados.EstatisticaFora);
+                await _MLDb.SaveChangesAsync();
 
+                // 2. Atualiza a partida com os IDs das estatísticas
+                dados.Partida.Id_EstatisticaCasa = dados.EstatisticaCasa.Id_Estatistica;
+                dados.Partida.Id_EstatisticaFora = dados.EstatisticaFora.Id_Estatistica;
+
+                Partida PartidaML = await _MLDb.TB_PARTIDAS
+                .FirstOrDefaultAsync(es => es.NomeTimeCasa == dados.Partida.NomeTimeCasa && es.NomeTimeFora == dados.Partida.NomeTimeFora
+                && es.Url_Partida == dados.Partida.Url_Partida
+                && es.DataPartida == dados.Partida.DataPartida
+                && es.Campeonato == dados.Partida.Campeonato
+                && es.TipoPartida == dados.Partida.TipoPartida
+                && es.PartidaAnalise == true);
+
+                Partida partidaSecundaria = await _context.TB_PARTIDAS
+                .FirstOrDefaultAsync(es => es.Id == PartidaML.Id);
+
+                if (PartidaML == null || partidaSecundaria == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
+
+                dados.Partida.PartidaAnalise = false;//ela ja foi analisada ent não é mais uma partida analise
+
+                _MLDb.Entry(PartidaML).CurrentValues.SetValues(dados.Partida);
+                _context.Entry(partidaSecundaria).CurrentValues.SetValues(dados.Partida);
+
+                await _MLDb.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _MLDb.Entry(PartidaML).State = EntityState.Unchanged;
+                    return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                }
+
+
+                // 4. Atualiza as estatísticas com o ID da partida
+                dados.EstatisticaCasa.Id_Partida = dados.Partida.Id;
+                dados.EstatisticaFora.Id_Partida = dados.Partida.Id;
+
+                _MLDb.TB_ESTATISTICA.UpdateRange(dados.EstatisticaCasa, dados.EstatisticaFora);
+                await _MLDb.SaveChangesAsync();
+
+                // 5. Desanexar do primeiro contexto
+                _MLDb.Entry(dados.Partida).State = EntityState.Detached;
+                _MLDb.Entry(dados.EstatisticaCasa).State = EntityState.Detached;
+                _MLDb.Entry(dados.EstatisticaFora).State = EntityState.Detached;
+
+                try
+                {
+                    // 6. Inserir no segundo contexto
+                    await _context.TB_PARTIDAS.AddAsync(dados.Partida);
+                    await _context.TB_ESTATISTICA.AddRangeAsync(dados.EstatisticaCasa, dados.EstatisticaFora);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception exSecundario)
+                {
+                    // ⚠️ Rollback manual no primeiro contexto (_MLDb)
+                    var estatisticas = await _MLDb.TB_ESTATISTICA
+                        .Where(e => e.Id_Estatistica == dados.EstatisticaCasa.Id_Estatistica
+                                 || e.Id_Estatistica == dados.EstatisticaFora.Id_Estatistica)
+                        .ToListAsync();
+
+                    _MLDb.TB_ESTATISTICA.RemoveRange(estatisticas);
+
+                    var partidaSalva = await _MLDb.TB_PARTIDAS.FindAsync(dados.Partida.Id);
+                    if (partidaSalva != null)
+                        _MLDb.TB_PARTIDAS.Remove(partidaSalva);
+
+                    await _MLDb.SaveChangesAsync();
+
+                    return BadRequest($"Erro ao salvar no segundo banco: {exSecundario.Message}. Alterações no primeiro banco foram revertidas.");
+                }
+
+                return Ok(new
+                {
+                    Mensagem = "Partida e estatísticas salvas com sucesso nos dois bancos.",
+                    IdPartida = dados.Partida.Id,
+                    IdEstatisticaCasa = dados.EstatisticaCasa.Id_Estatistica,
+                    IdEstatisticaFora = dados.EstatisticaFora.Id_Estatistica
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao salvar no primeiro banco: {ex.Message}");
+            }
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, Estatistica estatisticaAtualizada)
