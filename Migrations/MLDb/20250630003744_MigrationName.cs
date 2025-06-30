@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace botAPI.Migrations
+namespace botAPI.Migrations.MLDb
 {
     /// <inheritdoc />
     public partial class MigrationName : Migration
@@ -402,6 +402,7 @@ namespace botAPI.Migrations
                     Num = table.Column<double>(type: "float", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(510)", maxLength: 510, nullable: true),
                     GreenRed = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    ODD = table.Column<float>(type: "real", nullable: true),
                     DataPalpite = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MetodoGeradorPalpite_Id = table.Column<int>(type: "int", nullable: false)
                 },

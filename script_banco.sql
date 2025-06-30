@@ -321,6 +321,7 @@ CREATE TABLE [TB_PALPITES] (
     [Num] float NOT NULL,
     [Descricao] varchar(510) NULL,
     [GreenRed] varchar(250) NULL,
+    [ODD] real NULL,
     [DataPalpite] datetime2 NOT NULL,
     [MetodoGeradorPalpite_Id] int NOT NULL,
     CONSTRAINT [PK_TB_PALPITES] PRIMARY KEY ([Id]),
@@ -394,7 +395,7 @@ CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Partida_HTId] ON [TB_PARTIDA_E
 CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_PartidaId] ON [TB_PARTIDA_ESTAITSTICA_ESPERADAS] ([PartidaId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250629235454_migrationsdatacontext', N'9.0.6');
+VALUES (N'20250630003726_migrationsdatacontext', N'9.0.6');
 
 COMMIT;
 GO

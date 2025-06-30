@@ -17,6 +17,7 @@ namespace botAPI.Models
         public string Descricao { get; set; } = string.Empty;
 
         public string GreenRed { get; set; } = string.Empty;
+        public float? ODD { get; set; } 
 
         public DateTime DataPalpite { get; set; }
 

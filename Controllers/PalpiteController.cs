@@ -56,8 +56,8 @@ namespace botAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
         }
+        
         [HttpGet("GetAllComplete")]
         public async Task<IActionResult> GetAllComplete()
         {
@@ -100,10 +100,10 @@ namespace botAPI.Controllers
             {
                 try
                 {
-                    var inserted = await _MLDb.TB_ESTATISTICA_TIME.FindAsync(p.Id);
+                    var inserted = await _MLDb.TB_PALPITES.FindAsync(p.Id);
                     if (inserted != null)
                     {
-                        _MLDb.TB_ESTATISTICA_TIME.Remove(inserted);
+                        _MLDb.TB_PALPITES.Remove(inserted);
                         await _MLDb.SaveChangesAsync();
                     }
                 }

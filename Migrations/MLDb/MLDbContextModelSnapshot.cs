@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using botAPI.Data;
 
 #nullable disable
 
-namespace botAPI.Migrations
+namespace botAPI.Migrations.MLDb
 {
     [DbContext(typeof(MLDbContext))]
-    [Migration("20250629235545_MigrationName")]
-    partial class MigrationName
+    partial class MLDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -971,6 +968,9 @@ namespace botAPI.Migrations
 
                     b.Property<double>("Num")
                         .HasColumnType("float");
+
+                    b.Property<float?>("ODD")
+                        .HasColumnType("real");
 
                     b.Property<int>("TipoAposta")
                         .HasColumnType("int");

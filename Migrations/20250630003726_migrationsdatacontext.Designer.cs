@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using botAPI.Data;
 
@@ -10,10 +11,12 @@ using botAPI.Data;
 
 namespace botAPI.Migrations
 {
-    [DbContext(typeof(MLDbContext))]
-    partial class MLDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20250630003726_migrationsdatacontext")]
+    partial class migrationsdatacontext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,10 +56,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica", b =>
                 {
                     b.Property<int>("Id_Estatistica")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Estatistica"));
 
                     b.Property<int?>("Bolas_Afastadas")
                         .HasColumnType("int");
@@ -223,10 +223,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica_BaseModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float?>("Bolas_Afastadas")
                         .HasColumnType("real");
@@ -365,10 +362,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica_Esperadas", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("FTId")
                         .HasColumnType("int");
@@ -430,10 +424,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Estatistica_Times", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float?>("Bolas_Afastadas")
                         .HasColumnType("real");
@@ -912,7 +903,7 @@ namespace botAPI.Migrations
                             Id = 3,
                             Condicoes = "baseado em 4 características para definir quem tem a maior probabilidade de vencer, sendo eles posse de bola,Precisão dos passes,gols e jogos sem sofre gol",
                             Descricao = "Para definir quem sera o vencedor da partida em termpo regulamentar",
-                            Nome = "Vencedor",
+                            Nome = "Vencedor do Encontro",
                             Versao = "1.0"
                         },
                         new
@@ -944,10 +935,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Palpites", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataPalpite")
                         .HasColumnType("datetime2");
@@ -969,6 +957,9 @@ namespace botAPI.Migrations
                     b.Property<double>("Num")
                         .HasColumnType("float");
 
+                    b.Property<float?>("ODD")
+                        .HasColumnType("real");
+
                     b.Property<int>("TipoAposta")
                         .HasColumnType("int");
 
@@ -982,11 +973,8 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Partida", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Campeonato")
                         .HasMaxLength(250)
@@ -1028,10 +1016,7 @@ namespace botAPI.Migrations
             modelBuilder.Entity("botAPI.Models.Partida_Estatistica_Esperadas", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Estatisticas_Esperadas_CasaId")
                         .HasColumnType("int");
