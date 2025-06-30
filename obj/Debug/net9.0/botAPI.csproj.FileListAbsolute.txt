@@ -449,7 +449,6 @@ C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.build.jso
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\botAPI.csproj.Up2Date
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\botAPI.genruntimeconfig.cache
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\ref\botAPI.dll

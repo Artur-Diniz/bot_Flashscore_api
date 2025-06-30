@@ -17,7 +17,7 @@ namespace botAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -862,6 +862,85 @@ namespace botAPI.Migrations
                     b.ToTable("TB_ESTATISTICA_TIME");
                 });
 
+            modelBuilder.Entity("botAPI.Models.MetodoGeradorPalpites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Condicoes")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Nome")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Versao")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_METODOPALPITES");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Condicoes = "media de gols feitos casa mais media de gols sofridos fora /2  o mesmo para visitante",
+                            Descricao = "Para partidas que houver menos de 4 gols em tempo regulamentar",
+                            Nome = "Under 4 gols",
+                            Versao = "1.0"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Condicoes = "media de gols feitos casa mais media de gols sofridos fora /2  o mesmo para visitante",
+                            Descricao = "Para partidas que houver mais de 2 gols em tempo regulamentar",
+                            Nome = "Over 2 gols",
+                            Versao = "1.0"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Condicoes = "baseado em 4 características para definir quem tem a maior probabilidade de vencer, sendo eles posse de bola,Precisão dos passes,gols e jogos sem sofre gol",
+                            Descricao = "Para definir quem sera o vencedor da partida em termpo regulamentar",
+                            Nome = "Vencedor",
+                            Versao = "1.0"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Condicoes = "baseado na media de escanteios feitos e  sofridos de cada time /4 ",
+                            Descricao = "Para definir a linha de over escanteios da Partida em termpo regulamentar",
+                            Nome = "Over escanteios Variaveis",
+                            Versao = "1.0"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Condicoes = "baseado na media de escanteios feitos e  sofridos de cada time /4 ",
+                            Descricao = "Para definir a linha de Under escanteios da Partida em termpo regulamentar",
+                            Nome = "Under escanteios Variaveis",
+                            Versao = "1.0"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Condicoes = "media de gols feitos casa mais media de gols sofridos fora /2  ",
+                            Descricao = "Para definir se um time faz um gol no adversario em termpo regulamentar",
+                            Nome = "Over 0.5 Time",
+                            Versao = "1.0"
+                        });
+                });
+
             modelBuilder.Entity("botAPI.Models.Palpites", b =>
                 {
                     b.Property<int>("Id")
@@ -870,11 +949,21 @@ namespace botAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DataPalpite")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Descricao")
                         .HasMaxLength(510)
                         .HasColumnType("varchar(510)");
 
+                    b.Property<string>("GreenRed")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar");
+
                     b.Property<int>("IdPartida")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetodoGeradorPalpite_Id")
                         .HasColumnType("int");
 
                     b.Property<double>("Num")
@@ -884,6 +973,8 @@ namespace botAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MetodoGeradorPalpite_Id");
 
                     b.ToTable("TB_PALPITES");
                 });
@@ -1040,6 +1131,17 @@ namespace botAPI.Migrations
                     b.Navigation("HT_Adversario");
 
                     b.Navigation("HT_Confronto");
+                });
+
+            modelBuilder.Entity("botAPI.Models.Palpites", b =>
+                {
+                    b.HasOne("botAPI.Models.MetodoGeradorPalpites", "MetodoGerador")
+                        .WithMany()
+                        .HasForeignKey("MetodoGeradorPalpite_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MetodoGerador");
                 });
 
             modelBuilder.Entity("botAPI.Models.Partida_Estatistica_Esperadas", b =>

@@ -267,13 +267,13 @@ CREATE TABLE [TB_ESTATISTICA_TIME] (
     CONSTRAINT [PK_TB_ESTATISTICA_TIME] PRIMARY KEY ([Id])
 );
 
-CREATE TABLE [TB_PALPITES] (
-    [Id] int NOT NULL,
-    [IdPartida] int NOT NULL,
-    [TipoAposta] int NOT NULL,
-    [Num] float NOT NULL,
-    [Descricao] varchar(510) NULL,
-    CONSTRAINT [PK_TB_PALPITES] PRIMARY KEY ([Id])
+CREATE TABLE [TB_METODOPALPITES] (
+    [Id] int NOT NULL IDENTITY,
+    [Nome] varchar(250) NULL,
+    [Versao] varchar(250) NULL,
+    [Descricao] varchar(250) NULL,
+    [Condicoes] varchar(250) NULL,
+    CONSTRAINT [PK_TB_METODOPALPITES] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [TB_PARTIDAS] (
@@ -314,6 +314,19 @@ CREATE TABLE [TB_ESTATISTICA_ESPERADAS] (
     CONSTRAINT [FK_TB_ESTATISTICA_ESPERADAS_TB_ESTATISTICA_BASEMODEL_HT_ConfrontoId] FOREIGN KEY ([HT_ConfrontoId]) REFERENCES [TB_ESTATISTICA_BASEMODEL] ([Id])
 );
 
+CREATE TABLE [TB_PALPITES] (
+    [Id] int NOT NULL,
+    [IdPartida] int NOT NULL,
+    [TipoAposta] int NOT NULL,
+    [Num] float NOT NULL,
+    [Descricao] varchar(510) NULL,
+    [GreenRed] varchar(250) NULL,
+    [DataPalpite] datetime2 NOT NULL,
+    [MetodoGeradorPalpite_Id] int NOT NULL,
+    CONSTRAINT [PK_TB_PALPITES] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TB_PALPITES_TB_METODOPALPITES_MetodoGeradorPalpite_Id] FOREIGN KEY ([MetodoGeradorPalpite_Id]) REFERENCES [TB_METODOPALPITES] ([Id]) ON DELETE CASCADE
+);
+
 CREATE TABLE [TB_PARTIDA_ESTAITSTICA_ESPERADAS] (
     [Id] int NOT NULL,
     [Id_Partida] int NOT NULL,
@@ -340,6 +353,18 @@ CREATE TABLE [TB_PARTIDA_ESTAITSTICA_ESPERADAS] (
     CONSTRAINT [FK_TB_PARTIDA_ESTAITSTICA_ESPERADAS_TB_PARTIDAS_PartidaId] FOREIGN KEY ([PartidaId]) REFERENCES [TB_PARTIDAS] ([id])
 );
 
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Condicoes', N'Descricao', N'Nome', N'Versao') AND [object_id] = OBJECT_ID(N'[TB_METODOPALPITES]'))
+    SET IDENTITY_INSERT [TB_METODOPALPITES] ON;
+INSERT INTO [TB_METODOPALPITES] ([Id], [Condicoes], [Descricao], [Nome], [Versao])
+VALUES (1, 'media de gols feitos casa mais media de gols sofridos fora /2  o mesmo para visitante', 'Para partidas que houver menos de 4 gols em tempo regulamentar', 'Under 4 gols', '1.0'),
+(2, 'media de gols feitos casa mais media de gols sofridos fora /2  o mesmo para visitante', 'Para partidas que houver mais de 2 gols em tempo regulamentar', 'Over 2 gols', '1.0'),
+(3, 'baseado em 4 características para definir quem tem a maior probabilidade de vencer, sendo eles posse de bola,Precisão dos passes,gols e jogos sem sofre gol', 'Para definir quem sera o vencedor da partida em termpo regulamentar', 'Vencedor do Encontro', '1.0'),
+(4, 'baseado na media de escanteios feitos e  sofridos de cada time /4 ', 'Para definir a linha de over escanteios da Partida em termpo regulamentar', 'Over escanteios Variaveis', '1.0'),
+(5, 'baseado na media de escanteios feitos e  sofridos de cada time /4 ', 'Para definir a linha de Under escanteios da Partida em termpo regulamentar', 'Under escanteios Variaveis', '1.0'),
+(6, 'media de gols feitos casa mais media de gols sofridos fora /2  ', 'Para definir se um time faz um gol no adversario em termpo regulamentar', 'Over 0.5 Time', '1.0');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Condicoes', N'Descricao', N'Nome', N'Versao') AND [object_id] = OBJECT_ID(N'[TB_METODOPALPITES]'))
+    SET IDENTITY_INSERT [TB_METODOPALPITES] OFF;
+
 CREATE INDEX [IX_TB_ESTATISTICA_ESPERADAS_FT_AdversarioId] ON [TB_ESTATISTICA_ESPERADAS] ([FT_AdversarioId]);
 
 CREATE INDEX [IX_TB_ESTATISTICA_ESPERADAS_FT_ConfrontoId] ON [TB_ESTATISTICA_ESPERADAS] ([FT_ConfrontoId]);
@@ -351,6 +376,8 @@ CREATE INDEX [IX_TB_ESTATISTICA_ESPERADAS_HT_AdversarioId] ON [TB_ESTATISTICA_ES
 CREATE INDEX [IX_TB_ESTATISTICA_ESPERADAS_HT_ConfrontoId] ON [TB_ESTATISTICA_ESPERADAS] ([HT_ConfrontoId]);
 
 CREATE INDEX [IX_TB_ESTATISTICA_ESPERADAS_HTId] ON [TB_ESTATISTICA_ESPERADAS] ([HTId]);
+
+CREATE INDEX [IX_TB_PALPITES_MetodoGeradorPalpite_Id] ON [TB_PALPITES] ([MetodoGeradorPalpite_Id]);
 
 CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Estatisticas_Esperadas_CasaId] ON [TB_PARTIDA_ESTAITSTICA_ESPERADAS] ([Estatisticas_Esperadas_CasaId]);
 
@@ -367,7 +394,7 @@ CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Partida_HTId] ON [TB_PARTIDA_E
 CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_PartidaId] ON [TB_PARTIDA_ESTAITSTICA_ESPERADAS] ([PartidaId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250607142728_migrationsdatacontext', N'9.0.3');
+VALUES (N'20250629235454_migrationsdatacontext', N'9.0.6');
 
 COMMIT;
 GO

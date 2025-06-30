@@ -253,28 +253,52 @@ namespace botAPI.Controllers
                     && partida.Campeonato != "Copa Sul-Americana" && partida.Campeonato != "COPA LIBERTADORES"
                      && partida.Campeonato != "Copa do Mundo" && partida.Campeonato != "Liga dos Campeoes")
             {
-                Palpites under4 = await MetodoUnder4(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                Palpites under4 = await MetodoUnder4(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (under4.Descricao != "")
+                {
+                    under4.MetodoGeradorPalpite_Id = 1;
+                    under4.GreenRed = "Em Andamento";
                     palpites.Add(under4);
-                Palpites Over2 = await MetodoOver2(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                }
+                Palpites Over2 = await MetodoOver2(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (Over2.Descricao != "")
+                {
+                    Over2.MetodoGeradorPalpite_Id = 2;
+                    Over2.GreenRed = "Em Andamento";
                     palpites.Add(Over2);
-                Palpites Winner = await MetodoWinner(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                }
+                Palpites Winner = await MetodoWinner(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (Winner.Descricao != "")
+                {
+                    Winner.MetodoGeradorPalpite_Id = 3;
+                    Winner.GreenRed = "Em Andamento";
                     palpites.Add(Winner);
-                Palpites OverCantos = await OverCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                }
+                Palpites OverCantos = await OverCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (OverCantos.Descricao != "")
+                {
+                    OverCantos.MetodoGeradorPalpite_Id = 4;
+                    OverCantos.GreenRed = "Em Andamento";
                     palpites.Add(OverCantos);
-                Palpites UnderCantos = await UnderCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                }
+                Palpites UnderCantos = await UnderCantosVariaveis(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (UnderCantos.Descricao != "")
+                {
+                    UnderCantos.MetodoGeradorPalpite_Id = 5;
+                    UnderCantos.GreenRed = "Em Andamento";
                     palpites.Add(UnderCantos);
-                Palpites Golteam = await GolTime(casa, fora, Partidas_casa, Partidas_fora, partida.Id);
+                }
+                Palpites Golteam = await GolTime(casa, fora, Partidas_casa, Partidas_fora, partida.Id, partida.DataPartida);
                 if (Golteam.Descricao != "")
+                {
+                    Golteam.MetodoGeradorPalpite_Id = 6;
+                    Golteam.GreenRed = "Em Andamento";
                     palpites.Add(Golteam);
+                }
             }
 
 
-            
+
             if (palpites.Any())
             {
 
@@ -314,7 +338,7 @@ namespace botAPI.Controllers
 
         }
 
-        private async Task<Palpites> MetodoUnder4(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> MetodoUnder4(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
             Palpites palpite = new Palpites();
 
@@ -378,6 +402,7 @@ namespace botAPI.Controllers
                 palpite.IdPartida = IdPartida;
                 palpite.TipoAposta = TipoAposta.Gols;
                 palpite.Num = 3.5;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.Descricao = $"Menos de 3.5 Gols para Essa Partida por Representarem" +
                 $" uma espectativa de Gols abaixo de 4 gols Esperadas para esse Partida entre {c.NomeTime} e {f.NomeTime} ";
@@ -387,7 +412,7 @@ namespace botAPI.Controllers
             return palpite;
         }
 
-        private async Task<Palpites> MetodoOver2(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> MetodoOver2(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
             Palpites palpite = new Palpites();
 
@@ -439,6 +464,7 @@ namespace botAPI.Controllers
                 palpite.IdPartida = IdPartida;
                 palpite.TipoAposta = TipoAposta.Gols;
                 palpite.Num = 1.5;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.Descricao = $"Mais de 1.5 Gols para Essa Partida por Representarem" +
                 $" Constante  Media de Gols Esperadas para esse Partida entre {c.NomeTime} e {f.NomeTime} ";
@@ -448,7 +474,7 @@ namespace botAPI.Controllers
         }
 
 
-        private async Task<Palpites> OverCantosVariaveis(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> OverCantosVariaveis(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
 
             Palpites palpite = new Palpites();
@@ -498,6 +524,8 @@ namespace botAPI.Controllers
             {
                 palpite.TipoAposta = TipoAposta.Escanteios;
                 palpite.Num = cantosEsperados - 0.5;
+                palpite.IdPartida = IdPartida;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.Descricao = $"over {cantosEsperados - 0.5}" +
                 $" os confronstos entre {c.NomeTime} e {f.NomeTime} apresentaram Alta media de escanteios " +
@@ -508,7 +536,7 @@ namespace botAPI.Controllers
         }
 
 
-        private async Task<Palpites> UnderCantosVariaveis(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> UnderCantosVariaveis(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
             Palpites palpite = new Palpites();
 
@@ -558,6 +586,7 @@ namespace botAPI.Controllers
                 palpite.TipoAposta = TipoAposta.Escanteios;
                 palpite.IdPartida = IdPartida;
                 palpite.Num = cantosEsperados - 0.5;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.Descricao = $"Under {cantosEsperados - 0.5}" +
                 $" os confronstos entre {c.NomeTime} e {f.NomeTime} apresentaram Baixa media de escanteios " +
@@ -568,7 +597,7 @@ namespace botAPI.Controllers
         }
 
 
-        private async Task<Palpites> GolTime(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> GolTime(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
             Palpites palpite = new Palpites();
 
@@ -614,7 +643,7 @@ namespace botAPI.Controllers
             if (CasaMarca && ForaMarca)
             {
                 palpite.IdPartida = IdPartida;
-
+                palpite.DataPalpite = dataPartida;
                 palpite.TipoAposta = TipoAposta.Gols;
                 palpite.Num = 2;
 
@@ -625,6 +654,7 @@ namespace botAPI.Controllers
            if (CasaMarca)
             {
                 palpite.IdPartida = IdPartida;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.TipoAposta = TipoAposta.Gols;
                 palpite.Num = 0.5;
@@ -636,6 +666,7 @@ namespace botAPI.Controllers
            if (ForaMarca)
             {
                 palpite.IdPartida = IdPartida;
+                palpite.DataPalpite = dataPartida;
 
                 palpite.TipoAposta = TipoAposta.Gols;
                 palpite.Num = 0.5;
@@ -648,7 +679,7 @@ namespace botAPI.Controllers
             return palpite;
         }
 
-        private async Task<Palpites> MetodoWinner(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida)
+        private async Task<Palpites> MetodoWinner(Estatistica_Times c, Estatistica_Times f, List<Partida> casa, List<Partida> fora, int IdPartida, DateTime dataPartida)
         {
 
             Palpites palpite = new Palpites();
@@ -728,6 +759,7 @@ namespace botAPI.Controllers
                     palpite.TipoAposta = TipoAposta.CasaVence;
                     palpite.Num = 0;
                     palpite.IdPartida = IdPartida;
+                    palpite.DataPalpite = dataPartida;
                     palpite.Descricao = $"Casa Vitoria Empate" +
                    $" o Mandante {c.NomeTime} tem se mostrar um adversário melhor em comparação ao {f.NomeTime}, tendo tendencia Maior de vitoria o Mandante";
 
@@ -737,6 +769,8 @@ namespace botAPI.Controllers
                     palpite.TipoAposta = TipoAposta.CasaVence;
                     palpite.Num = 0;
                     palpite.IdPartida = IdPartida;
+                    palpite.DataPalpite = dataPartida;
+
                     palpite.Descricao = $"Casa Vitoria " +
                    $"o Mandante {c.NomeTime} tem se mostrar um adversário Superior em comparação ao {f.NomeTime}, tendo tendencia Maior de vitoria o Mandante";
 
@@ -750,6 +784,8 @@ namespace botAPI.Controllers
                     palpite.TipoAposta = TipoAposta.ForaVence;
                     palpite.Num = 0;
                     palpite.IdPartida = IdPartida;
+                    palpite.DataPalpite = dataPartida;
+
                     palpite.Descricao = $"Fora Vitoria Empate " +
                    $"o Mandante {c.NomeTime} tem se mostrar um adversário Fraco em comparação ao {f.NomeTime}, tendo tendencia Maior de vitoria  o Visitante";
 
@@ -759,6 +795,8 @@ namespace botAPI.Controllers
                     palpite.TipoAposta = TipoAposta.ForaVence;
                     palpite.Num = 0;
                     palpite.IdPartida = IdPartida;
+                    palpite.DataPalpite = dataPartida;
+
                     palpite.Descricao = $"Fora Vitoria " +
                    $"o Mandante {c.NomeTime} tem se mostrar um adversário Fraco em comparação ao {f.NomeTime}, tendo tendencia Maior de vitoria o Visitante";
 

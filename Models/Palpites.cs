@@ -1,5 +1,8 @@
 
 using System.ComponentModel.DataAnnotations;
+using botAPI.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace botAPI.Models
 {
@@ -13,8 +16,15 @@ namespace botAPI.Models
         [MaxLength(510)]
         public string Descricao { get; set; } = string.Empty;
 
-        //qual é o metodo 
-        // green red em espera
+        public string GreenRed { get; set; } = string.Empty;
+
+        public DateTime DataPalpite { get; set; }
+
+        public int MetodoGeradorPalpite_Id { get; set; }
+        [ForeignKey("MetodoGeradorPalpite_Id")]
+        public MetodoGeradorPalpites MetodoGerador { get; set; }
+
+
 
     }
 }
