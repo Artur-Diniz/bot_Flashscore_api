@@ -370,7 +370,7 @@ namespace botAPI.Controllers
             try
             {
                 int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_ESTATISTICA");
-                return Ok($"{linhasAfetadas} Partidas foram apagadas.");
+                return Ok($"{linhasAfetadas} Estatisticas foram apagadas.");
             }
             catch (System.Exception ex)
             {

@@ -28,7 +28,8 @@ namespace botAPI.Controllers
                 if (id == 0)
                     throw new System.Exception("Id não pode ser igual a Zero");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                Palpites p = await _MLDb.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
+                Palpites p = await _MLDb.TB_PALPITES.Include(e => e.MetodoGerador)
+.FirstOrDefaultAsync(pa => pa.Id == id);
                 if (p == null)
                     throw new System.Exception("Palpite Não Encontrada");
 
@@ -46,7 +47,7 @@ namespace botAPI.Controllers
             try
             {
                 List<Palpites> palpites = await _context
-                .TB_PALPITES.ToListAsync();
+                .TB_PALPITES.Include(e => e.MetodoGerador).ToListAsync();
                 if (palpites.Count() == 0)
                     return Ok($"Sem Palpites Para o Hoje");
                 return Ok(palpites);
@@ -57,14 +58,14 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpGet("GetAllComplete")]
         public async Task<IActionResult> GetAllComplete()
         {
             try
             {
                 List<Palpites> palpites = await _MLDb
-                .TB_PALPITES.ToListAsync();
+                .TB_PALPITES.Include(e => e.MetodoGerador).ToListAsync();
                 if (palpites.Count() == 0)
                     return Ok($"Sem Palpites Para o Hoje");
                 return Ok(palpites);

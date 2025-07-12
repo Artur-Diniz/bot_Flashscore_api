@@ -1300,8 +1300,22 @@
         }
       },
       "System.Text.Encodings.Web/4.7.2": {},
-      "System.Text.Json/9.0.6": {},
-      "System.Threading.Channels/9.0.5": {},
+      "System.Text.Json/9.0.6": {
+        "runtime": {
+          "lib/net9.0/System.Text.Json.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.625.26613"
+          }
+        }
+      },
+      "System.Threading.Channels/9.0.5": {
+        "runtime": {
+          "lib/net9.0/System.Threading.Channels.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21509"
+          }
+        }
+      },
       "System.Threading.Tasks.Extensions/4.5.4": {}
     }
   },

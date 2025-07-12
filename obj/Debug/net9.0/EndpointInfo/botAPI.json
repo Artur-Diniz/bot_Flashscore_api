@@ -670,6 +670,157 @@
         }
       }
     },
+    "/EstatisticaTimes/Apague": {
+      "delete": {
+        "tags": [
+          "EstatisticaTimes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/MetodoGeradorPalpites/{id}": {
+      "get": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/MetodoGeradorPalpites/GetAll": {
+      "get": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/MetodoGeradorPalpites/GetAllComplete": {
+      "get": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/MetodoGeradorPalpites": {
+      "post": {
+        "tags": [
+          "MetodoGeradorPalpites"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetodoGeradorPalpites"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Palpite/{id}": {
       "get": {
         "tags": [
@@ -2437,6 +2588,32 @@
         },
         "additionalProperties": false
       },
+      "MetodoGeradorPalpites": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "versao": {
+            "type": "string",
+            "nullable": true
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          },
+          "condicoes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Palpites": {
         "type": "object",
         "properties": {
@@ -2459,6 +2636,26 @@
             "maxLength": 510,
             "type": "string",
             "nullable": true
+          },
+          "greenRed": {
+            "type": "string",
+            "nullable": true
+          },
+          "odd": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "dataPalpite": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metodoGeradorPalpite_Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "metodoGerador": {
+            "$ref": "#/components/schemas/MetodoGeradorPalpites"
           }
         },
         "additionalProperties": false

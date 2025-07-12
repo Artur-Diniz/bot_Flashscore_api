@@ -46,11 +46,12 @@ namespace botAPI.Controllers
         {
             try
             {//é só pra verificar se teve partida pra mandar gerar relatorio  por isso ta chumbado
-                List<Partida> partidas = await _context
-                .TB_PARTIDAS.Where(p => p.Id == 1).ToListAsync();
+                Partida partidas = await _context.TB_PARTIDAS.OrderBy(p => p.Id)
+    .FirstOrDefaultAsync();
 
-                if (partidas.Count() == 0)
+                if (partidas == null)
                     throw new System.Exception("Sem Partidas Analisadas Hoje");
+
                 string relatorio = await relatorioMensage();
                 return Ok(relatorio);
             }
@@ -237,7 +238,7 @@ namespace botAPI.Controllers
             try
             {
                 int linhasAfetadas = await _mlDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_PARTIDAS");
-                return Ok($"{linhasAfetadas} Estatisticas foram apagadas.");
+                return Ok($"{linhasAfetadas} Partidas foram apagadas.");
             }
             catch (System.Exception ex)
             {

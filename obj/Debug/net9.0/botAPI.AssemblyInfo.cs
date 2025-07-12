@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("botAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfa2b5c047ab94ac442ee86dcd4bfd03b6847da4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f672d1f90cc56143841be2f5b5e447ac5f4c8b82")]
 [assembly: System.Reflection.AssemblyProductAttribute("botAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("botAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

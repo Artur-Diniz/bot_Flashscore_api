@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8Ho2Lpb+75Q=",
+  "dgSpecHash": "GJtKVR1Ms6g=",
   "success": true,
-  "projectFilePath": "C:\\Users\\artur\\Desktop\\program\\botAPI\\botAPI.csproj",
+  "projectFilePath": "C:\\Users\\artur\\OneDrive\\Área de Trabalho\\hdzim\\program\\botAPI\\botAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artur\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\artur\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

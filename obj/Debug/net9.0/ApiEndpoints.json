@@ -390,6 +390,16 @@
   },
   {
     "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
+    "Method": "DeleteAll",
+    "RelativePath": "EstatisticaTimes/Apague",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
     "Method": "GerarEstatisticaMedia",
     "RelativePath": "EstatisticaTimes/GerarEstatistica/{nomeTime}",
     "HttpMethod": "POST",
@@ -418,6 +428,95 @@
     "ContainingType": "botAPI.Controllers.EstatisticaTimesController",
     "Method": "GetAllComplete",
     "RelativePath": "EstatisticaTimes/GetAllComplete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "Post",
+    "RelativePath": "MetodoGeradorPalpites",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mp",
+        "Type": "botAPI.Models.MetodoGeradorPalpites",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "getId",
+    "RelativePath": "MetodoGeradorPalpites/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "Put",
+    "RelativePath": "MetodoGeradorPalpites/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "palpites",
+        "Type": "botAPI.Models.MetodoGeradorPalpites",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "delte",
+    "RelativePath": "MetodoGeradorPalpites/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "GetAll",
+    "RelativePath": "MetodoGeradorPalpites/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.MetodoGeradorPalpitesController",
+    "Method": "GetAllComplete",
+    "RelativePath": "MetodoGeradorPalpites/GetAllComplete",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
