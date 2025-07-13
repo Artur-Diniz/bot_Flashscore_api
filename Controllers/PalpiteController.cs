@@ -78,6 +78,57 @@ namespace botAPI.Controllers
         }
 
 
+        [HttpGet("GetPalpitesEmAndamento")]
+        public async Task<IActionResult> GetEmAndamento()
+        {
+            try
+            {
+                DateTime ontem = DateTime.Today.AddDays(-1);              // Começo do dia de ontem
+                DateTime fimOntem = DateTime.Today.AddTicks(-1);          // Final do dia de ontem
+
+                List<Palpites> palpites = await _MLDb.TB_PALPITES
+                    .Where(p => p.GreenRed == "Em Andamento" &&
+                                p.DataPalpite >= ontem &&
+                                p.DataPalpite <= fimOntem)
+                    .ToListAsync();
+
+                if (palpites.Count == 0)
+                    return Ok("Sem Palpites para ontem");
+
+                return Ok(palpites);
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetPalpitesHoje")]
+        public async Task<IActionResult> GetPalpitesHoje()
+        {
+            try
+            {
+                DateTime hojeInicio = DateTime.Today;                  // 00:00:00 de hoje
+                DateTime hojeFim = DateTime.Today.AddDays(1).AddTicks(-1); // 23:59:59.9999999 de hoje
+
+                List<Palpites> palpitesHoje = await _MLDb.TB_PALPITES
+                    .Where(p => p.GreenRed == "Em Andamento" &&
+                                p.DataPalpite >= hojeInicio &&
+                                p.DataPalpite <= hojeFim)
+                    .OrderByDescending(p => p.DataPalpite) // Do mais recente para o mais antigo
+                    .ToListAsync();
+
+                if (palpitesHoje.Count == 0)
+                    return Ok("Sem Palpites para hoje");
+
+                return Ok(palpitesHoje);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(Palpites p)

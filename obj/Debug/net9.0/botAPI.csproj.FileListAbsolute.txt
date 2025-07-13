@@ -685,3 +685,9 @@ C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\obj\Debug\net9.0\
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\obj\Debug\net9.0\botAPI.pdb
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\obj\Debug\net9.0\botAPI.genruntimeconfig.cache
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\obj\Debug\net9.0\ref\botAPI.dll
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\web.config
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\appsettings.Development.json
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\appsettings.json
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.deps.json
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.runtimeconfig.json
+C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.staticwebassets.endpoints.json

@@ -623,6 +623,26 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "GetEmAndamento",
+    "RelativePath": "Palpite/GetPalpitesEmAndamento",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "GetPalpitesHoje",
+    "RelativePath": "Palpite/GetPalpitesHoje",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "Post",
     "RelativePath": "Partida",

@@ -929,6 +929,30 @@
         }
       }
     },
+    "/Palpite/GetPalpitesEmAndamento": {
+      "get": {
+        "tags": [
+          "Palpite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Palpite/GetPalpitesHoje": {
+      "get": {
+        "tags": [
+          "Palpite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Palpite": {
       "post": {
         "tags": [

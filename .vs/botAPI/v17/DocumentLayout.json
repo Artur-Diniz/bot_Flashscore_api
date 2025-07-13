@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\hdzim\\program\\botapi\\controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\hdzim\\program\\botapi\\controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -37,14 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\hdzim\\program\\botapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\hdzim\\program\\botapi\\controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\onedrive\\\u00E1rea de trabalho\\hdzim\\program\\botapi\\script_banco_mldb.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:script_banco_mldb.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,19 +62,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "script_banco_MLDb.sql ",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\script_banco_MLDb.sql",
-              "RelativeDocumentMoniker": "script_banco_MLDb.sql",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\script_banco_MLDb.sql",
-              "RelativeToolTip": "script_banco_MLDb.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-07-12T15:29:44.43Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EstatistcaTimesController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\EstatistcaTimesController.cs",
               "RelativeDocumentMoniker": "Controllers\\EstatistcaTimesController.cs",
@@ -91,20 +75,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PartidaController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PartidaController.cs",
               "RelativeDocumentMoniker": "Controllers\\PartidaController.cs",
               "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PartidaController.cs",
               "RelativeToolTip": "Controllers\\PartidaController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAuwDIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAuwC0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T11:52:25.781Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -116,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\appsettings.Development.json",
               "RelativeDocumentMoniker": "appsettings.Development.json",
@@ -128,7 +112,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "botAPI.csproj",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\botAPI.csproj",
               "RelativeDocumentMoniker": "botAPI.csproj",
@@ -140,7 +124,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
+              "Title": "PalpiteController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PalpiteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PalpiteController.cs",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PalpiteController.cs",
+              "RelativeToolTip": "Controllers\\PalpiteController.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAqwHMAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T13:06:22.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "script_banco_MLDb.sql",
+              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\script_banco_MLDb.sql",
+              "RelativeDocumentMoniker": "script_banco_MLDb.sql",
+              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\script_banco_MLDb.sql",
+              "RelativeToolTip": "script_banco_MLDb.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-07-12T15:29:44.43Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "MLDbContext.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Data\\MLDbContext.cs",
               "RelativeDocumentMoniker": "Data\\MLDbContext.cs",
@@ -152,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EstatisticaController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\EstatisticaController.cs",
               "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
@@ -165,7 +173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -174,18 +182,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAiwBMAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T11:34:35.83Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PalpiteController.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PalpiteController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PalpiteController.cs",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\\u00C1rea de Trabalho\\hdzim\\program\\botAPI\\Controllers\\PalpiteController.cs",
-              "RelativeToolTip": "Controllers\\PalpiteController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJEAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T13:06:22.909Z"
             }
           ]
         },

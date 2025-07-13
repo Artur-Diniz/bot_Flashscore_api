@@ -43,7 +43,7 @@ namespace botAPI.Controllers
 
         [HttpGet("Relatorio")]
         public async Task<IActionResult> GetGerarRelatorio()
-        {
+        {   
             try
             {//é só pra verificar se teve partida pra mandar gerar relatorio  por isso ta chumbado
                 Partida partidas = await _context.TB_PARTIDAS.OrderBy(p => p.Id)
