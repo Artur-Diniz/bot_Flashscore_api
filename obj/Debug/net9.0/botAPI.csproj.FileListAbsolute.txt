@@ -452,7 +452,6 @@ C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.build.end
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\botAPI.csproj.Up2Date
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\botAPI.genruntimeconfig.cache
 C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\ref\botAPI.dll
-C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\appsettings.json
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\botAPI.staticwebassets.endpoints.json
@@ -691,3 +690,4 @@ C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.deps.json
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.runtimeconfig.json
 C:\Users\artur\OneDrive\Área de Trabalho\hdzim\program\botAPI\bin\Debug\net9.0\publish\botAPI.staticwebassets.endpoints.json
+C:\Users\artur\Desktop\program\botAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

@@ -8,9 +8,11 @@ namespace botAPI.Models
         [Key]
         public int Id { get; set; }
 
-        public string CasaOuFora { get; set; }= string.Empty;
-        public string NomeTime { get; set; }= string.Empty;
+        public string CasaOuFora { get; set; } = string.Empty;
+        public string NomeTime { get; set; } = string.Empty;
+        public bool Analisada { get; set; } = false;
 
+        
         public float? Gol { get; set; }
         public float? GolSofrido { get; set; }
         public float? Posse_Bola { get; set; }
@@ -84,7 +86,7 @@ namespace botAPI.Models
         public float? Interceptacoes_Confrontos { get; set; }
 
 
-        
+
         public float? Gol_HT { get; set; }
         public float? GolSofrido_HT { get; set; }
         public float? Posse_Bola_HT { get; set; }

@@ -9,7 +9,9 @@ namespace botAPI.Models
         public int Id_Estatistica { get; set; }
         public int Id_Partida { get; set; }
 
-        public string CasaOuFora { get; set; }= string.Empty;
+        public bool EstastiticaAnalise { get; set; } = false;
+
+        public string CasaOuFora { get; set; } = string.Empty;
         public string TipoPartida { get; set; }= string.Empty;
        
         public string NomeTime { get; set; } = string.Empty;

@@ -58,6 +58,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("GetAllComplete")]
         public async Task<IActionResult> GetAllComplete()
         {
@@ -369,7 +370,7 @@ namespace botAPI.Controllers
         {
             try
             {
-                int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_ESTATISTICA");
+                int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_ESTATISTICA WHERE [EstastiticaAnalise] = 0;");
                 return Ok($"{linhasAfetadas} Estatisticas foram apagadas.");
             }
             catch (System.Exception ex)

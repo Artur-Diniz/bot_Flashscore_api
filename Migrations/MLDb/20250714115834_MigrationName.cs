@@ -36,6 +36,7 @@ namespace botAPI.Migrations.MLDb
                     Id_Estatistica = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_Partida = table.Column<int>(type: "int", nullable: false),
+                    EstastiticaAnalise = table.Column<bool>(type: "bit", nullable: false),
                     CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     TipoPartida = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
@@ -155,6 +156,7 @@ namespace botAPI.Migrations.MLDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    Analisada = table.Column<bool>(type: "bit", nullable: false),
                     Gol = table.Column<float>(type: "real", nullable: true),
                     GolSofrido = table.Column<float>(type: "real", nullable: true),
                     Posse_Bola = table.Column<float>(type: "real", nullable: true),

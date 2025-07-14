@@ -35,6 +35,7 @@ namespace botAPI.Migrations
                 {
                     Id_Estatistica = table.Column<int>(type: "int", nullable: false),
                     Id_Partida = table.Column<int>(type: "int", nullable: false),
+                    EstastiticaAnalise = table.Column<bool>(type: "bit", nullable: false),
                     CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     TipoPartida = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
@@ -152,6 +153,7 @@ namespace botAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     CasaOuFora = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     NomeTime = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    Analisada = table.Column<bool>(type: "bit", nullable: false),
                     Gol = table.Column<float>(type: "real", nullable: true),
                     GolSofrido = table.Column<float>(type: "real", nullable: true),
                     Posse_Bola = table.Column<float>(type: "real", nullable: true),

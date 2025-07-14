@@ -113,6 +113,9 @@ namespace botAPI.Migrations
                     b.Property<int?>("Escanteios_HT")
                         .HasColumnType("int");
 
+                    b.Property<bool>("EstastiticaAnalise")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("Faltas")
                         .HasColumnType("int");
 
@@ -422,6 +425,9 @@ namespace botAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Analisada")
+                        .HasColumnType("bit");
 
                     b.Property<float?>("Bolas_Afastadas")
                         .HasColumnType("real");

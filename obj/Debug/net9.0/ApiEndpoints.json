@@ -743,6 +743,22 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetMultiPartidas",
+    "RelativePath": "Partida/GetMultiPartidas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "GetAnalise",
     "RelativePath": "Partida/PartidasAnalisadas",
     "HttpMethod": "GET",

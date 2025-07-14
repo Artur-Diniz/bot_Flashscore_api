@@ -21,6 +21,7 @@ CREATE TABLE [TB_ERROSLOGS] (
 CREATE TABLE [TB_ESTATISTICA] (
     [Id_Estatistica] int NOT NULL,
     [Id_Partida] int NOT NULL,
+    [EstastiticaAnalise] bit NOT NULL,
     [CasaOuFora] varchar(250) NULL,
     [TipoPartida] varchar(250) NULL,
     [NomeTime] varchar(250) NULL,
@@ -126,6 +127,7 @@ CREATE TABLE [TB_ESTATISTICA_TIME] (
     [Id] int NOT NULL,
     [CasaOuFora] varchar(250) NULL,
     [NomeTime] varchar(250) NULL,
+    [Analisada] bit NOT NULL,
     [Gol] real NULL,
     [GolSofrido] real NULL,
     [Posse_Bola] real NULL,
@@ -395,7 +397,7 @@ CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_Partida_HTId] ON [TB_PARTIDA_E
 CREATE INDEX [IX_TB_PARTIDA_ESTAITSTICA_ESPERADAS_PartidaId] ON [TB_PARTIDA_ESTAITSTICA_ESPERADAS] ([PartidaId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250630003726_migrationsdatacontext', N'9.0.6');
+VALUES (N'20250714115817_migrationsdatacontext', N'9.0.6');
 
 COMMIT;
 GO

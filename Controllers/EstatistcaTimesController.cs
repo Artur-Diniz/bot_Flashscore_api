@@ -247,7 +247,9 @@ namespace botAPI.Controllers
         {
             try
             {
-                int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_ESTATISTICA_TIME");
+                int linhasAfetadas = await _MLDb.Database.ExecuteSqlRawAsync(
+                    "UPDATE [TB_ESTATISTICA_TIME] SET [Analisada] = 1 WHERE [Analisada] = 0;"
+                );
                 return Ok($"{linhasAfetadas} Partidas foram apagadas.");
             }
             catch (System.Exception ex)

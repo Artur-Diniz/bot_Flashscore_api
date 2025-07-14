@@ -115,7 +115,26 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpGet("GetMultiPartidas")]
+        public async Task<IActionResult> GetMultiPartidas([FromQuery] string ids)
+        {
+            try
+            {
+                List<int> listaIds = ids.Split(',').Select(int.Parse).ToList();
 
+                List<Partida> partidas = await _mlDb
+                .TB_PARTIDAS.Where(p => listaIds.Contains(p.Id)).ToListAsync();
+                
+                if (partidas.Count == 0)
+                    throw new System.Exception("Partida Não Encontrada");
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> Post(Partida partida)
         {
@@ -237,7 +256,7 @@ namespace botAPI.Controllers
         {
             try
             {
-                int linhasAfetadas = await _mlDb.Database.ExecuteSqlRawAsync("DELETE FROM TB_PARTIDAS");
+                int linhasAfetadas = await _mlDb.Database.ExecuteSqlRawAsync("DELETE FROM [TB_PARTIDAS] WHERE [PartidaAnalise] = 0;");
                 return Ok($"{linhasAfetadas} Partidas foram apagadas.");
             }
             catch (System.Exception ex)

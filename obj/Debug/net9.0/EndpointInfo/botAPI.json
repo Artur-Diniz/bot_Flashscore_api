@@ -1128,6 +1128,27 @@
         }
       }
     },
+    "/Partida/GetMultiPartidas": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Partida": {
       "post": {
         "tags": [
@@ -1373,6 +1394,9 @@
           "id_Partida": {
             "type": "integer",
             "format": "int32"
+          },
+          "estastiticaAnalise": {
+            "type": "boolean"
           },
           "casaOuFora": {
             "type": "string",
@@ -1918,6 +1942,9 @@
           "nomeTime": {
             "type": "string",
             "nullable": true
+          },
+          "analisada": {
+            "type": "boolean"
           },
           "gol": {
             "type": "number",

@@ -22,6 +22,7 @@ namespace botAPI.Models
         public DateTime DataPalpite { get; set; }
 
         public int MetodoGeradorPalpite_Id { get; set; }
+        
         [ForeignKey("MetodoGeradorPalpite_Id")]
         public MetodoGeradorPalpites MetodoGerador { get; set; }
 
