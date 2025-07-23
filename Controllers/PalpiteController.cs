@@ -291,8 +291,8 @@ namespace botAPI.Controllers
         {
             List<Palpites> palpites = new List<Palpites>();
 
-            Estatistica_Times casa = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeCasa);
-            Estatistica_Times fora = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeFora);
+            Estatistica_Times casa = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeCasa && c.Analisada == false);
+            Estatistica_Times fora = await _context.TB_ESTATISTICA_TIME.FirstOrDefaultAsync(c => c.NomeTime == partida.NomeTimeFora && c.Analisada == false);
 
             if (casa == null || fora == null)
                 return palpites;

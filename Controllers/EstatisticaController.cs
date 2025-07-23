@@ -191,6 +191,27 @@ namespace botAPI.Controllers
         {
             try
             {
+
+                Partida PartidaML = await _MLDb.TB_PARTIDAS
+                    .FirstOrDefaultAsync(es => es.NomeTimeCasa == dados.Partida.NomeTimeCasa && es.NomeTimeFora == dados.Partida.NomeTimeFora
+                    && es.Url_Partida == dados.Partida.Url_Partida
+                    && es.DataPartida == dados.Partida.DataPartida
+                    && es.Campeonato == dados.Partida.Campeonato
+                    && es.TipoPartida == dados.Partida.TipoPartida
+                    && es.PartidaAnalise == true);
+
+
+                Partida partidaSecundaria = await _context.TB_PARTIDAS
+                .FirstOrDefaultAsync(es => es.Id == PartidaML.Id);
+
+
+                if (PartidaML == null || partidaSecundaria == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
+
+                dados.EstatisticaCasa.Id_Partida = PartidaML.Id;
+                dados.EstatisticaFora.Id_Partida = PartidaML.Id;
+
+
                 // 1. Insere estatísticas no primeiro contexto (_MLDb)
                 await _MLDb.TB_ESTATISTICA.AddRangeAsync(dados.EstatisticaCasa, dados.EstatisticaFora);
                 await _MLDb.SaveChangesAsync();
@@ -198,26 +219,14 @@ namespace botAPI.Controllers
                 // 2. Atualiza a partida com os IDs das estatísticas
                 dados.Partida.Id_EstatisticaCasa = dados.EstatisticaCasa.Id_Estatistica;
                 dados.Partida.Id_EstatisticaFora = dados.EstatisticaFora.Id_Estatistica;
+                dados.Partida.TipoPartida = "Analisada";
 
-                Partida PartidaML = await _MLDb.TB_PARTIDAS
-                .FirstOrDefaultAsync(es => es.NomeTimeCasa == dados.Partida.NomeTimeCasa && es.NomeTimeFora == dados.Partida.NomeTimeFora
-                && es.Url_Partida == dados.Partida.Url_Partida
-                && es.DataPartida == dados.Partida.DataPartida
-                && es.Campeonato == dados.Partida.Campeonato
-                && es.TipoPartida == dados.Partida.TipoPartida
-                && es.PartidaAnalise == true);
-
-                Partida partidaSecundaria = await _context.TB_PARTIDAS
-                .FirstOrDefaultAsync(es => es.Id == PartidaML.Id);
-
-                if (PartidaML == null || partidaSecundaria == null)
-                    return NotFound("Estatística não encontrada em um dos bancos.");
-
-                dados.Partida.PartidaAnalise = false;//ela ja foi analisada ent não é mais uma partida analise
+                dados.Partida.Id = PartidaML.Id;
 
                 _MLDb.Entry(PartidaML).CurrentValues.SetValues(dados.Partida);
                 _context.Entry(partidaSecundaria).CurrentValues.SetValues(dados.Partida);
-
+               
+               
                 await _MLDb.SaveChangesAsync();
                 try
                 {
@@ -230,22 +239,14 @@ namespace botAPI.Controllers
                 }
 
 
-                // 4. Atualiza as estatísticas com o ID da partida
-                dados.EstatisticaCasa.Id_Partida = dados.Partida.Id;
-                dados.EstatisticaFora.Id_Partida = dados.Partida.Id;
-
-                _MLDb.TB_ESTATISTICA.UpdateRange(dados.EstatisticaCasa, dados.EstatisticaFora);
-                await _MLDb.SaveChangesAsync();
 
                 // 5. Desanexar do primeiro contexto
-                _MLDb.Entry(dados.Partida).State = EntityState.Detached;
                 _MLDb.Entry(dados.EstatisticaCasa).State = EntityState.Detached;
                 _MLDb.Entry(dados.EstatisticaFora).State = EntityState.Detached;
 
                 try
                 {
                     // 6. Inserir no segundo contexto
-                    await _context.TB_PARTIDAS.AddAsync(dados.Partida);
                     await _context.TB_ESTATISTICA.AddRangeAsync(dados.EstatisticaCasa, dados.EstatisticaFora);
                     await _context.SaveChangesAsync();
                 }

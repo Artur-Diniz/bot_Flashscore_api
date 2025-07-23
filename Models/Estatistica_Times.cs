@@ -12,7 +12,6 @@ namespace botAPI.Models
         public string NomeTime { get; set; } = string.Empty;
         public bool Analisada { get; set; } = false;
 
-        
         public float? Gol { get; set; }
         public float? GolSofrido { get; set; }
         public float? Posse_Bola { get; set; }

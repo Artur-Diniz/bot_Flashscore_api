@@ -51,7 +51,7 @@ namespace botAPI.Controllers
             try
             {
                 List<Estatistica_Times> estatisticas = await _context
-                .TB_ESTATISTICA_TIME.ToListAsync();
+                .TB_ESTATISTICA_TIME.Where(e => e.Analisada == false).ToListAsync();
 
                 return Ok(estatisticas);
 

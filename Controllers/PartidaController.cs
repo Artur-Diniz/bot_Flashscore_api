@@ -79,6 +79,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("GetAllComplete")]
         public async Task<IActionResult> GetComplete()
         {
@@ -104,6 +105,24 @@ namespace botAPI.Controllers
             {
                 List<Partida> partidas = await _context
                 .TB_PARTIDAS.Where(p => p.PartidaAnalise == true).ToListAsync();
+                if (partidas == null)
+                    throw new System.Exception("Partida Não Encontrada");
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetComfirmarPalpites")]
+        public async Task<IActionResult> GetComfirmarPalpites()
+        {
+            try
+            {
+                List<Partida> partidas = await _context
+                .TB_PARTIDAS.Where(p => p.PartidaAnalise == true && p.Id_EstatisticaCasa == 0 && p.Id_EstatisticaFora == 0).ToListAsync();
                 if (partidas == null)
                     throw new System.Exception("Partida Não Encontrada");
 

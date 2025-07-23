@@ -3,48 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\artur\\Desktop\\program\\botAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\models\\palpites.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:models\\palpites.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\palpitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\script_banco_mldb.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:script_banco_mldb.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\partidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\estatisticaesperadascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatisticaesperadascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:data\\mldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:botapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|c:\\users\\artur\\desktop\\program\\botapi\\controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06DF84A7-6367-0EC2-11CE-B96792E5F0E4}|botAPI.csproj|solutionrelative:controllers\\estatistcatimescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,138 +38,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Palpites.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Models\\Palpites.cs",
-              "RelativeDocumentMoniker": "Models\\Palpites.cs",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Models\\Palpites.cs",
-              "RelativeToolTip": "Models\\Palpites.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "EstatisticaEsperadasController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaEsperadasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstatisticaEsperadasController.cs",
+              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaEsperadasController.cs",
+              "RelativeToolTip": "Controllers\\EstatisticaEsperadasController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T14:03:07.33Z"
+              "WhenOpened": "2025-07-22T12:00:50.365Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "EstatisticaController.cs",
+              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
+              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaController.cs",
+              "RelativeToolTip": "Controllers\\EstatisticaController.cs",
+              "ViewState": "AgIAAP8AAAAAAAAAAAAiwBsBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T12:00:50.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "EstatistcaTimesController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatistcaTimesController.cs",
               "RelativeDocumentMoniker": "Controllers\\EstatistcaTimesController.cs",
               "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatistcaTimesController.cs",
               "RelativeToolTip": "Controllers\\EstatistcaTimesController.cs",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAAwPkAAABtAAAAAAAAAA==",
+              "ViewState": "AgIAAOkAAAAAAAAAAAAAwPkAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-12T15:12:12.6Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PartidaController.cs",
               "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\PartidaController.cs",
               "RelativeDocumentMoniker": "Controllers\\PartidaController.cs",
               "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\PartidaController.cs",
               "RelativeToolTip": "Controllers\\PartidaController.cs",
-              "ViewState": "AgIAAOwAAAAAAAAAAAAowHcAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAQwHwAAAB6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T11:52:25.781Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-29T01:16:40.618Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "appsettings.Development.json",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\appsettings.Development.json",
-              "RelativeToolTip": "appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-29T01:16:39.106Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "botAPI.csproj",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\botAPI.csproj",
-              "RelativeDocumentMoniker": "botAPI.csproj",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\botAPI.csproj",
-              "RelativeToolTip": "botAPI.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-27T11:48:22.047Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PalpiteController.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\PalpiteController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PalpiteController.cs",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\PalpiteController.cs",
-              "RelativeToolTip": "Controllers\\PalpiteController.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAqwHMAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T13:06:22.909Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "script_banco_MLDb.sql",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\script_banco_MLDb.sql",
-              "RelativeDocumentMoniker": "script_banco_MLDb.sql",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\script_banco_MLDb.sql",
-              "RelativeToolTip": "script_banco_MLDb.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-07-12T15:29:44.43Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MLDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Data\\MLDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\MLDbContext.cs",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Data\\MLDbContext.cs",
-              "RelativeToolTip": "Data\\MLDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:51:20.966Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "EstatisticaController.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EstatisticaController.cs",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Controllers\\EstatisticaController.cs",
-              "RelativeToolTip": "Controllers\\EstatisticaController.cs",
-              "ViewState": "AgIAAJ0AAAAAAAAAAAAiwLkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T13:40:58.668Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\artur\\Desktop\\program\\botAPI\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAiwBMAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T11:34:35.83Z"
+              "WhenOpened": "2025-07-10T11:52:25.781Z"
             }
           ]
         },

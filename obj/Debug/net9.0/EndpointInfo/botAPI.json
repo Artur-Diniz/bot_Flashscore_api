@@ -1128,6 +1128,18 @@
         }
       }
     },
+    "/Partida/GetComfirmarPalpites": {
+      "get": {
+        "tags": [
+          "Partida"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Partida/GetMultiPartidas": {
       "get": {
         "tags": [

@@ -743,6 +743,16 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetComfirmarPalpites",
+    "RelativePath": "Partida/GetComfirmarPalpites",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "GetMultiPartidas",
     "RelativePath": "Partida/GetMultiPartidas",
     "HttpMethod": "GET",
