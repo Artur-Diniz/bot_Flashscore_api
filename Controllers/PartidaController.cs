@@ -121,8 +121,11 @@ namespace botAPI.Controllers
         {
             try
             {
-                List<Partida> partidas = await _context
-                .TB_PARTIDAS.Where(p => p.PartidaAnalise == true && p.Id_EstatisticaCasa == 0 && p.Id_EstatisticaFora == 0).ToListAsync();
+                List<Partida>  partidas = await _mlDb.TB_PARTIDAS
+                    .Where(p => p.PartidaAnalise == true && p.Id_EstatisticaCasa == 0 && p.Id_EstatisticaFora == 0)
+                    .OrderBy(p => p.Id)
+                    .ToListAsync();
+
                 if (partidas == null)
                     throw new System.Exception("Partida Não Encontrada");
 

@@ -83,13 +83,11 @@ namespace botAPI.Controllers
         {
             try
             {
-                DateTime ontem = DateTime.Today.AddDays(-1);              // Começo do dia de ontem
-                DateTime fimOntem = DateTime.Today.AddTicks(-1);          // Final do dia de ontem
+                var agora = DateTime.Now;
 
                 List<Palpites> palpites = await _MLDb.TB_PALPITES
                     .Where(p => p.GreenRed == "Em Andamento" &&
-                                p.DataPalpite >= ontem &&
-                                p.DataPalpite <= fimOntem)
+                                EF.Functions.DateDiffMinute(p.DataPalpite, agora) >= 150) // 2h30
                     .ToListAsync();
 
                 if (palpites.Count == 0)
@@ -103,6 +101,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpGet("GetPalpitesHoje")]
         public async Task<IActionResult> GetPalpitesHoje()
@@ -129,6 +128,8 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Post(Palpites p)
@@ -210,14 +211,12 @@ namespace botAPI.Controllers
                     .FirstOrDefaultAsync(es => es.Id == id);
 
                 if (palpitesML == null || palpitesSecundarios == null)
-                    return NotFound("Estatística não encontrada em um dos bancos.");
+                    return NotFound("Palpites não encontrada em um dos bancos.");
 
 
                 _MLDb.Entry(palpitesML).CurrentValues.SetValues(palpites);
                 _context.Entry(palpitesSecundarios).CurrentValues.SetValues(palpites);
 
-                palpitesML.Id = id;
-                palpitesSecundarios.Id = id;
                 await _MLDb.SaveChangesAsync();
 
                 try
@@ -241,6 +240,57 @@ namespace botAPI.Controllers
             }
         }
 
+        [HttpPut("ConfirmarPalpites/{id}")]
+        public async Task<IActionResult> ConfirmarPalpites(int id)
+        {
+            try
+            {
+                if (id == 0)
+                    return BadRequest("O Id não pode ser igual a zero");
+
+                var palpitesML = await _MLDb.TB_PALPITES
+                              .FirstOrDefaultAsync(es => es.Id == id);
+
+                var palpitesSecundarios = await _context.TB_PALPITES
+                    .FirstOrDefaultAsync(es => es.Id == id);
+
+                if (palpitesML == null)
+                    return NotFound("Estatística não encontrada em um dos bancos.");
+
+                Palpites palpites = await ConfirmarPalpite(palpitesML, palpitesML.IdPartida);
+
+                _MLDb.Entry(palpitesML).CurrentValues.SetValues(palpites);
+
+                palpitesML.Id = id;
+                await _MLDb.SaveChangesAsync();
+
+                if (palpitesSecundarios != null)
+                {
+                    palpitesSecundarios.Id = id;
+
+                    _context.Entry(palpitesSecundarios).CurrentValues.SetValues(palpites);
+                    try
+                    {
+                        // Salva no segundo banco
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Tenta desfazer alteração no primeiro banco
+                        _MLDb.Entry(palpitesML).State = EntityState.Unchanged;
+                        return BadRequest($"Erro ao salvar no segundo banco: {ex.Message}");
+                    }
+
+                }
+
+                return Ok(new { Message = "Atualização realizada com sucesso em ambos os bancos" });
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> delte(int id)
@@ -253,15 +303,17 @@ namespace botAPI.Controllers
                 Palpites p = await _MLDb.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
                 Palpites p_repeat = await _context.TB_PALPITES.FirstOrDefaultAsync(pa => pa.Id == id);
 
-                if (p == null || p_repeat == null)
-                    throw new System.Exception("Palpite Não Encontrada");
+                if (p?.Id != null)
+                    _MLDb.TB_PALPITES.Remove(p);
 
+                if (p_repeat?.Id != null)
+                    _context.TB_PALPITES.Remove(p_repeat);
 
-                _context.TB_PALPITES.Remove(p_repeat);
-                _MLDb.TB_PALPITES.Remove(p);
+                if (p_repeat?.Id == null && p?.Id == null)
+                    throw new System.Exception("Id não encontrado em nem um dos dois bancos");
 
-                await _MLDb.SaveChangesAsync();
-                int linhasAfetadas = await _context.SaveChangesAsync();
+                int linhasAfetadas = await _MLDb.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 return Ok(linhasAfetadas);
             }
@@ -271,7 +323,7 @@ namespace botAPI.Controllers
             }
         }
 
-
+        #region Gerar_Palpites
         private async Task<List<Palpites>> MetodosPalpites(List<Partida> partidas)
         {
 
@@ -900,8 +952,142 @@ namespace botAPI.Controllers
 
             return input;
         }
+        #endregion
+
+
+        private async Task<Palpites> ConfirmarPalpite(Palpites palpite, int id_Partida)
+        {
+
+            Partida p = await _MLDb.TB_PARTIDAS
+                .FirstOrDefaultAsync(pa => pa.Id == id_Partida);
+
+            if (p.Id_EstatisticaCasa == 0 || p.Id_EstatisticaFora == 0)
+                return palpite;
+
+
+            Estatistica casa = await _MLDb.TB_ESTATISTICA
+            .FirstOrDefaultAsync(es => es.Id_Estatistica == p.Id_EstatisticaCasa);
+
+            Estatistica fora = await _MLDb.TB_ESTATISTICA
+            .FirstOrDefaultAsync(es => es.Id_Estatistica == p.Id_EstatisticaFora);
+
+            switch (palpite.MetodoGeradorPalpite_Id)
+            {
+                case 1:
+                    palpite.GreenRed = conferirUnder4Gols(casa, fora);
+                    break;
+                case 2:
+                    palpite.GreenRed = conferirOver2Gols(casa, fora);
+                    break;
+                case 3:
+                    palpite.GreenRed = conferirWinner(palpite, casa, fora);
+                    break;
+                case 4:
+                    palpite.GreenRed = conferirOverCantosVariaveis(palpite, casa, fora);
+                    break;
+                case 5:
+                    palpite.GreenRed = conferirUnderCantosVariaveis(palpite, casa, fora);
+                    break;
+                case 6:
+                    palpite.GreenRed = conferirOverGolTime(palpite, casa, fora);
+                    break;
+            }
+
+
+            return palpite;
+        }
+
+        private string conferirUnder4Gols(Estatistica casa, Estatistica fora)
+        {
+            int quantidade_gol = (int)(casa.Gol + fora.Gol);
+
+            if (quantidade_gol < 4)
+                return "Green";
+
+            return "Red";
+        }
+        private string conferirOver2Gols(Estatistica casa, Estatistica fora)
+        {
+            int quantidade_gol = (int)(casa.Gol + fora.Gol);
+
+            if (quantidade_gol >= 2)
+                return "Green";
+
+            return "Red";
+        }
+        private string conferirWinner(Palpites palpite, Estatistica casa, Estatistica fora)
+        {
+            if (palpite.Descricao.Contains("Casa Vitoria Empate"))
+            {
+                if (casa.Gol >= fora.Gol)
+                    return "Green";
+            }
+            if (palpite.Descricao.Contains("Casa Vitoria"))
+            {
+                if (casa.Gol > fora.Gol)
+                    return "Green";
+            }
+            if (palpite.Descricao.Contains("Fora Vitoria Empate"))
+            {
+                if (casa.Gol <= fora.Gol)
+                    return "Green";
+            }
+            if (palpite.Descricao.Contains("Fora Vitoria"))
+            {
+                if (casa.Gol < fora.Gol)
+                    return "Green";
+            }
+
+            return "Red";
+        }
+
+        private string conferirOverCantosVariaveis(Palpites palpite, Estatistica casa, Estatistica fora)
+        {
+            int quantidade_Escanteios = (int)(casa.Escanteios + fora.Escanteios);
+
+            if (quantidade_Escanteios > palpite.Num)
+                return "Green";
+
+            return "Red";
+        }
+
+        private string conferirUnderCantosVariaveis(Palpites palpite, Estatistica casa, Estatistica fora)
+        {
+            int quantidade_Escanteios = (int)(casa.Escanteios + fora.Escanteios);
+
+            if (quantidade_Escanteios < palpite.Num)
+                return "Green";
+
+            return "Red";
+        }
+
+        private string conferirOverGolTime(Palpites palpite, Estatistica casa, Estatistica fora)
+        {
+            if (palpite.Descricao.Contains("Ambas Marcam"))
+            {
+                if (casa.Gol > 0 && fora.Gol > 0)
+                    return "Green";
+            }
+            else if (palpite.Descricao.Contains("Casa Marca"))
+            {
+                if (casa.Gol > 0)
+                    return "Green";
+            }
+            else if (palpite.Descricao.Contains("Fora Marca"))
+            {
+                if (fora.Gol > 0)
+                    return "Green";
+            }
+
+            return "Red";
+        }
+
 
 
 
     }
+
+
 }
+
+

@@ -594,6 +594,22 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PalpiteController",
+    "Method": "ConfirmarPalpites",
+    "RelativePath": "Palpite/ConfirmarPalpites/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PalpiteController",
     "Method": "GerarPalpites",
     "RelativePath": "Palpite/Gerar_Palpites",
     "HttpMethod": "POST",
