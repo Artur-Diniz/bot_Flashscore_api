@@ -126,8 +126,6 @@ namespace botAPI.Controllers
             Partida_Estatistica_Esperadas partida = null;
             try
             {
-
-
                 Partida partidaAnalisada = await _context.TB_PARTIDAS
                 .FirstOrDefaultAsync(p => p.Id == IdPartida && p.PartidaAnalise == true);
 
@@ -140,12 +138,8 @@ namespace botAPI.Controllers
                 await _mlDb.SaveChangesAsync();
                 int idPrincipal = partida.Id;
 
-                _mlDb.Entry(partida).State = EntityState.Detached;
-                _context.Entry(partida).State = EntityState.Added;
-                int idSecundario = partida.Id;
-                await _context.SaveChangesAsync();
 
-                return Ok(new { PrimaryId = idPrincipal, SecondaryId = idSecundario });
+                return Ok(new { PrimaryId = idPrincipal});
 
             }
             catch (System.Exception ex)
@@ -246,7 +240,7 @@ namespace botAPI.Controllers
         {
             Partida_Estatistica_Esperadas partida = new Partida_Estatistica_Esperadas();
 
-            Estatistica_Esperadas estaTistica_Home = await _context.TB_ESTATISTICA_ESPERADAS
+            Estatistica_Esperadas estaTistica_Home = await _mlDb.TB_ESTATISTICA_ESPERADAS
                 .Include(e => e.FT)
                 .Include(e => e.FT_Adversario)
                 .Include(e => e.FT_Confronto)
@@ -256,7 +250,7 @@ namespace botAPI.Controllers
             .FirstOrDefaultAsync(p => p.NomeTime.ToLower().Contains(partidaAnalisada.NomeTimeCasa.ToLower()));
 
 
-            Estatistica_Esperadas estaTistica_Fora = await _context.TB_ESTATISTICA_ESPERADAS
+            Estatistica_Esperadas estaTistica_Fora = await _mlDb.TB_ESTATISTICA_ESPERADAS
                 .Include(e => e.FT)
                 .Include(e => e.FT_Adversario)
                 .Include(e => e.FT_Confronto)
@@ -265,35 +259,51 @@ namespace botAPI.Controllers
                 .Include(e => e.HT_Confronto)
             .FirstOrDefaultAsync(p => p.NomeTime.ToLower().Contains(partidaAnalisada.NomeTimeFora.ToLower()));
 
-            partida = GerarmediaPartida(estaTistica_Home, estaTistica_Fora);
+            partida = await GerarMediaPartidaAsync(estaTistica_Home, estaTistica_Fora);
 
-            partida.Partida = partidaAnalisada;
             partida.Id_Partida = partidaAnalisada.Id;
             partida.Id_Estatisticas_Esperadas_Casa = estaTistica_Home.Id;
             partida.Id_Estatisticas_Esperadas_Fora = estaTistica_Fora.Id;
-            partida.Estatisticas_Esperadas_Casa = estaTistica_Home;
-            partida.Estatisticas_Esperadas_Fora = estaTistica_Fora;
+   
 
             return partida;
         }
-        private Partida_Estatistica_Esperadas GerarmediaPartida(Estatistica_Esperadas casa, Estatistica_Esperadas fora)
+        private async Task<Partida_Estatistica_Esperadas> GerarMediaPartidaAsync(Estatistica_Esperadas casa, Estatistica_Esperadas fora)
         {
-            Partida_Estatistica_Esperadas Partida = new Partida_Estatistica_Esperadas();
+            // 1. Calcular os modelos base da partida
+            var ftTeam1 = CalcularMedia(casa.FT, fora.FT_Adversario);
+            var ftTeam2 = CalcularMedia(casa.FT_Adversario, fora.FT);
+            var htTeam1 = CalcularMedia(casa.HT, fora.HT_Adversario);
+            var htTeam2 = CalcularMedia(casa.HT_Adversario, fora.HT);
 
+            var partidaFT = CalcularMedia(ftTeam1, ftTeam2);
+            var partidaHT = CalcularMedia(htTeam1, htTeam2);
+            var partidaFTConfronto = CalcularMedia(casa.FT_Confronto, fora.FT_Confronto);
+            var partidaHTConfronto = CalcularMedia(casa.HT_Confronto, fora.HT_Confronto);
 
-            Estatistica_BaseModel FT_TEAM1 = CalcularMedia(casa.FT, fora.FT_Adversario);
-            Estatistica_BaseModel FT_TEAM2 = CalcularMedia(casa.FT_Adversario, fora.FT);
-            Estatistica_BaseModel HT_TEAM1 = CalcularMedia(casa.HT, fora.HT_Adversario);
-            Estatistica_BaseModel HT_TEAM2 = CalcularMedia(casa.HT_Adversario, fora.HT);
+            // 2. Lista para salvar todos os modelos
+            var estatisticasBase = new List<Estatistica_BaseModel>
+            {
+                ftTeam1, ftTeam2, htTeam1, htTeam2,
+                partidaFT, partidaHT, partidaFTConfronto, partidaHTConfronto
+            };
 
+            // 3. Salvar os Estatistica_BaseModel no banco
+            await _mlDb.TB_ESTATISTICA_BASEMODEL.AddRangeAsync(estatisticasBase);
+            await _mlDb.SaveChangesAsync();
 
-            Partida.Partida_FT = CalcularMedia(FT_TEAM1, FT_TEAM2);
-            Partida.Partida_HT = CalcularMedia(HT_TEAM1, HT_TEAM2);
-            Partida.Partida_FT_Confronto = CalcularMedia(casa.FT_Confronto, fora.FT_Confronto);
-            Partida.Partida_HT_Confronto = CalcularMedia(casa.HT_Confronto, fora.HT_Confronto);
+            // 4. Criar o objeto final com os objetos e seus respectivos IDs
+            var partida = new Partida_Estatistica_Esperadas
+            { 
+                Id_Partida_FT = partidaFT.Id,
+                Id_Partida_HT = partidaHT.Id,
+                Id_Partida_FT_Confronto = partidaFTConfronto.Id,
+                Id_Partida_HT_Confronto = partidaHTConfronto.Id
+            };
 
-            return Partida;
+            return partida;
         }
+
 
 
         public static Estatistica_BaseModel CalcularMedia(Estatistica_BaseModel estatistica1, Estatistica_BaseModel estatistica2)

@@ -163,12 +163,6 @@ namespace botAPI.Controllers
                 await _MLDb.SaveChangesAsync();
 
 
-                _MLDb.Entry(c).State = EntityState.Detached;
-                _MLDb.Entry(f).State = EntityState.Detached;
-                _context.Entry(c).State = EntityState.Added;
-                _context.Entry(f).State = EntityState.Added;
-                await _context.SaveChangesAsync();
-
                 string mensagem = $"foi gerado Estatisticas esperadas corretamente o ID de casa é{c.Id} ,  o ID de Fora é {f.Id} ";
                 return Ok(mensagem);
 
@@ -298,14 +292,14 @@ namespace botAPI.Controllers
 
             if (partidaAnalisada.NomeTimeCasa.ToLower().Contains(nomeTime.ToLower()))
             {
-                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Casa").ToListAsync();
-                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Casa").ToListAsync();
+                estatisticas = await _MLDb.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Casa").ToListAsync();
+                estatisticasRival = await _MLDb.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Casa").ToListAsync();
 
             }
             else
             {
-                estatisticas = await _context.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Fora").ToListAsync();
-                estatisticasRival = await _context.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Fora").ToListAsync();
+                estatisticas = await _MLDb.TB_ESTATISTICA.Where(n => n.NomeTimeRival.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Casa" && n.TipoPartida == "Fora").ToListAsync();
+                estatisticasRival = await _MLDb.TB_ESTATISTICA.Where(n => n.NomeTime.ToLower().Contains(nomeTime.ToLower()) && n.CasaOuFora == "Fora" && n.TipoPartida == "Fora").ToListAsync();
             }
             if (estatisticasRival.Count() == 0 || estatisticas.Count() == 0)
                 throw new System.Exception("Não achei time com esse nome ai");
@@ -323,9 +317,9 @@ namespace botAPI.Controllers
                 rival = partidaAnalisada.NomeTimeCasa;
             }
 
-            List<Estatistica> confrontos = await _context.TB_ESTATISTICA.Where(e => e.NomeTime == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
-            List<Estatistica> confrontosFora = await _context.TB_ESTATISTICA.Where(e => e.NomeTimeRival == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
-            confrontos.AddRange(confrontosFora);
+            List<Estatistica> confrontos = await _MLDb.TB_ESTATISTICA.Where(e => e.NomeTime == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
+            //List<Estatistica> confrontosFora = await _MLDb.TB_ESTATISTICA.Where(e => e.NomeTimeRival == time.NomeTime && e.TipoPartida == "Confronto Direto").ToListAsync();
+            //confrontos.AddRange(confrontosFora);
 
 
             time = await GerarEstatisticasByTime(estatisticas, estatisticasRival, confrontos);
@@ -336,26 +330,41 @@ namespace botAPI.Controllers
 
         private async Task<Estatistica_Esperadas> GerarEstatisticasByTime(List<Estatistica> principal, List<Estatistica> rival, List<Estatistica> confronto)
         {
-            List<Estatistica_BaseModel> estatisticas_Base = new List<Estatistica_BaseModel>();
+            // 1. Criar os 6 objetos Estatistica_BaseModel
+            var ft = CalcularMetricasTime(principal);
+            var ht = CalcularMetricasTime(principal, "HT");
+            var ftAdv = CalcularMetricasTime(rival);
+            var htAdv = CalcularMetricasTime(rival, "HT");
+            var ftConfronto = CalcularMetricasTime(confronto);
+            var htConfronto = CalcularMetricasTime(confronto, "HT");
 
-            Estatistica_Esperadas estatisticas = new Estatistica_Esperadas
+            var estatisticas_Base = new List<Estatistica_BaseModel>
             {
-                FT = CalcularMetricasTime(principal),
-                HT = CalcularMetricasTime(principal, "HT"),
-                FT_Adversario = CalcularMetricasTime(rival),
-                HT_Adversario = CalcularMetricasTime(rival, "HT"),
-                FT_Confronto = CalcularMetricasTime(confronto),
-                HT_Confronto = CalcularMetricasTime(confronto, "HT"),
+                ft, ht, ftAdv, htAdv, ftConfronto, htConfronto
             };
-            estatisticas_Base.AddRange(estatisticas.FT, estatisticas.HT);
-            estatisticas_Base.AddRange(estatisticas.FT_Adversario, estatisticas.HT_Adversario);
-            estatisticas_Base.AddRange(estatisticas.FT_Confronto, estatisticas.HT_Confronto);
 
-            await _context.TB_ESTATISTICA_ESPERADAS.AddRangeAsync((IEnumerable<Estatistica_Esperadas>)estatisticas_Base);
-            await _MLDb.TB_ESTATISTICA_ESPERADAS.AddRangeAsync((IEnumerable<Estatistica_Esperadas>)estatisticas_Base);
-            await _MLDb.SaveChangesAsync();
-            await _context.SaveChangesAsync();
+            // 2. Salvar os Estatistica_BaseModel no banco primeiro
+            await _MLDb.TB_ESTATISTICA_BASEMODEL.AddRangeAsync(estatisticas_Base);
+            await _MLDb.SaveChangesAsync(); // IDs serão populados aqui
 
+            // 3. Criar o objeto Estatistica_Esperadas com os IDs e objetos salvos
+            var estatisticas = new Estatistica_Esperadas
+            {
+                FT = ft,
+                FT_Id = ft.Id,
+                HT = ht,
+                HT_Id = ht.Id,
+                FT_Adversario = ftAdv,
+                FT_Adversario_Id = ftAdv.Id,
+                HT_Adversario = htAdv,
+                HT_Adversario_Id = htAdv.Id,
+                FT_Confronto = ftConfronto,
+                FT_Confronto_Id = ftConfronto.Id,
+                HT_Confronto = htConfronto,
+                HT_Confronto_Id = htConfronto.Id
+            };
+
+     
             return estatisticas;
         }
         private static float SafeAverage(IEnumerable<Estatistica> list, Func<Estatistica, float?> selector)
