@@ -785,6 +785,26 @@
   },
   {
     "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetPartidasComPalpites",
+    "RelativePath": "Partida/GetPartidasComPalpites",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
+    "Method": "GetPartidasComPalpitesEmAndamento",
+    "RelativePath": "Partida/GetPartidasComPalpitesEmAndamento",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "botAPI.Controllers.PartidaController",
     "Method": "GetAnalise",
     "RelativePath": "Partida/PartidasAnalisadas",
     "HttpMethod": "GET",

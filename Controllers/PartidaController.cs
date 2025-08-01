@@ -43,7 +43,7 @@ namespace botAPI.Controllers
 
         [HttpGet("Relatorio")]
         public async Task<IActionResult> GetGerarRelatorio()
-        {   
+        {
             try
             {//é só pra verificar se teve partida pra mandar gerar relatorio  por isso ta chumbado
                 Partida partidas = await _context.TB_PARTIDAS.OrderBy(p => p.Id)
@@ -121,7 +121,7 @@ namespace botAPI.Controllers
         {
             try
             {
-                List<Partida>  partidas = await _mlDb.TB_PARTIDAS
+                List<Partida> partidas = await _mlDb.TB_PARTIDAS
                     .Where(p => p.PartidaAnalise == true && p.Id_EstatisticaCasa == 0 && p.Id_EstatisticaFora == 0)
                     .OrderBy(p => p.Id)
                     .ToListAsync();
@@ -146,7 +146,7 @@ namespace botAPI.Controllers
 
                 List<Partida> partidas = await _mlDb
                 .TB_PARTIDAS.Where(p => listaIds.Contains(p.Id)).ToListAsync();
-                
+
                 if (partidas.Count == 0)
                     throw new System.Exception("Partida Não Encontrada");
 
@@ -157,6 +157,70 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetPartidasComPalpitesEmAndamento")]
+        public async Task<IActionResult> GetPartidasComPalpitesEmAndamento()
+        {
+            try
+            {
+
+                List<Palpites> palpitesHoje = await _mlDb.TB_PALPITES
+                    .Where(p => p.GreenRed == "Em Andamento" &&
+                    p.ODD == null)
+                    .OrderByDescending(p => p.DataPalpite) // Do mais recente para o mais antigo
+                    .ToListAsync();
+
+                List<int> Ids_partidas = new List<int>();
+
+                foreach (Palpites palpite in palpitesHoje)
+                {
+                    if (!Ids_partidas.Contains(palpite.IdPartida))
+                        Ids_partidas.Add(palpite.IdPartida);
+                }
+
+                List<Partida> partidas = await _mlDb.TB_PARTIDAS
+                .Where(p => Ids_partidas.Contains(p.Id))
+                .ToListAsync();
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetPartidasComPalpites")]
+        public async Task<IActionResult> GetPartidasComPalpites()
+        {
+            try
+            {
+
+                List<Palpites> palpitesHoje = await _mlDb.TB_PALPITES
+                    .Where(p => p.ODD == null)
+                    .OrderByDescending(p => p.DataPalpite) // Do mais recente para o mais antigo
+                    .ToListAsync();
+
+                List<int> Ids_partidas = new List<int>();
+
+                foreach (Palpites palpite in palpitesHoje)
+                {
+                    if (!Ids_partidas.Contains(palpite.IdPartida))
+                        Ids_partidas.Add(palpite.IdPartida);
+                }
+
+                List<Partida> partidas = await _mlDb.TB_PARTIDAS
+                .Where(p => Ids_partidas.Contains(p.Id))
+                .ToListAsync();
+
+                return Ok(partidas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Partida partida)
         {
@@ -272,7 +336,7 @@ namespace botAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpDelete("Apague")]
         public async Task<IActionResult> DeleteAll()
         {
